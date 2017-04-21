@@ -15,9 +15,20 @@ using Gadgeteer.Modules.GHIElectronics;
 using Gadgeteer.Modules.Seeed;
 using System.Text;
 
+// State
+// IsCardMounted
+
+
 
 namespace EGDRAPTOR
 {
+    public class EGDNoTemplateFile : System.Exception
+    {
+        public EGDNoTemplateFile() : base() { }
+        public EGDNoTemplateFile(string message) : base(message) { }
+        public EGDNoTemplateFile(string message, System.Exception inner) : base(message, inner) { }
+    }
+
     public partial class Program
     {
         private ArrayList NUMBERS_TO_CONTACT = new ArrayList() { 
@@ -61,7 +72,7 @@ namespace EGDRAPTOR
 
         private string[] fileList = null;
 
-        private int Threshold = 80;
+        private int Threshold = 40;
         private int MovementX = 0;
         private int MovementY = 0;
 
@@ -69,55 +80,91 @@ namespace EGDRAPTOR
 
         Detector detector;
 
+        private readonly string EMPTY_TEMPLATE_FILENAME = "empty_container_template.bmp";
+
+        private Bitmap emptyTamplate;
+
+
+        // Method No. 1
         void ProgramStarted()
         {
-            this.gsm = new FezRaptor.GSMController(cellularRadio, true, led7c);
+            SDCardController sdCardController = new SDCardController(sdCard, display);
+            sdCardController.CardMounted += sdCardController_CardMounted;
+            sdCardController.EnsureCardIsMounted();
 
-            this.lifeCycleTimer.Tick += lifeCycleTimer_Tick;
+            // Async code. End point: Method No. 2
 
-            button.ButtonPressed += new Button.ButtonEventHandler(button_ButtonPressed);
 
-            // initializing camera
-            camera.PictureCaptured += new Camera.PictureCapturedEventHandler(camera_PictureCaptured);
-            Thread.Sleep(1000);
-            camera.TakePicture();
 
-            //button1.ButtonPressed += new Button.ButtonEventHandler(button1_ButtonPressed);
 
-            // Do one-time tasks here
-            Debug.Print("Program Started");
-            led.TurnRed();
+
+
+
+
+
+            //display.SimpleGraphics.DisplayImage(this.emptyTamplate, 0, 0);
+            //this.gsm = new FezRaptor.GSMController(cellularRadio, true, multicolorLed);
+
+
+            //this.lifeCycleTimer.Tick += lifeCycleTimer_Tick;
+
+            //button.ButtonPressed += new Button.ButtonEventHandler(button_ButtonPressed);
+
+            //// initializing camera
+            //camera.PictureCaptured += new Camera.PictureCapturedEventHandler(camera_PictureCaptured);
+            //Thread.Sleep(1000);
+            //camera.TakePicture();
+
+            ////button1.ButtonPressed += new Button.ButtonEventHandler(button1_ButtonPressed);
+
+            //// Do one-time tasks here
+            //Debug.Print("Program Started");
+            //led.TurnRed();
 
             // Getting empty garbage container pattern
-            if (sdCard.IsCardInserted)
-            {
-                // Loads template from SD card
-                this.templateBitmap = this.getEmptyTemplate();
+            //if (sdCard.IsCardInserted)
+            //{
+            //    // Loads template from SD card
+            //    this.templateBitmap = this.getEmptyTemplate();
 
-                //this.readPhoneNumbers();
+            //    //this.readPhoneNumbers();
 
-                // No template found indication
-                if (templateBitmap == null)
-                {
-                    led.BlinkRepeatedly(GT.Color.Red);
-                }
+            //    // No template found indication
+            //    if (templateBitmap == null)
+            //    {
+            //        led.BlinkRepeatedly(GT.Color.Red);
+            //    }
 
-                led.BlinkRepeatedly(GT.Color.Green);
-                this.detector = new Detector(templateBitmap);
+            //    led.BlinkRepeatedly(GT.Color.Green);
+            //    this.detector = new Detector(templateBitmap);
 
-                this.detector.PrepareTemplates(Threshold);
+            //    this.detector.PrepareTemplates(Threshold);
 
-                Debug.Print("Ready");
+            //    Debug.Print("Ready");
 
-                //this.getPhoneNumberFromFile();
-                led.TurnGreen();
-            }
-            else
-            {
-                Debug.Print("No SDCard detected");
-                led.BlinkRepeatedly(GT.Color.Blue);
-            }
+            //    //this.getPhoneNumberFromFile();
+            //    led.TurnGreen();
+            //}
+            //else
+            //{
+            //    Debug.Print("No SDCard detected");
+            //    led.BlinkRepeatedly(GT.Color.Blue);
+            //}
         }
+
+        // Method No. 2
+        void sdCardController_CardMounted(SDCard sender, SDCardController controller)
+        {
+            this.emptyTamplate = controller.GetTemplate(EMPTY_TEMPLATE_FILENAME);
+
+            if (this.emptyTamplate == null)
+            {
+                throw new EGDNoTemplateFile("Could not load template file. Check SD card content if EMPTY_TEMPLATE_FILENAME exists.");
+            }
+
+            display.SimpleGraphics.DisplayImage(this.emptyTamplate, 0, 0);
+        }
+
 
         void lifeCycleTimer_Tick(GT.Timer timer)
         {
@@ -191,10 +238,10 @@ namespace EGDRAPTOR
         {
             if (this.cameraInitialized)
             {
-                int x = 7;
-                int x2 = 308;
-                int y = 43;
-                int y2 = 183;
+                int x = 30;
+                int x2 = 300;
+                int y = 30;
+                int y2 = 190;
 
                 display.SimpleGraphics.DisplayImage(picture, 0, 0);
                 led.TurnBlue();

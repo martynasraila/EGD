@@ -21,13 +21,13 @@ namespace FezRaptor
         private GT.Timer unsentMessagesTimer = new GT.Timer(2000);   // every 2 seconds retrying message
         private ArrayList unsentMessages = new ArrayList();
 
-        private LED7C led;
+        private MulticolorLed led;
 
-        public GSMController(CellularRadio module, bool showDebugMessages, LED7C led)
+        public GSMController(CellularRadio module, bool showDebugMessages, MulticolorLed led)
         {
             this.led = led;
 
-            this.led.SetColor(LED7C.LEDColor.Blue);
+            this.led.TurnBlue();
 
             this.module = module;
 
@@ -141,6 +141,12 @@ namespace FezRaptor
             this.module.GprsNetworkRegistrationChanged += new CellularRadio.GprsNetworkRegistrationChangedHandler(module_GprsNetworkRegistrationChanged);
             this.module.GsmNetworkRegistrationChanged += new CellularRadio.GsmNetworkRegistrationChangedHandler(module_GsmNetworkRegistrationChanged);
             this.module.OperatorRetrieved += new CellularRadio.OperatorRetrievedHandler(module_OperatorReady);
+            this.module.ResponseRetrieved += module_ResponseRetrieved;
+        }
+
+        void module_ResponseRetrieved(CellularRadio sender, string response)
+        {
+            Debug.Print(response);
         }
 
         void module_GsmNetworkRegistrationChanged(CellularRadio sender, CellularRadio.NetworkRegistrationState networkState)
@@ -148,12 +154,12 @@ namespace FezRaptor
             if (Enum.Equals(networkState, CellularRadio.NetworkRegistrationState.Registered))
             {
                 Debug.Print("NetworkRegistrationState -->" + networkState.ToString());
-                this.led.SetColor(LED7C.LEDColor.Green);
+                this.led.TurnGreen();
                 this.isGSMRegistered = true;
             }
             else
             {
-                this.led.SetColor(LED7C.LEDColor.Blue);
+                this.led.TurnBlue();
                 this.isGSMRegistered = false;
             }
 
