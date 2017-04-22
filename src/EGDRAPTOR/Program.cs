@@ -64,7 +64,6 @@ namespace EGDRAPTOR
 
         private bool cameraInitialized = false;
 
-        private Font font = Resources.GetFont(Resources.FontResources.NinaB);
 
         private Font fontArial18 = Resources.GetFont(Resources.FontResources.Arial_18);
         private Font fontConsolas24 = Resources.GetFont(Resources.FontResources.consolas_24);
@@ -72,7 +71,6 @@ namespace EGDRAPTOR
 
         private string[] fileList = null;
 
-        private int Threshold = 40;
         private int MovementX = 0;
         private int MovementY = 0;
 
@@ -80,29 +78,32 @@ namespace EGDRAPTOR
 
         Detector detector;
 
+        // --------------- new program ----------------------
+
+        // TODO: move constants to config
+        // Constants
         private readonly string EMPTY_TEMPLATE_FILENAME = "empty_container_template.bmp";
 
+        // Resources 
+        private Font font = Resources.GetFont(Resources.FontResources.NinaB);
+
+        // Templates
         private Bitmap emptyTamplate;
+
+
+        private byte threshold = 40;
 
 
         // Method No. 1
         void ProgramStarted()
         {
-            SDCardController sdCardController = new SDCardController(sdCard, display);
-            sdCardController.CardMounted += sdCardController_CardMounted;
-            sdCardController.EnsureCardIsMounted();
+            //SDCardController sdCardController = new SDCardController(sdCard, display);
+            //sdCardController.CardMounted += sdCardController_CardMounted;
+            //sdCardController.EnsureCardIsMounted();
 
             // Async code. End point: Method No. 2
 
-
-
-
-
-
-
-
-
-            //display.SimpleGraphics.DisplayImage(this.emptyTamplate, 0, 0);
+            #region
             //this.gsm = new FezRaptor.GSMController(cellularRadio, true, multicolorLed);
 
 
@@ -150,6 +151,7 @@ namespace EGDRAPTOR
             //    Debug.Print("No SDCard detected");
             //    led.BlinkRepeatedly(GT.Color.Blue);
             //}
+            #endregion
         }
 
         // Method No. 2
@@ -163,7 +165,41 @@ namespace EGDRAPTOR
             }
 
             display.SimpleGraphics.DisplayImage(this.emptyTamplate, 0, 0);
+
+            Thread.Sleep(500);
+
+            display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToGrayscale(this.emptyTamplate), 0, 0);
+
+            Thread.Sleep(500);
+
+            display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(this.emptyTamplate, this.threshold), 0, 0);
+
+            Bitmap tempBitmap = controller.GetTemplate("test_comparing_photo.bmp");
+
+            // temp code
+
+            display.SimpleGraphics.DisplayImage(tempBitmap, 0, 0);
+
+            Thread.Sleep(500);
+
+            display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToGrayscale(tempBitmap), 0, 0);
+
+            Thread.Sleep(500);
+
+            display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(tempBitmap, this.threshold), 0, 0);
+
+            Thread.Sleep(500);
+
+            double compareResult = BitmapComparer.CompareBitmaps(this.emptyTamplate, tempBitmap, this.threshold);
+
+            Debug.Print(compareResult.ToString());
+
+
+            // temp code
         }
+
+        // --------------- new program --------------------
+
 
 
         void lifeCycleTimer_Tick(GT.Timer timer)
@@ -248,7 +284,7 @@ namespace EGDRAPTOR
 
                 this.displayOutline(x, y, x2, y2);
 
-                int matchResult = this.detector.CheckHowLoaded(picture.MakeBitmap(), Threshold, MovementX, MovementY);
+                int matchResult = this.detector.CheckHowLoaded(picture.MakeBitmap(), threshold, MovementX, MovementY);
                 this.setStatusByMatchResult(matchResult);
 
 
