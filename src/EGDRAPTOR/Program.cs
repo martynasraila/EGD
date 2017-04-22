@@ -34,11 +34,11 @@ namespace EGDRAPTOR
 
     public partial class Program
     {
-        private ArrayList NUMBERS_TO_CONTACT = new ArrayList() { 
-                "37064261586",
-                "37069191020",
-                "37061963244"
-            };
+        //private ArrayList NUMBERS_TO_CONTACT = new ArrayList() { 
+        //        "37064261586",
+        //        "37069191020",
+        //        "37061963244"
+        //    };
 
         const string CONTAINER_ID = "c-kaunas-1";
         const string CONTAINER_ADDRESS = "K. Barsausko g. 59 51423, Kaunas, Lietuva";
@@ -63,7 +63,7 @@ namespace EGDRAPTOR
         private GT.Timer lifeCycleTimer = new GT.Timer(15000);      // single life cycle duration 15000 miliseconds
 
 
-        private FezRaptor.GSMControllerDep gsm;
+        //private FezRaptor.GSMControllerDep gsm;
 
         private bool cameraInitialized = false;
 
@@ -96,6 +96,14 @@ namespace EGDRAPTOR
 
         private byte threshold = 40;
 
+        NetworkConnector gsm;
+        MessagesSender messagesSender;
+
+        private ArrayList numberToContact = new ArrayList()
+        {
+            "37069191020",
+            "37064780029"
+        };
 
         // Method No. 1
         void ProgramStarted()
@@ -130,10 +138,62 @@ namespace EGDRAPTOR
 
             if (this.emptyTamplate == null)
             {
+                display.SimpleGraphics.Clear();
+                display.SimpleGraphics.DisplayText("Template not found. Reload required.", font, GT.Color.Red, 0, 0);
                 throw new EGDNoTemplateFile("Could not load template file. Check SD card content if EMPTY_TEMPLATE_FILENAME exists.");
             }
 
+            // SD card initialized
+            // Initializing GSM network
 
+            this.gsm = new NetworkConnector(cellularRadio, display);
+            this.gsm.NetworkRegistered += gsm_NetworkRegistered;
+            this.gsm.EnsureNetwork();
+
+            // Async code. End point: Method No. 3
+
+            // delete after testing
+            this.button.ButtonPressed += button_ButtonPressed;
+        }
+
+        // Method No. 3
+        void gsm_NetworkRegistered(CellularRadio sender, NetworkConnector controller)
+        {
+            display.SimpleGraphics.Clear();
+            display.SimpleGraphics.DisplayText("Connected to network", font, GT.Color.Red, 0, 0);
+
+            this.cellularRadio.IncomingCall += cellularRadio_IncomingCall;
+
+            // Initialing connected module
+            // Enable incoming call information
+            cellularRadio.SendATCommand("AT+CLIP=1");
+            this.messagesSender = new MessagesSender(this.cellularRadio, this.gsm);
+            this.messagesSender.MessagesDelivered += messagesSender_MessagesDelivered;
+        }
+
+        // Incomming call event
+        void cellularRadio_IncomingCall(CellularRadio sender, string caller)
+        {
+            // Hanging incomming call
+            this.cellularRadio.SendATCommand("ATH");
+
+            // Registering / unregistering contact
+            int numberIndex = this.numberToContact.IndexOf(caller);
+
+            if (numberIndex >= 0)
+            {
+                this.numberToContact.RemoveAt(numberIndex);
+            }
+            else
+            {
+                this.numberToContact.Add(caller);
+            }
+        }
+
+        void messagesSender_MessagesDelivered(CellularRadio cellular, NetworkConnector gsm)
+        {
+            display.SimpleGraphics.Clear();
+            display.SimpleGraphics.DisplayText("All messages delivered.", font, GT.Color.Red, 0, 0);
         }
 
         // --------------- new program --------------------
@@ -149,26 +209,29 @@ namespace EGDRAPTOR
         // starts periodical check
         void button_ButtonPressed(Button sender, Button.ButtonState state)
         {
-            //this.lifeCycleTimer.Start();
-            led.TurnGreen();
-            camera.TakePicture();
+
+            this.messagesSender.SendMessages(this.numberToContact, "Belekas :) :)");
+
+            ////this.lifeCycleTimer.Start();
+            //led.TurnGreen();
+            //camera.TakePicture();
         }
 
-        private void readPhoneNumbers()
-        {
-            GT.StorageDevice sdStorage = sdCard.GetStorageDevice();
+        //private void readPhoneNumbers()
+        //{
+        //    GT.StorageDevice sdStorage = sdCard.GetStorageDevice();
 
-            string phoneNumbersPath = "phone_numbers.txt";
-            byte[] data = sdStorage.ReadFile(phoneNumbersPath);
-            char[] characters = System.Text.Encoding.UTF8.GetChars(data);
-            string text = new string(characters);
-            string[] phoneNumbers = text.Split(',');
+        //    string phoneNumbersPath = "phone_numbers.txt";
+        //    byte[] data = sdStorage.ReadFile(phoneNumbersPath);
+        //    char[] characters = System.Text.Encoding.UTF8.GetChars(data);
+        //    string text = new string(characters);
+        //    string[] phoneNumbers = text.Split(',');
 
-            foreach (string phoneNumber in phoneNumbers)
-            {
-                this.NUMBERS_TO_CONTACT.Add(phoneNumber);
-            }
-        }
+        //    foreach (string phoneNumber in phoneNumbers)
+        //    {
+        //        this.NUMBERS_TO_CONTACT.Add(phoneNumber);
+        //    }
+        //}
 
         void camera_PictureCaptured(Camera sender, GT.Picture picture)
         {
@@ -190,7 +253,7 @@ namespace EGDRAPTOR
 
                 string resultMessage = this.getMessageByStatus();
                 this.displayMatch(resultMessage, matchResult, this.getColorByStatus());
-                this.sendMessage(resultMessage);
+                //this.sendMessage(resultMessage);
 
                 Thread.Sleep(1000);
 
@@ -202,22 +265,22 @@ namespace EGDRAPTOR
             }
         }
 
-        private void sendMessage(string statusMessage)
-        {
-            string formedMessage = CONTAINER_ID + " status: " + statusMessage + " Address: " + CONTAINER_ADDRESS;
+        //private void sendMessage(string statusMessage)
+        //{
+        //    string formedMessage = CONTAINER_ID + " status: " + statusMessage + " Address: " + CONTAINER_ADDRESS;
 
-            if (this.containerStatus == ContainerStatus.Full && !this.isFullMessageSent)
-            {
-                this.gsm.SendMessage(this.NUMBERS_TO_CONTACT, formedMessage);
-                this.isFullMessageSent = true;
-            }
+        //    if (this.containerStatus == ContainerStatus.Full && !this.isFullMessageSent)
+        //    {
+        //        this.gsm.SendMessage(this.NUMBERS_TO_CONTACT, formedMessage);
+        //        this.isFullMessageSent = true;
+        //    }
 
-            if (this.containerStatus == ContainerStatus.Overloaded && !this.isOverLoadedMessageSent)
-            {
-                this.gsm.SendMessage(this.NUMBERS_TO_CONTACT, formedMessage);
-                this.isOverLoadedMessageSent = true;
-            }
-        }
+        //    if (this.containerStatus == ContainerStatus.Overloaded && !this.isOverLoadedMessageSent)
+        //    {
+        //        this.gsm.SendMessage(this.NUMBERS_TO_CONTACT, formedMessage);
+        //        this.isOverLoadedMessageSent = true;
+        //    }
+        //}
 
         private void setStatusByMatchResult(int matchResult)
         {

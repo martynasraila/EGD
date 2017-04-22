@@ -20,6 +20,8 @@ namespace EGDRAPTOR
         private Display_T35 display;
         private Font mainFont = Resources.GetFont(Resources.FontResources.NinaB);
 
+        private GT.Timer cardMountTimer;
+
         public SDCardController(SDCard sdCard, Display_T35 display)
         {
             this.sdCard = sdCard;
@@ -28,6 +30,7 @@ namespace EGDRAPTOR
             // checking if card inserted INITIALLY
             if (sdCard.IsCardInserted == false)
             {
+                display.SimpleGraphics.Clear();
                 display.SimpleGraphics.DisplayText("No card on start up.", mainFont, GT.Color.Red, 0, 0);
             }
         }
@@ -38,7 +41,7 @@ namespace EGDRAPTOR
             {
                 sdCard.SDCardMounted += sdCard_SDCardMounted;
 
-                GT.Timer cardMountTimer = new GT.Timer(1000);
+                cardMountTimer = new GT.Timer(1000, GT.Timer.BehaviorType.RunContinuously);
                 cardMountTimer.Tick += cardMountTimer_Tick;
                 cardMountTimer.Start();
                 this.displayFailedToMountError();
@@ -53,17 +56,23 @@ namespace EGDRAPTOR
         {
             if (sdCard.IsCardMounted)
             {
-                timer.Stop();
+                this.cardMountTimer.Stop();
             }
             else
             {
-                sdCard.MountSDCard();
+                // Check if card inserted
+                // If not, continue fallback ticks
+                if (sdCard.IsCardInserted) {
+                    sdCard.MountSDCard();
+                }
+                
                 this.displayFailedToMountError();
             }
         }
 
         private void displayFailedToMountError()
         {
+            display.SimpleGraphics.Clear();
             display.SimpleGraphics.DisplayText("Failed to mount SD card.", mainFont, GT.Color.Red, 0, 0);
         }
 

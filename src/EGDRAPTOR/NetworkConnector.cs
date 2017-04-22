@@ -6,8 +6,11 @@ using GT = Gadgeteer;
 
 namespace EGDRAPTOR
 {
-    class GSMController
+    class NetworkConnector
     {
+        const int NETWORK_CONNECTION_TICK_TIME = 1000;
+        const int KEEP_CONNECTION_ALIVE_TICK_TIME = 5000;
+
         // State
         private CellularRadio.NetworkRegistrationState gsmState;
         private CellularRadio.NetworkRegistrationState gprsState;
@@ -17,14 +20,15 @@ namespace EGDRAPTOR
         private Font mainFont = Resources.GetFont(Resources.FontResources.NinaB);
         private Display_T35 display;
 
-        public GSMController(CellularRadio gsm, Display_T35 display)
+        public NetworkConnector(CellularRadio gsm, Display_T35 display)
         {
             this.gsm = gsm;
             this.display = display;
             gsm.GsmNetworkRegistrationChanged += gsm_GsmNetworkRegistrationChanged;
             gsm.GprsNetworkRegistrationChanged += gsm_GprsNetworkRegistrationChanged;
 
-            gsm.PowerOn(1000);
+            gsm.DebugPrintEnabled = true;
+            gsm.PowerOn(1);
         }
 
         void gsm_GprsNetworkRegistrationChanged(CellularRadio sender, CellularRadio.NetworkRegistrationState networkState)
@@ -46,7 +50,7 @@ namespace EGDRAPTOR
             else
             {
                 this.displayFailedConnectToNetworkError();
-                GT.Timer networkConnectionTimer = new GT.Timer(500);
+                GT.Timer networkConnectionTimer = new GT.Timer(NETWORK_CONNECTION_TICK_TIME);
                 networkConnectionTimer.Tick += networkConnectionTimer_Tick;
                 networkConnectionTimer.Start();
             }
@@ -57,39 +61,64 @@ namespace EGDRAPTOR
             if (IsRegisteredToNetwork())
             {
                 timer.Stop();
+                timer = null;
+
+                GT.Timer connectionAliveTimer = new GT.Timer(KEEP_CONNECTION_ALIVE_TICK_TIME);
+                connectionAliveTimer.Tick += keepConnectionAliveTimerTick;
+                connectionAliveTimer.Start();
+
                 NetworkRegistered(this.gsm, this);
-                timer = new GT.Timer(2000);
-                timer.Tick += networkConnectionTimer_Tick;
-                timer.Start();
             }
             else
             {
-                timer.Stop();
-                timer = new GT.Timer(500);
-                timer.Start();
                 this.displayFailedConnectToNetworkError();
                 this.RegisterToNetwork();
             }
         }
 
+        void keepConnectionAliveTimerTick(GT.Timer timer)
+        {
+            if (!IsRegisteredToNetwork())
+            {
+                timer.Stop();
+                this.displayFailedConnectToNetworkError();
+                GT.Timer networkConnectionTimer = new GT.Timer(NETWORK_CONNECTION_TICK_TIME);
+                networkConnectionTimer.Tick += networkConnectionTimer_Tick;
+                networkConnectionTimer.Start();
+            }
+        }
+
         private void displayFailedConnectToNetworkError()
         {
-            display.SimpleGraphics.DisplayText("Failed to connect to network.", mainFont, GT.Color.Red, 0, 0);
+            display.SimpleGraphics.Clear();
+            display.SimpleGraphics.DisplayText("Connecting to network.", mainFont, GT.Color.Red, 0, 0);
         }
 
         public bool IsRegisteredToNetwork()
         {
-            return gsmState == CellularRadio.NetworkRegistrationState.Registered &&
-                gprsState == CellularRadio.NetworkRegistrationState.Registered;
+            return gsmState == CellularRadio.NetworkRegistrationState.Registered;
+            //&&
+            //    gprsState == CellularRadio.NetworkRegistrationState.Registered;
         }
 
         public void RegisterToNetwork()
         {
-            // TODO: fill this
+            // Forcing registration to network if unregistered yet
+            if (this.gsmState != CellularRadio.NetworkRegistrationState.Registered)
+            {
+                this.gsm.SendATCommand("AT+CREG=1");
+            }
+            //else
+            //{
+            //    if (this.gprsState != CellularRadio.NetworkRegistrationState.Registered)
+            //    {
+            //        this.gsm.SendATCommand("AT+CGREG=1");
+            //    }
+            //}
         }
 
         public event NetworkRegisteredHandler NetworkRegistered;
 
-        public delegate void NetworkRegisteredHandler(CellularRadio sender, GSMController controller);
+        public delegate void NetworkRegisteredHandler(CellularRadio sender, NetworkConnector controller);
     }
 }
