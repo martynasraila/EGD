@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="BitmapComparer.cs" />
     <Compile Include="Detector.cs" />
+    <Compile Include="GSMController-dep.cs" />
     <Compile Include="GSMController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Program.generated.cs">
