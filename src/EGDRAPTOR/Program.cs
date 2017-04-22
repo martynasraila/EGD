@@ -15,6 +15,9 @@ using Gadgeteer.Modules.GHIElectronics;
 using Gadgeteer.Modules.Seeed;
 using System.Text;
 
+// TODO: camera class, camera initialization
+// TODO: LED indicators class, define LED indicators values 
+
 // State
 // IsCardMounted
 
@@ -60,7 +63,7 @@ namespace EGDRAPTOR
         private GT.Timer lifeCycleTimer = new GT.Timer(15000);      // single life cycle duration 15000 miliseconds
 
 
-        private FezRaptor.GSMController gsm;
+        private FezRaptor.GSMControllerDep gsm;
 
         private bool cameraInitialized = false;
 
@@ -97,9 +100,9 @@ namespace EGDRAPTOR
         // Method No. 1
         void ProgramStarted()
         {
-            //SDCardController sdCardController = new SDCardController(sdCard, display);
-            //sdCardController.CardMounted += sdCardController_CardMounted;
-            //sdCardController.EnsureCardIsMounted();
+            SDCardController sdCardController = new SDCardController(sdCard, display);
+            sdCardController.CardMounted += sdCardController_CardMounted;
+            sdCardController.EnsureCardIsMounted();
 
             // Async code. End point: Method No. 2
 
@@ -117,40 +120,6 @@ namespace EGDRAPTOR
             //camera.TakePicture();
 
             ////button1.ButtonPressed += new Button.ButtonEventHandler(button1_ButtonPressed);
-
-            //// Do one-time tasks here
-            //Debug.Print("Program Started");
-            //led.TurnRed();
-
-            // Getting empty garbage container pattern
-            //if (sdCard.IsCardInserted)
-            //{
-            //    // Loads template from SD card
-            //    this.templateBitmap = this.getEmptyTemplate();
-
-            //    //this.readPhoneNumbers();
-
-            //    // No template found indication
-            //    if (templateBitmap == null)
-            //    {
-            //        led.BlinkRepeatedly(GT.Color.Red);
-            //    }
-
-            //    led.BlinkRepeatedly(GT.Color.Green);
-            //    this.detector = new Detector(templateBitmap);
-
-            //    this.detector.PrepareTemplates(Threshold);
-
-            //    Debug.Print("Ready");
-
-            //    //this.getPhoneNumberFromFile();
-            //    led.TurnGreen();
-            //}
-            //else
-            //{
-            //    Debug.Print("No SDCard detected");
-            //    led.BlinkRepeatedly(GT.Color.Blue);
-            //}
             #endregion
         }
 
@@ -164,38 +133,7 @@ namespace EGDRAPTOR
                 throw new EGDNoTemplateFile("Could not load template file. Check SD card content if EMPTY_TEMPLATE_FILENAME exists.");
             }
 
-            display.SimpleGraphics.DisplayImage(this.emptyTamplate, 0, 0);
 
-            Thread.Sleep(500);
-
-            display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToGrayscale(this.emptyTamplate), 0, 0);
-
-            Thread.Sleep(500);
-
-            display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(this.emptyTamplate, this.threshold), 0, 0);
-
-            Bitmap tempBitmap = controller.GetTemplate("test_comparing_photo.bmp");
-
-            // temp code
-
-            display.SimpleGraphics.DisplayImage(tempBitmap, 0, 0);
-
-            Thread.Sleep(500);
-
-            display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToGrayscale(tempBitmap), 0, 0);
-
-            Thread.Sleep(500);
-
-            display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(tempBitmap, this.threshold), 0, 0);
-
-            Thread.Sleep(500);
-
-            double compareResult = BitmapComparer.CompareBitmaps(this.emptyTamplate, tempBitmap, this.threshold);
-
-            Debug.Print(compareResult.ToString());
-
-
-            // temp code
         }
 
         // --------------- new program --------------------
@@ -216,25 +154,6 @@ namespace EGDRAPTOR
             camera.TakePicture();
         }
 
-        //void button1_ButtonPressed(Button sender, Button.ButtonState state)
-        //{
-        //    // this button will be used to show a slideshow of the pictures on the SD card
-        //    GT.StorageDevice sdStorage = sdCard.GetStorageDevice();
-        //    fileList = sdStorage.ListRootDirectoryFiles();
-
-        //    for (int i = 0; i < fileList.Length; i++)
-        //    {
-        //        if (fileList[i] != "._.Trashes")
-        //        {
-        //            Microsoft.SPOT.Bitmap picture = sdStorage.LoadBitmap(fileList[i], Bitmap.BitmapImageType.Bmp);
-        //            display.SimpleGraphics.DisplayImage(picture, 0, 0);
-        //            display.SimpleGraphics.DisplayText(fileList[i], font, GT.Color.Black, 10, 220);
-        //            Thread.Sleep(1000);  // this code just used to wait one second (needs 'using System.Threading' at the top)
-        //        }
-
-        //    }
-        //}
-
         private void readPhoneNumbers()
         {
             GT.StorageDevice sdStorage = sdCard.GetStorageDevice();
@@ -249,25 +168,6 @@ namespace EGDRAPTOR
             {
                 this.NUMBERS_TO_CONTACT.Add(phoneNumber);
             }
-        }
-
-        private Bitmap getEmptyTemplate()
-        {
-            GT.StorageDevice sdStorage = sdCard.GetStorageDevice();
-            fileList = sdStorage.ListRootDirectoryFiles();
-
-            for (int i = 0; i < fileList.Length; i++)
-            {
-                if (fileList[i] != "._.Trashes")
-                {
-                    if (fileList[i].ToLower().IndexOf("sleep") >= 0)
-                    {
-                        return sdStorage.LoadBitmap(fileList[i], Bitmap.BitmapImageType.Bmp);
-                    }
-                }
-            }
-
-            return null;        // no template found
         }
 
         void camera_PictureCaptured(Camera sender, GT.Picture picture)
