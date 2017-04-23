@@ -34,15 +34,6 @@ namespace EGDRAPTOR
 
     public partial class Program
     {
-        //private ArrayList NUMBERS_TO_CONTACT = new ArrayList() { 
-        //        "37064261586",
-        //        "37069191020",
-        //        "37061963244"
-        //    };
-
-        const string CONTAINER_ID = "c-kaunas-1";
-        const string CONTAINER_ADDRESS = "K. Barsausko g. 59 51423, Kaunas, Lietuva";
-
         private int fullLimitNumber = 70;
         private int halfFullLimitNumber = 50;
         private int emptyLimitNumber = 25;
@@ -62,48 +53,33 @@ namespace EGDRAPTOR
         // TODO: Implement life cycle
         private GT.Timer lifeCycleTimer = new GT.Timer(15000);      // single life cycle duration 15000 miliseconds
 
-
-        //private FezRaptor.GSMControllerDep gsm;
-
         private bool cameraInitialized = false;
 
+        // --------------- new program ----------------------
 
+        // Constants
+        private readonly string CONFIG_FILENAME = "egd_config.txt";
+
+        // Resources 
+        private Font font = Resources.GetFont(Resources.FontResources.NinaB);
         private Font fontArial18 = Resources.GetFont(Resources.FontResources.Arial_18);
         private Font fontConsolas24 = Resources.GetFont(Resources.FontResources.consolas_24);
         private Font fontConsolas72 = Resources.GetFont(Resources.FontResources.consolas_72);
 
-        private string[] fileList = null;
-
-        private int MovementX = 0;
-        private int MovementY = 0;
-
-        Microsoft.SPOT.Bitmap templateBitmap = null;
-
-        Detector detector;
-
-        // --------------- new program ----------------------
-
-        // TODO: move constants to config
-        // Constants
-        private readonly string EMPTY_TEMPLATE_FILENAME = "empty_container_template.bmp";
-
-        // Resources 
-        private Font font = Resources.GetFont(Resources.FontResources.NinaB);
-
         // Templates
         private Bitmap emptyTamplate;
-
 
         private byte threshold = 40;
 
         NetworkConnector gsm;
         MessagesSender messagesSender;
 
-        private ArrayList numberToContact = new ArrayList()
-        {
-            "37069191020",
-            "37064780029"
-        };
+
+        // Config
+        ConfigManager configManager;
+        private string emptyTemplateFileName;
+        private string containerId;
+        private string containerAddress;
 
         // Method No. 1
         void ProgramStarted()
@@ -115,12 +91,6 @@ namespace EGDRAPTOR
             // Async code. End point: Method No. 2
 
             #region
-            //this.gsm = new FezRaptor.GSMController(cellularRadio, true, multicolorLed);
-
-
-            //this.lifeCycleTimer.Tick += lifeCycleTimer_Tick;
-
-            //button.ButtonPressed += new Button.ButtonEventHandler(button_ButtonPressed);
 
             //// initializing camera
             //camera.PictureCaptured += new Camera.PictureCapturedEventHandler(camera_PictureCaptured);
@@ -132,9 +102,13 @@ namespace EGDRAPTOR
         }
 
         // Method No. 2
-        void sdCardController_CardMounted(SDCard sender, SDCardController controller)
+        void sdCardController_CardMounted(SDCard sender, SDCardController sdController)
         {
-            this.emptyTamplate = controller.GetTemplate(EMPTY_TEMPLATE_FILENAME);
+            // Reading config
+            string configText = sdController.GetTextFile(CONFIG_FILENAME);
+            this.configManager = new ConfigManager(configText);
+
+            this.emptyTamplate = sdController.GetTemplate(this.configManager.EmptyTemplatePath);
 
             if (this.emptyTamplate == null)
             {
@@ -171,22 +145,31 @@ namespace EGDRAPTOR
             this.messagesSender.MessagesDelivered += messagesSender_MessagesDelivered;
         }
 
+        // Waiting for a trigger action - request of image comparision
+
+
         // Incomming call event
         void cellularRadio_IncomingCall(CellularRadio sender, string caller)
         {
             // Hanging incomming call
             this.cellularRadio.SendATCommand("ATH");
 
+            // Removing '+' from caller id;
+            if (caller[0] == '+')
+            {
+                caller = caller.Substring(1);
+            }
+
             // Registering / unregistering contact
-            int numberIndex = this.numberToContact.IndexOf(caller);
+            int numberIndex = configManager.PhoneNumbers.IndexOf(caller);
 
             if (numberIndex >= 0)
             {
-                this.numberToContact.RemoveAt(numberIndex);
+                configManager.PhoneNumbers.RemoveAt(numberIndex);
             }
             else
             {
-                this.numberToContact.Add(caller);
+                configManager.PhoneNumbers.Add(caller);
             }
         }
 
@@ -200,17 +183,18 @@ namespace EGDRAPTOR
 
 
 
-        void lifeCycleTimer_Tick(GT.Timer timer)
-        {
-            led.TurnGreen();
-            camera.TakePicture();
-        }
+        //void lifeCycleTimer_Tick(GT.Timer timer)
+        //{
+        //    led.TurnGreen();
+        //    camera.TakePicture();
+        //}
 
         // starts periodical check
         void button_ButtonPressed(Button sender, Button.ButtonState state)
         {
-
-            this.messagesSender.SendMessages(this.numberToContact, "Belekas :) :)");
+            //Bitmap x = BitmapComparer.BitmapToThresholdedBitmap(emptyTamplate, threshold);
+            //display.SimpleGraphics.DisplayImage(this.emptyTamplate, 0, 0);
+            this.messagesSender.SendMessages(this.configManager.PhoneNumbers, "Belekas :) :)");
 
             ////this.lifeCycleTimer.Start();
             //led.TurnGreen();
@@ -233,37 +217,37 @@ namespace EGDRAPTOR
         //    }
         //}
 
-        void camera_PictureCaptured(Camera sender, GT.Picture picture)
-        {
-            if (this.cameraInitialized)
-            {
-                int x = 30;
-                int x2 = 300;
-                int y = 30;
-                int y2 = 190;
+        //void camera_PictureCaptured(Camera sender, GT.Picture picture)
+        //{
+        //    if (this.cameraInitialized)
+        //    {
+        //        int x = 30;
+        //        int x2 = 300;
+        //        int y = 30;
+        //        int y2 = 190;
 
-                display.SimpleGraphics.DisplayImage(picture, 0, 0);
-                led.TurnBlue();
+        //        display.SimpleGraphics.DisplayImage(picture, 0, 0);
+        //        led.TurnBlue();
 
-                this.displayOutline(x, y, x2, y2);
+        //        this.displayOutline(x, y, x2, y2);
 
-                int matchResult = this.detector.CheckHowLoaded(picture.MakeBitmap(), threshold, MovementX, MovementY);
-                this.setStatusByMatchResult(matchResult);
+        //        int matchResult = this.detector.CheckHowLoaded(picture.MakeBitmap(), threshold, MovementX, MovementY);
+        //        this.setStatusByMatchResult(matchResult);
 
 
-                string resultMessage = this.getMessageByStatus();
-                this.displayMatch(resultMessage, matchResult, this.getColorByStatus());
-                //this.sendMessage(resultMessage);
+        //        string resultMessage = this.getMessageByStatus();
+        //        this.displayMatch(resultMessage, matchResult, this.getColorByStatus());
+        //        //this.sendMessage(resultMessage);
 
-                Thread.Sleep(1000);
+        //        Thread.Sleep(1000);
 
-                led.TurnGreen();
-            }
-            else
-            {
-                this.cameraInitialized = true;
-            }
-        }
+        //        led.TurnGreen();
+        //    }
+        //    else
+        //    {
+        //        this.cameraInitialized = true;
+        //    }
+        //}
 
         //private void sendMessage(string statusMessage)
         //{

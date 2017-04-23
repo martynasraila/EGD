@@ -3,6 +3,7 @@ using Microsoft.SPOT;
 using Gadgeteer.Modules.GHIElectronics;
 using GT = Gadgeteer;
 using System.Threading;
+using System.Text;
 
 namespace EGDRAPTOR
 {
@@ -62,10 +63,11 @@ namespace EGDRAPTOR
             {
                 // Check if card inserted
                 // If not, continue fallback ticks
-                if (sdCard.IsCardInserted) {
+                if (sdCard.IsCardInserted)
+                {
                     sdCard.MountSDCard();
                 }
-                
+
                 this.displayFailedToMountError();
             }
         }
@@ -95,6 +97,22 @@ namespace EGDRAPTOR
             if (this.indexOf(fileList, fileName) >= 0)
             {
                 return sdStorage.LoadBitmap(fileName, Bitmap.BitmapImageType.Bmp);
+            }
+
+            return null;
+        }
+
+        public string GetTextFile(string fileName)
+        {
+            GT.StorageDevice sdStorage = sdCard.GetStorageDevice();
+            string[] fileList = sdStorage.ListRootDirectoryFiles();
+
+            if (this.indexOf(fileList, fileName) >= 0)
+            {
+                byte[] fileBytes = sdStorage.ReadFile(fileName);
+                Encoding utf8 = new UTF8Encoding();
+                char[] fileChars = utf8.GetChars(fileBytes);
+                return new string(fileChars);
             }
 
             return null;
