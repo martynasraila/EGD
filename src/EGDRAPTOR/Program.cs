@@ -13,13 +13,17 @@ using GT = Gadgeteer;
 using GTM = Gadgeteer.Modules;
 using Gadgeteer.Modules.GHIElectronics;
 using Gadgeteer.Modules.Seeed;
-using System.Text;
+
+// For testing
+//using System.Diagnostics;
 
 // TODO: camera class, camera initialization
-// TODO: LED indicators class, define LED indicators values 
+// TODO: LED indicators class, define LED indicators values ?
+// Detector controller?
 
 // State
 // IsCardMounted
+// IsConnectedToNetwork
 
 
 
@@ -34,9 +38,11 @@ namespace EGDRAPTOR
 
     public partial class Program
     {
+        // Move to config
         private int fullLimitNumber = 70;
         private int halfFullLimitNumber = 50;
         private int emptyLimitNumber = 25;
+
 
         private enum ContainerStatus
         {
@@ -45,6 +51,7 @@ namespace EGDRAPTOR
             Full,
             Overloaded
         };
+
 
         private ContainerStatus containerStatus = ContainerStatus.Empty;
         private bool isOverLoadedMessageSent = false;
@@ -67,7 +74,7 @@ namespace EGDRAPTOR
         private Font fontConsolas72 = Resources.GetFont(Resources.FontResources.consolas_72);
 
         // Templates
-        private Bitmap emptyTamplate;
+        private Bitmap emptyTemplate;
 
         private byte threshold = 40;
 
@@ -77,9 +84,6 @@ namespace EGDRAPTOR
 
         // Config
         ConfigManager configManager;
-        private string emptyTemplateFileName;
-        private string containerId;
-        private string containerAddress;
 
         // Method No. 1
         void ProgramStarted()
@@ -104,13 +108,16 @@ namespace EGDRAPTOR
         // Method No. 2
         void sdCardController_CardMounted(SDCard sender, SDCardController sdController)
         {
+            display.SimpleGraphics.Clear();
+            display.SimpleGraphics.DisplayText("SD card mounted", font, GT.Color.Red, 0, 0);
+
             // Reading config
             string configText = sdController.GetTextFile(CONFIG_FILENAME);
             this.configManager = new ConfigManager(configText);
 
-            this.emptyTamplate = sdController.GetTemplate(this.configManager.EmptyTemplatePath);
+            this.emptyTemplate = sdController.GetTemplate(this.configManager.EmptyTemplatePath);
 
-            if (this.emptyTamplate == null)
+            if (this.emptyTemplate == null)
             {
                 display.SimpleGraphics.Clear();
                 display.SimpleGraphics.DisplayText("Template not found. Reload required.", font, GT.Color.Red, 0, 0);
@@ -120,13 +127,13 @@ namespace EGDRAPTOR
             // SD card initialized
             // Initializing GSM network
 
-            this.gsm = new NetworkConnector(cellularRadio, display);
-            this.gsm.NetworkRegistered += gsm_NetworkRegistered;
-            this.gsm.EnsureNetwork();
+            //this.gsm = new NetworkConnector(cellularRadio, display);
+            //this.gsm.NetworkRegistered += gsm_NetworkRegistered;
+            //this.gsm.EnsureNetwork();
 
             // Async code. End point: Method No. 3
 
-            // delete after testing
+            // 
             this.button.ButtonPressed += button_ButtonPressed;
         }
 
@@ -147,7 +154,7 @@ namespace EGDRAPTOR
 
         // Waiting for a trigger action - request of image comparision
 
-
+        #region Registering / unregistering phone numbers
         // Incomming call event
         void cellularRadio_IncomingCall(CellularRadio sender, string caller)
         {
@@ -172,12 +179,68 @@ namespace EGDRAPTOR
                 configManager.PhoneNumbers.Add(caller);
             }
         }
+        #endregion
 
+        #region Async cycle
+
+        // Picture taken event simulation
+        void button_ButtonPressed(Button sender, Button.ButtonState state)
+        {
+
+            //this.displayOutline(configManager.Padding);
+            var x = sdCard.GetStorageDevice();
+            var y = x.LoadBitmap("test_comparing_photo.bmp", Bitmap.BitmapImageType.Bmp);
+
+            //display.SimpleGraphics.DisplayLine(GT.Color.Red, 2, 10, 10, 10, 310);
+            //display.SimpleGraphics.DisplayText("SOMETHING", font, GT.Color.Red, 10, 20);
+
+            //display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(this.emptyTemplate, threshold), 0, 0);
+
+
+            //Detector detector = new Detector(this.emptyTemplate);
+
+            //Debug.Print("Before PrepareTemplate " + System.DateTime.Now.ToString());
+
+
+            //detector.GrayscaleTemplates();
+            //detector.PrepareTemplates(threshold);
+
+
+
+            //Debug.Print("After PrepareTemplate " + System.DateTime.Now.ToString());
+            //Debug.Print("\r\n");
+            //Debug.Print("Before checkHowLoaded" + System.DateTime.Now.ToString());
+            //Debug.Print(detector.CheckHowLoaded(y, threshold, 0, 0).ToString());
+            //Debug.Print("After checkHowLoader " + System.DateTime.Now.ToString());
+            //Debug.Print("\r\n");
+            Debug.Print("Before CompareFast" + System.DateTime.Now.ToString());
+            Debug.Print(BitmapComparer.CompareBitmapsFast(this.emptyTemplate, y, threshold, configManager.Padding).ToString());
+            Debug.Print("After checkHowLoaded" + System.DateTime.Now.ToString());
+
+            //Thread.Sleep(3000);
+
+            //display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(y, threshold), 0, 0);
+
+            //double matchFast = BitmapComparer.CompareBitmapsFast(this.emptyTemplate, y, threshold);
+
+            //double match = BitmapComparer.CompareBitmaps(this.emptyTemplate, y, threshold);
+
+            //display.SimpleGraphics.Clear();
+            //display.SimpleGraphics.DisplayText(match.ToString(), font, GT.Color.Red, 0, 0);
+
+
+            //this.messagesSender.SendMessages(this.configManager.PhoneNumbers, "Belekas :) :)");
+
+            //camera.TakePicture();
+        }
+
+        // All messages delivered
         void messagesSender_MessagesDelivered(CellularRadio cellular, NetworkConnector gsm)
         {
             display.SimpleGraphics.Clear();
             display.SimpleGraphics.DisplayText("All messages delivered.", font, GT.Color.Red, 0, 0);
         }
+        #endregion
 
         // --------------- new program --------------------
 
@@ -190,16 +253,16 @@ namespace EGDRAPTOR
         //}
 
         // starts periodical check
-        void button_ButtonPressed(Button sender, Button.ButtonState state)
-        {
-            //Bitmap x = BitmapComparer.BitmapToThresholdedBitmap(emptyTamplate, threshold);
-            //display.SimpleGraphics.DisplayImage(this.emptyTamplate, 0, 0);
-            this.messagesSender.SendMessages(this.configManager.PhoneNumbers, "Belekas :) :)");
+        //void button_ButtonPressed(Button sender, Button.ButtonState state)
+        //{
+        //    //Bitmap x = BitmapComparer.BitmapToThresholdedBitmap(emptyTamplate, threshold);
+        //    //display.SimpleGraphics.DisplayImage(this.emptyTamplate, 0, 0);
+        //    this.messagesSender.SendMessages(this.configManager.PhoneNumbers, "Belekas :) :)");
 
-            ////this.lifeCycleTimer.Start();
-            //led.TurnGreen();
-            //camera.TakePicture();
-        }
+        //    ////this.lifeCycleTimer.Start();
+        //    //led.TurnGreen();
+        //    //camera.TakePicture();
+        //}
 
         //private void readPhoneNumbers()
         //{
@@ -342,13 +405,22 @@ namespace EGDRAPTOR
             }
         }
 
-        private void displayOutline(int x, int y, int x2, int y2)
+        private void displayOutline(Padding padding)
         {
-            display.SimpleGraphics.DisplayLine(GT.Color.Red, 1, x, y, x, y2);
-            display.SimpleGraphics.DisplayLine(GT.Color.Red, 1, x2, y, x2, y2);
 
-            display.SimpleGraphics.DisplayLine(GT.Color.Red, 1, x, y, x2, y);
-            display.SimpleGraphics.DisplayLine(GT.Color.Red, 1, x, y2, x2, y2);
+            GT.Color lineColor = GT.Color.Red;
+            uint thickness = 2;
+            ushort fillOpacity = 0;
+
+            display.SimpleGraphics.DisplayImage(this.emptyTemplate, 0, 0);
+            display.SimpleGraphics.DisplayRectangle(
+                lineColor, thickness, GT.Color.Black,
+                (uint)padding.Left,
+                (uint)padding.Top,
+                (uint)(display.Width - padding.Left - padding.Right),
+                (uint)(display.Height - padding.Top - padding.Bottom),
+                fillOpacity
+            );
         }
 
         private void displayMatch(string text, int matchResult, GT.Color color)

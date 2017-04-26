@@ -40,8 +40,9 @@
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
     <Compile Include="BitmapComparer.cs" />
+    <Compile Include="CameraController.cs" />
     <Compile Include="ConfigManager.cs" />
-    <Compile Include="Detector.cs" />
+    <Compile Include="Detector-dep.cs" />
     <Compile Include="GSMController-dep.cs" />
     <Compile Include="NetworkConnector.cs" />
     <Compile Include="MessagesSender.cs" />

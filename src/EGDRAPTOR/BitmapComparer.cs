@@ -8,6 +8,7 @@ namespace EGDRAPTOR
     {
         // white pixel - true,
         // black pixel - false
+        // Rewrite to awoid bitmap.GetPixel     !!!
         public static bool[][] GetComparableMatrix(Bitmap bitmap, byte threshold)
         {
             bool[][] comparableMatrix = new bool[bitmap.Width][];
@@ -49,12 +50,18 @@ namespace EGDRAPTOR
             return (byte)(pixel.R * GRAYSCALE_RED_FACTOR + pixel.G * GRAYSCALE_GREEN_FACTOR + pixel.B * GRAYSCALE_BLUE_FACTOR);
         }
 
+        public static byte GetGrayScaleFromPixel(byte red, byte green, byte blue)
+        {
+            return (byte)(red * GRAYSCALE_RED_FACTOR + green * GRAYSCALE_GREEN_FACTOR + blue * GRAYSCALE_BLUE_FACTOR);
+        }
+
         public const double GRAYSCALE_RED_FACTOR = 0.299;
         public const double GRAYSCALE_GREEN_FACTOR = 0.587;
         public const double GRAYSCALE_BLUE_FACTOR = 0.114;
 
         // Demonstration reasons - don't use in production.
         // Transforms bitmap to grayscale bitmap.
+        // Rewrite to awoid bitmap.GetPixel
         public static Bitmap BitmapToGrayscale(Bitmap bitmap)
         {
             Bitmap result = new Bitmap(bitmap.Width, bitmap.Height);
@@ -74,6 +81,7 @@ namespace EGDRAPTOR
 
         // Demonstration reasons - don't use in production.
         // Transforms bitmap to thresholded bitmap.
+        // Rewrite to awoid bitmap.GetPixel
         public static Bitmap BitmapToThresholdedBitmap(Bitmap bitmap, byte threshold)
         {
             Bitmap result = new Bitmap(bitmap.Width, bitmap.Height);
@@ -99,6 +107,70 @@ namespace EGDRAPTOR
             bool[][] comparableMatrix1 = GetComparableMatrix(bitmap1, threshold);
             bool[][] comparableMatrix2 = GetComparableMatrix(bitmap2, threshold);
             return CompareComparableMatrices(comparableMatrix1, comparableMatrix2);
+        }
+
+        public static double CompareBitmapsFast(Bitmap bitmap1, Bitmap bitmap2, byte threshold, Padding padding)
+        {
+            int matched = 0;
+
+            // Colors map of first bitmap
+            byte[] map1 = bitmap1.GetBitmap();
+
+            // Colors map of second bitmap
+            byte[] map2 = bitmap2.GetBitmap();
+
+            int width = bitmap1.Width;
+
+            // Comparing each pixel of bitmap
+            for (int x = padding.Left; x < bitmap1.Width - padding.Right; x++)
+            {
+                for (int y = padding.Top; y < bitmap1.Height - padding.Bottom; y++)
+                {
+                    // Getting start position of pixel values in flatten bitmap array
+                    int pixelStartPosition = getPixelStartPosition(x, y, width);
+
+                    // Position of red color value of current pixel
+                    int redPosition = pixelStartPosition + (byte)BaseColor.Red;
+                    // Position of green color value of current pixel
+                    int greenPosition = pixelStartPosition + (byte)BaseColor.Green;
+                    // Position of blue color value of current pixel
+                    int bluePosition = pixelStartPosition + (byte)BaseColor.Blue;
+
+                    // Getting grayscale pixel value of first bitmap
+                    byte grayScale1 = (byte)(map1[redPosition] * GRAYSCALE_RED_FACTOR + map1[greenPosition] * GRAYSCALE_GREEN_FACTOR + map1[bluePosition] * GRAYSCALE_BLUE_FACTOR);
+                    // Getting grayscale pixel value of second bitmap
+                    byte grayScale2 = (byte)(map2[redPosition] * GRAYSCALE_RED_FACTOR + map2[greenPosition] * GRAYSCALE_GREEN_FACTOR + map2[bluePosition] * GRAYSCALE_BLUE_FACTOR);
+                    //Debug.Print(grayScale1.ToString() + " " + grayScale2.ToString());
+
+                    // Getting thresholded pixel value of first bitmap
+                    bool thresholdedValue1 = grayScale1 > threshold;
+                    // Getting thresholded pixel value of second bitmap
+                    bool thresholdedValue2 = grayScale2 > threshold;
+
+                    if (thresholdedValue1 == thresholdedValue2)
+                    {
+                        matched++;
+                    }
+                }
+            }
+
+            return matchFormula(width * bitmap1.Height, matched);
+        }
+
+        enum BaseColor
+        {
+            Red = 0,
+            Green = 1,
+            Blue = 2
+        }
+
+        private static int getPixelStartPosition(int x, int y, int width)
+        {
+            int flatY = y * 4 * width;
+            int flatX = x * 4;
+            int flatPos = flatY + flatX;
+
+            return flatPos;
         }
 
         // TODO: add padding
@@ -127,6 +199,11 @@ namespace EGDRAPTOR
                 }
             }
 
+            return matchFormula(total, matched);
+        }
+
+        private static double matchFormula(int total, int matched)
+        {
             if (total == 0)
             {
                 return 0;
