@@ -64,15 +64,25 @@ namespace EGDRAPTOR
         // Rewrite to awoid bitmap.GetPixel
         public static Bitmap BitmapToGrayscale(Bitmap bitmap)
         {
+            byte[] map = bitmap.GetBitmap();
             Bitmap result = new Bitmap(bitmap.Width, bitmap.Height);
 
             for (int x = 0; x < bitmap.Width; x++)
             {
                 for (int y = 0; y < bitmap.Height; y++)
                 {
-                    GT.Color currentPixel = bitmap.GetPixel(x, y);
-                    byte grayscalePixelValue = GetGrayScaleFromPixel(currentPixel);
-                    result.SetPixel(x, y, GT.Color.FromRGB(grayscalePixelValue, grayscalePixelValue, grayscalePixelValue));
+                    int pixelStartPosition = getPixelStartPosition(x, y, bitmap.Width);
+
+                    // Position of red color value of current pixel
+                    int redPosition = pixelStartPosition + (byte)BaseColor.Red;
+                    // Position of green color value of current pixel
+                    int greenPosition = pixelStartPosition + (byte)BaseColor.Green;
+                    // Position of blue color value of current pixel
+                    int bluePosition = pixelStartPosition + (byte)BaseColor.Blue;
+
+                    byte grayPixelColor = (byte)(map[redPosition] * GRAYSCALE_RED_FACTOR + map[greenPosition] * GRAYSCALE_GREEN_FACTOR + map[bluePosition] * GRAYSCALE_BLUE_FACTOR);
+
+                    result.SetPixel(x, y, GT.Color.FromRGB(grayPixelColor, grayPixelColor, grayPixelColor));
                 }
             }
 
@@ -84,15 +94,25 @@ namespace EGDRAPTOR
         // Rewrite to awoid bitmap.GetPixel
         public static Bitmap BitmapToThresholdedBitmap(Bitmap bitmap, byte threshold)
         {
+            byte[] map = bitmap.GetBitmap();
             Bitmap result = new Bitmap(bitmap.Width, bitmap.Height);
 
             for (int x = 0; x < bitmap.Width; x++)
             {
                 for (int y = 0; y < bitmap.Height; y++)
                 {
-                    GT.Color currentPixel = bitmap.GetPixel(x, y);
-                    byte grayscalePixelValue = GetGrayScaleFromPixel(currentPixel);
-                    byte newPixelValue = (byte)(GetThresholdedGrayscaleFactor(grayscalePixelValue, threshold) ? 255 : 0);
+                    int pixelStartPosition = getPixelStartPosition(x, y, bitmap.Width);
+
+                    // Position of red color value of current pixel
+                    int redPosition = pixelStartPosition + (byte)BaseColor.Red;
+                    // Position of green color value of current pixel
+                    int greenPosition = pixelStartPosition + (byte)BaseColor.Green;
+                    // Position of blue color value of current pixel
+                    int bluePosition = pixelStartPosition + (byte)BaseColor.Blue;
+
+                    byte grayPixelColor = (byte)(map[redPosition] * GRAYSCALE_RED_FACTOR + map[greenPosition] * GRAYSCALE_GREEN_FACTOR + map[bluePosition] * GRAYSCALE_BLUE_FACTOR);
+
+                    byte newPixelValue = (byte)(grayPixelColor > threshold ? 255 : 0);
 
                     result.SetPixel(x, y, GT.Color.FromRGB(newPixelValue, newPixelValue, newPixelValue));
                 }
@@ -120,6 +140,7 @@ namespace EGDRAPTOR
             byte[] map2 = bitmap2.GetBitmap();
 
             int width = bitmap1.Width;
+            int total = 0;
 
             // Comparing each pixel of bitmap
             for (int x = padding.Left; x < bitmap1.Width - padding.Right; x++)
@@ -147,14 +168,18 @@ namespace EGDRAPTOR
                     // Getting thresholded pixel value of second bitmap
                     bool thresholdedValue2 = grayScale2 > threshold;
 
-                    if (thresholdedValue1 == thresholdedValue2)
+                    if (!thresholdedValue1)
                     {
-                        matched++;
+                        total++;
+                        if (!thresholdedValue1 && (thresholdedValue1 == thresholdedValue2))
+                        {
+                            matched++;
+                        }
                     }
                 }
             }
 
-            return matchFormula(width * bitmap1.Height, matched);
+            return matchFormula(total, matched);
         }
 
         enum BaseColor

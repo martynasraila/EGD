@@ -39,6 +39,9 @@ namespace EGDRAPTOR {
         /// <summary>The MulticolorLed module using socket 1 of the mainboard.</summary>
         private Gadgeteer.Modules.GHIElectronics.MulticolorLed multicolorLed;
         
+        /// <summary>The Button module using socket 13 of the mainboard.</summary>
+        private Gadgeteer.Modules.GHIElectronics.Button button2;
+        
         /// <summary>This property provides access to the Mainboard API. This is normally not necessary for an end user program.</summary>
         protected new static GHIElectronics.Gadgeteer.FEZRaptor Mainboard {
             get {
@@ -69,6 +72,7 @@ namespace EGDRAPTOR {
             this.camera = new GTM.GHIElectronics.Camera(6);
             this.cellularRadio = new GTM.Seeed.CellularRadio(4);
             this.multicolorLed = new GTM.GHIElectronics.MulticolorLed(1);
+            this.button2 = new GTM.GHIElectronics.Button(13);
         }
     }
 }

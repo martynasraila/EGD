@@ -15,11 +15,8 @@ using Gadgeteer.Modules.GHIElectronics;
 using Gadgeteer.Modules.Seeed;
 
 // For testing
-//using System.Diagnostics;
 
-// TODO: camera class, camera initialization
 // TODO: LED indicators class, define LED indicators values ?
-// Detector controller?
 
 // State
 // IsCardMounted
@@ -43,24 +40,8 @@ namespace EGDRAPTOR
         private int halfFullLimitNumber = 50;
         private int emptyLimitNumber = 25;
 
-
-        private enum ContainerStatus
-        {
-            Empty,
-            HalfFull,
-            Full,
-            Overloaded
-        };
-
-
-        private ContainerStatus containerStatus = ContainerStatus.Empty;
         private bool isOverLoadedMessageSent = false;
         private bool isFullMessageSent = false;
-
-        // TODO: Implement life cycle
-        private GT.Timer lifeCycleTimer = new GT.Timer(15000);      // single life cycle duration 15000 miliseconds
-
-        private bool cameraInitialized = false;
 
         // --------------- new program ----------------------
 
@@ -78,9 +59,27 @@ namespace EGDRAPTOR
 
         private byte threshold = 40;
 
-        NetworkConnector gsm;
-        MessagesSender messagesSender;
+        private NetworkConnector gsm;
+        private MessagesSender messagesSender;
+        private CameraController cameraController;
 
+        private WorkMode mode = WorkMode.Work;
+
+        enum WorkMode
+        {
+            Demo,
+            Work
+        }
+
+        private enum ContainerStatus
+        {
+            Empty,
+            HalfFull,
+            Full,
+            Overloaded
+        };
+
+        private ContainerStatus containerStatus = ContainerStatus.Empty;
 
         // Config
         ConfigManager configManager;
@@ -93,16 +92,6 @@ namespace EGDRAPTOR
             sdCardController.EnsureCardIsMounted();
 
             // Async code. End point: Method No. 2
-
-            #region
-
-            //// initializing camera
-            //camera.PictureCaptured += new Camera.PictureCapturedEventHandler(camera_PictureCaptured);
-            //Thread.Sleep(1000);
-            //camera.TakePicture();
-
-            ////button1.ButtonPressed += new Button.ButtonEventHandler(button1_ButtonPressed);
-            #endregion
         }
 
         // Method No. 2
@@ -127,14 +116,11 @@ namespace EGDRAPTOR
             // SD card initialized
             // Initializing GSM network
 
-            //this.gsm = new NetworkConnector(cellularRadio, display);
-            //this.gsm.NetworkRegistered += gsm_NetworkRegistered;
-            //this.gsm.EnsureNetwork();
+            this.gsm = new NetworkConnector(cellularRadio, display);
+            this.gsm.NetworkRegistered += gsm_NetworkRegistered;
+            this.gsm.EnsureNetwork();
 
             // Async code. End point: Method No. 3
-
-            // 
-            this.button.ButtonPressed += button_ButtonPressed;
         }
 
         // Method No. 3
@@ -150,9 +136,27 @@ namespace EGDRAPTOR
             cellularRadio.SendATCommand("AT+CLIP=1");
             this.messagesSender = new MessagesSender(this.cellularRadio, this.gsm);
             this.messagesSender.MessagesDelivered += messagesSender_MessagesDelivered;
+
+            // Async code. End point Method 4.
+            this.cameraController = new CameraController(camera, display);
+            this.cameraController.CameraInitialized += cameraController_CameraInitialized;
         }
 
-        // Waiting for a trigger action - request of image comparision
+        // Method No. 4
+        void cameraController_CameraInitialized(CameraController cameraController, Camera camera)
+        {
+            display.SimpleGraphics.Clear();
+            display.SimpleGraphics.DisplayText("Camera initialized", font, GT.Color.Red, 0, 0);
+            this.cameraController.PictureTaken += cameraController_PictureTaken;
+
+            // Adding picture taking button event
+            this.button.ButtonPressed += button_ButtonPressed;
+
+            // Adding demo button event
+            this.button2.ButtonPressed += button2_ButtonPressed;
+        }
+
+        // Waiting for a trigger action - request of demo or work or incomming call.
 
         #region Registering / unregistering phone numbers
         // Incomming call event
@@ -183,57 +187,107 @@ namespace EGDRAPTOR
 
         #region Async cycle
 
-        // Picture taken event simulation
-        void button_ButtonPressed(Button sender, Button.ButtonState state)
+        // Demo event
+        void button2_ButtonPressed(Button sender, Button.ButtonState state)
         {
-
-            //this.displayOutline(configManager.Padding);
-            var x = sdCard.GetStorageDevice();
-            var y = x.LoadBitmap("test_comparing_photo.bmp", Bitmap.BitmapImageType.Bmp);
-
-            //display.SimpleGraphics.DisplayLine(GT.Color.Red, 2, 10, 10, 10, 310);
-            //display.SimpleGraphics.DisplayText("SOMETHING", font, GT.Color.Red, 10, 20);
-
-            //display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(this.emptyTemplate, threshold), 0, 0);
-
-
-            //Detector detector = new Detector(this.emptyTemplate);
-
-            //Debug.Print("Before PrepareTemplate " + System.DateTime.Now.ToString());
-
-
-            //detector.GrayscaleTemplates();
-            //detector.PrepareTemplates(threshold);
-
-
-
-            //Debug.Print("After PrepareTemplate " + System.DateTime.Now.ToString());
-            //Debug.Print("\r\n");
-            //Debug.Print("Before checkHowLoaded" + System.DateTime.Now.ToString());
-            //Debug.Print(detector.CheckHowLoaded(y, threshold, 0, 0).ToString());
-            //Debug.Print("After checkHowLoader " + System.DateTime.Now.ToString());
-            //Debug.Print("\r\n");
-            Debug.Print("Before CompareFast" + System.DateTime.Now.ToString());
-            Debug.Print(BitmapComparer.CompareBitmapsFast(this.emptyTemplate, y, threshold, configManager.Padding).ToString());
-            Debug.Print("After checkHowLoaded" + System.DateTime.Now.ToString());
-
-            //Thread.Sleep(3000);
-
-            //display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(y, threshold), 0, 0);
-
-            //double matchFast = BitmapComparer.CompareBitmapsFast(this.emptyTemplate, y, threshold);
-
-            //double match = BitmapComparer.CompareBitmaps(this.emptyTemplate, y, threshold);
-
-            //display.SimpleGraphics.Clear();
-            //display.SimpleGraphics.DisplayText(match.ToString(), font, GT.Color.Red, 0, 0);
-
-
-            //this.messagesSender.SendMessages(this.configManager.PhoneNumbers, "Belekas :) :)");
-
-            //camera.TakePicture();
+            this.mode = WorkMode.Demo;
+            this.cameraController.TakePicture();
         }
 
+        // Button for taking a photo
+        void button_ButtonPressed(Button sender, Button.ButtonState state)
+        {
+            this.cameraController.TakePicture();
+        }
+
+        void cameraController_PictureTaken(CameraController cameraController, Bitmap picture)
+        {
+            switch (this.mode)
+            {
+                case WorkMode.Work:
+                    {
+                        display.SimpleGraphics.DisplayImage(this.emptyTemplate, 0, 0);
+                        this.displayOutline(configManager.Padding);
+
+                        Thread.Sleep(2000);
+
+                        display.SimpleGraphics.DisplayImage(picture, 0, 0);
+                        this.displayOutline(configManager.Padding);
+                    } break;
+                case WorkMode.Demo:
+                    {
+                        int sleepTime = 3000;
+                        // Displaying emptyTemplate
+                        display.SimpleGraphics.DisplayImage(this.emptyTemplate, 0, 0);
+                        this.displayOutline(configManager.Padding);
+
+                        Thread.Sleep(sleepTime);
+
+                        // Displaying grayscale version of an empty template
+                        display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToGrayscale(this.emptyTemplate), 0, 0);
+
+                        Thread.Sleep(sleepTime);
+
+                        // Displaying thresholded version of an empty template
+                        display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(this.emptyTemplate, threshold), 0, 0);
+
+                        Thread.Sleep(sleepTime);
+
+                        // Displaying picture of a full container
+                        display.SimpleGraphics.DisplayImage(picture, 0, 0);
+
+                        // Displaying grayscale version of a full container
+                        display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToGrayscale(picture), 0, 0);
+
+                        Thread.Sleep(sleepTime);
+
+                        // Displaying thresholded version of a full container
+                        display.SimpleGraphics.DisplayImage(BitmapComparer.BitmapToThresholdedBitmap(picture, threshold), 0, 0);
+
+                        Thread.Sleep(sleepTime);
+                    } break;
+            }
+
+            double match = BitmapComparer.CompareBitmapsFast(this.emptyTemplate, picture, threshold, configManager.Padding);
+
+            setStatusByMatchResult(match);
+
+            string statusString = this.getMessageByStatus();
+
+            this.displayMatch(statusString, this.getColorByStatus());
+
+            string messageString = this.generateMessageString(statusString, configManager.ContainerId, configManager.ContainerId);
+
+            if (this.containerStatus == ContainerStatus.Full)
+            {
+                if (!this.isFullMessageSent)
+                {
+                    this.messagesSender.SendMessages(configManager.PhoneNumbers, messageString);
+                    this.isFullMessageSent = true;
+                }
+            }
+            else
+            {
+                if (this.containerStatus == ContainerStatus.Overloaded)
+                {
+                    if (!this.isOverLoadedMessageSent)
+                    {
+                        this.messagesSender.SendMessages(configManager.PhoneNumbers, messageString);
+                        this.isOverLoadedMessageSent = true;
+                    }
+                }
+                else
+                {
+                    this.isFullMessageSent = false;
+                    this.isOverLoadedMessageSent = false;
+                }
+            }
+        }
+
+        string generateMessageString(string containerStatusString, string containerId, string containerAddress)
+        {
+            return containerStatusString + "\r\nContainer Id: " + containerId + "\r\nLocation: " + containerAddress;
+        }
         // All messages delivered
         void messagesSender_MessagesDelivered(CellularRadio cellular, NetworkConnector gsm)
         {
@@ -242,94 +296,8 @@ namespace EGDRAPTOR
         }
         #endregion
 
-        // --------------- new program --------------------
 
-
-
-        //void lifeCycleTimer_Tick(GT.Timer timer)
-        //{
-        //    led.TurnGreen();
-        //    camera.TakePicture();
-        //}
-
-        // starts periodical check
-        //void button_ButtonPressed(Button sender, Button.ButtonState state)
-        //{
-        //    //Bitmap x = BitmapComparer.BitmapToThresholdedBitmap(emptyTamplate, threshold);
-        //    //display.SimpleGraphics.DisplayImage(this.emptyTamplate, 0, 0);
-        //    this.messagesSender.SendMessages(this.configManager.PhoneNumbers, "Belekas :) :)");
-
-        //    ////this.lifeCycleTimer.Start();
-        //    //led.TurnGreen();
-        //    //camera.TakePicture();
-        //}
-
-        //private void readPhoneNumbers()
-        //{
-        //    GT.StorageDevice sdStorage = sdCard.GetStorageDevice();
-
-        //    string phoneNumbersPath = "phone_numbers.txt";
-        //    byte[] data = sdStorage.ReadFile(phoneNumbersPath);
-        //    char[] characters = System.Text.Encoding.UTF8.GetChars(data);
-        //    string text = new string(characters);
-        //    string[] phoneNumbers = text.Split(',');
-
-        //    foreach (string phoneNumber in phoneNumbers)
-        //    {
-        //        this.NUMBERS_TO_CONTACT.Add(phoneNumber);
-        //    }
-        //}
-
-        //void camera_PictureCaptured(Camera sender, GT.Picture picture)
-        //{
-        //    if (this.cameraInitialized)
-        //    {
-        //        int x = 30;
-        //        int x2 = 300;
-        //        int y = 30;
-        //        int y2 = 190;
-
-        //        display.SimpleGraphics.DisplayImage(picture, 0, 0);
-        //        led.TurnBlue();
-
-        //        this.displayOutline(x, y, x2, y2);
-
-        //        int matchResult = this.detector.CheckHowLoaded(picture.MakeBitmap(), threshold, MovementX, MovementY);
-        //        this.setStatusByMatchResult(matchResult);
-
-
-        //        string resultMessage = this.getMessageByStatus();
-        //        this.displayMatch(resultMessage, matchResult, this.getColorByStatus());
-        //        //this.sendMessage(resultMessage);
-
-        //        Thread.Sleep(1000);
-
-        //        led.TurnGreen();
-        //    }
-        //    else
-        //    {
-        //        this.cameraInitialized = true;
-        //    }
-        //}
-
-        //private void sendMessage(string statusMessage)
-        //{
-        //    string formedMessage = CONTAINER_ID + " status: " + statusMessage + " Address: " + CONTAINER_ADDRESS;
-
-        //    if (this.containerStatus == ContainerStatus.Full && !this.isFullMessageSent)
-        //    {
-        //        this.gsm.SendMessage(this.NUMBERS_TO_CONTACT, formedMessage);
-        //        this.isFullMessageSent = true;
-        //    }
-
-        //    if (this.containerStatus == ContainerStatus.Overloaded && !this.isOverLoadedMessageSent)
-        //    {
-        //        this.gsm.SendMessage(this.NUMBERS_TO_CONTACT, formedMessage);
-        //        this.isOverLoadedMessageSent = true;
-        //    }
-        //}
-
-        private void setStatusByMatchResult(int matchResult)
+        private void setStatusByMatchResult(double matchResult)
         {
             if (matchResult >= this.fullLimitNumber)
             {
@@ -412,7 +380,6 @@ namespace EGDRAPTOR
             uint thickness = 2;
             ushort fillOpacity = 0;
 
-            display.SimpleGraphics.DisplayImage(this.emptyTemplate, 0, 0);
             display.SimpleGraphics.DisplayRectangle(
                 lineColor, thickness, GT.Color.Black,
                 (uint)padding.Left,
@@ -423,7 +390,7 @@ namespace EGDRAPTOR
             );
         }
 
-        private void displayMatch(string text, int matchResult, GT.Color color)
+        private void displayMatch(string text, GT.Color color)
         {
             display.SimpleGraphics.DisplayRectangle(GT.Color.White, 0, color, 0, 200, 320, 40);
             display.SimpleGraphics.DisplayText(text, fontArial18, GT.Color.White, 40, 208);
