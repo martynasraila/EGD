@@ -8,8 +8,8 @@ namespace EGDRAPTOR
 {
     class MessagesSender
     {
-        CellularRadio cellular;
-        NetworkConnector gsm;
+        private CellularRadio cellular;
+        private NetworkConnector gsm;
 
         private Stack numbersStack;
         private string message;
@@ -23,7 +23,7 @@ namespace EGDRAPTOR
             this.cellular.SmsSent += cellular_SmsSent;
         }
 
-        void cellular_SmsSent(CellularRadio sender, bool success, string messageReference)
+        private void cellular_SmsSent(CellularRadio sender, bool success, string messageReference)
         {
             Thread.Sleep(5000);
             this.sendMessage();

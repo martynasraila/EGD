@@ -19,7 +19,7 @@ namespace EGDRAPTOR
             }
         }
 
-        Display_T35 display;
+        private Display_T35 display;
 
         public CameraController(Camera camera, Display_T35 display)
         {
@@ -46,7 +46,7 @@ namespace EGDRAPTOR
         }
 
         // Camera connected event handler
-        void camera_CameraConnected(Camera sender)
+        private void camera_CameraConnected(Camera sender)
         {
             if (!this.isCameraInitialized)
             {
@@ -55,7 +55,7 @@ namespace EGDRAPTOR
         }
 
         // Picture captured event handler
-        void camera_PictureCaptured(Camera sender, Gadgeteer.Picture picture)
+        private void camera_PictureCaptured(Camera sender, Gadgeteer.Picture picture)
         {
             if (this.isCameraInitialized)
             {

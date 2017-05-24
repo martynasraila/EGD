@@ -51,8 +51,6 @@ namespace EGDRAPTOR
         // Resources 
         private Font font = Resources.GetFont(Resources.FontResources.NinaB);
         private Font fontArial18 = Resources.GetFont(Resources.FontResources.Arial_18);
-        private Font fontConsolas24 = Resources.GetFont(Resources.FontResources.consolas_24);
-        private Font fontConsolas72 = Resources.GetFont(Resources.FontResources.consolas_72);
 
         // Templates
         private Bitmap emptyTemplate;
@@ -65,7 +63,7 @@ namespace EGDRAPTOR
 
         private WorkMode mode = WorkMode.Work;
 
-        enum WorkMode
+        private enum WorkMode
         {
             Demo,
             Work
@@ -82,7 +80,7 @@ namespace EGDRAPTOR
         private ContainerStatus containerStatus = ContainerStatus.Empty;
 
         // Config
-        ConfigManager configManager;
+        private ConfigManager configManager;
 
         // Method No. 1
         void ProgramStarted()
@@ -95,7 +93,7 @@ namespace EGDRAPTOR
         }
 
         // Method No. 2
-        void sdCardController_CardMounted(SDCard sender, SDCardController sdController)
+        private void sdCardController_CardMounted(SDCard sender, SDCardController sdController)
         {
             display.SimpleGraphics.Clear();
             display.SimpleGraphics.DisplayText("SD card mounted", font, GT.Color.Red, 0, 0);
@@ -124,7 +122,7 @@ namespace EGDRAPTOR
         }
 
         // Method No. 3
-        void gsm_NetworkRegistered(CellularRadio sender, NetworkConnector controller)
+        private void gsm_NetworkRegistered(CellularRadio sender, NetworkConnector controller)
         {
             display.SimpleGraphics.Clear();
             display.SimpleGraphics.DisplayText("Connected to network", font, GT.Color.Red, 0, 0);
@@ -143,7 +141,7 @@ namespace EGDRAPTOR
         }
 
         // Method No. 4
-        void cameraController_CameraInitialized(CameraController cameraController, Camera camera)
+        private void cameraController_CameraInitialized(CameraController cameraController, Camera camera)
         {
             display.SimpleGraphics.Clear();
             display.SimpleGraphics.DisplayText("Camera initialized", font, GT.Color.Red, 0, 0);
@@ -160,7 +158,7 @@ namespace EGDRAPTOR
 
         #region Registering / unregistering phone numbers
         // Incomming call event
-        void cellularRadio_IncomingCall(CellularRadio sender, string caller)
+        private void cellularRadio_IncomingCall(CellularRadio sender, string caller)
         {
             // Hanging incomming call
             this.cellularRadio.SendATCommand("ATH");
@@ -188,19 +186,19 @@ namespace EGDRAPTOR
         #region Async cycle
 
         // Demo event
-        void button2_ButtonPressed(Button sender, Button.ButtonState state)
+        private void button2_ButtonPressed(Button sender, Button.ButtonState state)
         {
             this.mode = WorkMode.Demo;
             this.cameraController.TakePicture();
         }
 
         // Button for taking a photo
-        void button_ButtonPressed(Button sender, Button.ButtonState state)
+        private void button_ButtonPressed(Button sender, Button.ButtonState state)
         {
             this.cameraController.TakePicture();
         }
 
-        void cameraController_PictureTaken(CameraController cameraController, Bitmap picture)
+        private void cameraController_PictureTaken(CameraController cameraController, Bitmap picture)
         {
             switch (this.mode)
             {
@@ -284,12 +282,12 @@ namespace EGDRAPTOR
             }
         }
 
-        string generateMessageString(string containerStatusString, string containerId, string containerAddress)
+        private string generateMessageString(string containerStatusString, string containerId, string containerAddress)
         {
             return containerStatusString + "\r\nContainer Id: " + containerId + "\r\nLocation: " + containerAddress;
         }
         // All messages delivered
-        void messagesSender_MessagesDelivered(CellularRadio cellular, NetworkConnector gsm)
+        private void messagesSender_MessagesDelivered(CellularRadio cellular, NetworkConnector gsm)
         {
             display.SimpleGraphics.Clear();
             display.SimpleGraphics.DisplayText("All messages delivered.", font, GT.Color.Red, 0, 0);

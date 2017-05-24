@@ -31,12 +31,12 @@ namespace EGDRAPTOR
             gsm.PowerOn(1);
         }
 
-        void gsm_GprsNetworkRegistrationChanged(CellularRadio sender, CellularRadio.NetworkRegistrationState networkState)
+        private void gsm_GprsNetworkRegistrationChanged(CellularRadio sender, CellularRadio.NetworkRegistrationState networkState)
         {
             this.gprsState = networkState;
         }
 
-        void gsm_GsmNetworkRegistrationChanged(CellularRadio sender, CellularRadio.NetworkRegistrationState networkState)
+        private void gsm_GsmNetworkRegistrationChanged(CellularRadio sender, CellularRadio.NetworkRegistrationState networkState)
         {
             this.gsmState = networkState;
         }
@@ -56,7 +56,7 @@ namespace EGDRAPTOR
             }
         }
 
-        void networkConnectionTimer_Tick(GT.Timer timer)
+        private void networkConnectionTimer_Tick(GT.Timer timer)
         {
             if (IsRegisteredToNetwork())
             {
@@ -76,7 +76,7 @@ namespace EGDRAPTOR
             }
         }
 
-        void keepConnectionAliveTimerTick(GT.Timer timer)
+        private void keepConnectionAliveTimerTick(GT.Timer timer)
         {
             if (!IsRegisteredToNetwork())
             {

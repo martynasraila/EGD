@@ -134,7 +134,7 @@ namespace EGDRAPTOR
                     status = isLineHeading(line);
                 }
 
-                status = this.HandleStatus(status, line);
+                status = this.handleStatus(status, line);
 
                 configText = configText.Substring(newLinePosition + DEFAULT_LINE_SPLITTER.Length);
                 newLinePosition = configText.IndexOf(DEFAULT_LINE_SPLITTER);
@@ -173,7 +173,7 @@ namespace EGDRAPTOR
             }
         }
 
-        private ParsingStatus HandleStatus(ParsingStatus status, string line)
+        private ParsingStatus handleStatus(ParsingStatus status, string line)
         {
             // Checking for end of config section
             if (line == DEFAULT_CONFIG_SPLITTER)
