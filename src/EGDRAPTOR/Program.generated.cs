@@ -15,7 +15,7 @@ namespace EGDRAPTOR {
     
     public partial class Program : Gadgeteer.Program {
         
-        /// <summary>The Button module using socket 18 of the mainboard.</summary>
+        /// <summary>The Button module using socket 10 of the mainboard.</summary>
         private Gadgeteer.Modules.GHIElectronics.Button button;
         
         /// <summary>The Display_T35 module using sockets 15, 16, 17 and 14 of the mainboard.</summary>
@@ -27,7 +27,7 @@ namespace EGDRAPTOR {
         /// <summary>The SDCard module using socket 9 of the mainboard.</summary>
         private Gadgeteer.Modules.GHIElectronics.SDCard sdCard;
         
-        /// <summary>The MulticolorLed module using socket 11 of the mainboard.</summary>
+        /// <summary>The MulticolorLed module using socket 3 of the mainboard.</summary>
         private Gadgeteer.Modules.GHIElectronics.MulticolorLed led;
         
         /// <summary>The Camera (Premium) module using socket 6 of the mainboard.</summary>
@@ -36,8 +36,11 @@ namespace EGDRAPTOR {
         /// <summary>The CellularRadio module using socket 4 of the mainboard.</summary>
         private Gadgeteer.Modules.Seeed.CellularRadio cellularRadio;
         
-        /// <summary>The LED7C module using socket 1 of the mainboard.</summary>
-        private Gadgeteer.Modules.GHIElectronics.LED7C led7c;
+        /// <summary>The MulticolorLed module using socket 1 of the mainboard.</summary>
+        private Gadgeteer.Modules.GHIElectronics.MulticolorLed multicolorLed;
+        
+        /// <summary>The Button module using socket 13 of the mainboard.</summary>
+        private Gadgeteer.Modules.GHIElectronics.Button button2;
         
         /// <summary>This property provides access to the Mainboard API. This is normally not necessary for an end user program.</summary>
         protected new static GHIElectronics.Gadgeteer.FEZRaptor Mainboard {
@@ -61,14 +64,15 @@ namespace EGDRAPTOR {
         }
         
         private void InitializeModules() {
-            this.button = new GTM.GHIElectronics.Button(18);
+            this.button = new GTM.GHIElectronics.Button(10);
             this.display = new GTM.GHIElectronics.Display_T35(15, 16, 17, 14);
             this.usbClientDP = new GTM.GHIElectronics.UsbClientDP(8);
             this.sdCard = new GTM.GHIElectronics.SDCard(9);
-            this.led = new GTM.GHIElectronics.MulticolorLed(11);
+            this.led = new GTM.GHIElectronics.MulticolorLed(3);
             this.camera = new GTM.GHIElectronics.Camera(6);
             this.cellularRadio = new GTM.Seeed.CellularRadio(4);
-            this.led7c = new GTM.GHIElectronics.LED7C(1);
+            this.multicolorLed = new GTM.GHIElectronics.MulticolorLed(1);
+            this.button2 = new GTM.GHIElectronics.Button(13);
         }
     }
 }

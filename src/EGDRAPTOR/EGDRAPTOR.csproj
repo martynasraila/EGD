@@ -39,20 +39,24 @@
   <!-- Everything below here is custom to .NET MF / Gadgeteer template-->
   <Import Project="$(NetMfTargetsBaseDir)$(TargetFrameworkVersion)\CSharp.Targets" />
   <ItemGroup>
-    <Compile Include="Detector.cs" />
-    <Compile Include="GSMController.cs" />
+    <Compile Include="BitmapComparer.cs" />
+    <Compile Include="CameraController.cs" />
+    <Compile Include="ConfigManager.cs" />
+    <Compile Include="NetworkConnector.cs" />
+    <Compile Include="MessagesSender.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Program.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Program.gadgeteer</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SDCardController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Gadgeteer" />
@@ -86,9 +90,6 @@
     <Reference Include="GTM.GHIElectronics.Display_T35, Version=4.2.101.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="GTM.GHIElectronics.LED7C, Version=4.2.101.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="GTM.GHIElectronics.MulticolorLed, Version=4.2.101.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
@@ -98,8 +99,9 @@
     <Reference Include="GTM.GHIElectronics.UsbClientDP, Version=4.2.101.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
     </Reference>
-    <Reference Include="GTM.Seeed.CellularRadio, Version=1.6.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="GTM.Seeed.CellularRadio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Users\Deividas\Desktop\cellularradio\CellularRadio\bin\Release\NETMF\GTM.Seeed.CellularRadio.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SPOT.Graphics" />
     <Reference Include="Microsoft.SPOT.Hardware" />
