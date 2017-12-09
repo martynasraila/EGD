@@ -1,0 +1,22 @@
+.layout-header {
+    display: flex;
+    height: 50px;
+    border-bottom: 1px solid black;
+
+    .home-button {
+        width: 100px;
+        border-right: 1px solid black;
+
+        font-size: 25px;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .layout-navigation {
+        flex: 1 0 auto;
+        border-right: 1px solid black;
+    }
+}

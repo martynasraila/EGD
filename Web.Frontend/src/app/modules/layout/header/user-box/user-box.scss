@@ -1,0 +1,23 @@
+.user-box {
+    width: 300px;
+    display: flex;
+
+    align-items: center;
+
+    .user-avatar,
+    .logout-button {
+        font-size: 25px;
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .logout-button {
+        cursor: pointer;
+    }
+
+    .user-title {
+        flex: 1 0 auto;
+    }
+}
