@@ -1,0 +1,2671 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/9/2017 10:23:22 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-QEO2G0G"
+  DTS:CreatorName="DESKTOP-QEO2G0G\Dziugas"
+  DTS:Description="SSIS Package Description"
+  DTS:DTSID="{BECAE87C-5D9A-44EC-AE88-963E918C8E08}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="14.0.1000.169"
+  DTS:LocaleID="1033"
+  DTS:MaxErrorCount="0"
+  DTS:ObjectName="EGD"
+  DTS:VersionGUID="{60A32E33-CE98-4E4B-819A-A70BA67809F1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{74F0EE18-DD96-439A-88FA-FC51C21A1CF2}"
+      DTS:ObjectName="DestinationConnectionAdoNET">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EGD;Integrated Security=True;Connect Timeout=30;TrustServerCertificate=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{FBFFDD78-E8A0-416A-AF4B-61C07FE56FAE}"
+      DTS:ObjectName="SourceConnectionAdoNET">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EGD;Integrated Security=True;Connect Timeout=30;TrustServerCertificate=True;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task 1"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{9E651B20-F386-4A9F-8E13-FA2BAAC3A6D1}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task 1"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task 1\Destination - Containers"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Destination - Containers"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Containers"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Destination - Containers.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].Columns[Id]"
+                      cachedDataType="i4"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].Columns[Address]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="Address"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Address]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Address]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].Columns[Longitude]"
+                      cachedDataType="i4"
+                      cachedName="Longitude"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Longitude]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Longitude]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].Columns[Latitude]"
+                      cachedDataType="i4"
+                      cachedName="Latitude"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Latitude]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Latitude]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].Columns[Description]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Description"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Description]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Description]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].Columns[EGDid]"
+                      cachedDataType="i4"
+                      cachedName="EGDid"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[EGDid]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[EGDid]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].Columns[LastStateid]"
+                      cachedDataType="i4"
+                      cachedName="LastStateid"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[LastStateid]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[LastStateid]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Address]"
+                      dataType="wstr"
+                      length="100"
+                      name="Address" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Longitude]"
+                      dataType="i4"
+                      name="Longitude" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Latitude]"
+                      dataType="i4"
+                      name="Latitude" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[EGDid]"
+                      dataType="i4"
+                      name="EGDid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input].ExternalColumns[LastStateid]"
+                      dataType="i4"
+                      name="LastStateid" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Destination - Containers.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination - Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination - Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination - Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Destination 1 - EGD"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Destination 1 - EGD"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."EGD"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Destination 1 - EGD.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].Columns[Id]"
+                      cachedDataType="i4"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].Columns[PaddingTop]"
+                      cachedDataType="i4"
+                      cachedName="PaddingTop"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PaddingTop]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingTop]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].Columns[PaddingBottom]"
+                      cachedDataType="i4"
+                      cachedName="PaddingBottom"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PaddingBottom]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingBottom]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].Columns[PaddingLeft]"
+                      cachedDataType="i4"
+                      cachedName="PaddingLeft"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PaddingLeft]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingLeft]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].Columns[PaddingRight]"
+                      cachedDataType="i4"
+                      cachedName="PaddingRight"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PaddingRight]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingRight]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].Columns[PhotoStreak]"
+                      cachedDataType="i4"
+                      cachedName="PhotoStreak"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PhotoStreak]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PhotoStreak]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].Columns[ConfigurationStreak]"
+                      cachedDataType="i4"
+                      cachedName="ConfigurationStreak"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[ConfigurationStreak]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[ConfigurationStreak]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PaddingTop]"
+                      dataType="i4"
+                      name="PaddingTop" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PaddingBottom]"
+                      dataType="i4"
+                      name="PaddingBottom" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PaddingLeft]"
+                      dataType="i4"
+                      name="PaddingLeft" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PaddingRight]"
+                      dataType="i4"
+                      name="PaddingRight" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[PhotoStreak]"
+                      dataType="i4"
+                      name="PhotoStreak" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input].ExternalColumns[ConfigurationStreak]"
+                      dataType="i4"
+                      name="ConfigurationStreak" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Destination 1 - EGD.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination 1 - EGD.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination 1 - EGD.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination 1 - EGD.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Destination 2 - State_Values"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Destination 2 - State_Values"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."State_Values"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Destination 2 - State_Values.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input].Columns[Id]"
+                      cachedDataType="i4"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input].Columns[Name]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Name"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input].ExternalColumns[Name]"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].Columns[Name]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input].Columns[Description]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Description"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input].ExternalColumns[Description]"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].Columns[Description]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Destination 2 - State_Values.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination 2 - State_Values.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination 2 - State_Values.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination 2 - State_Values.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination 2 - State_Values.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Destination 3 - States"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Destination 3 - States"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."States"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Destination 3 - States.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].Columns[Id]"
+                      cachedDataType="i4"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].Columns[ImagePath]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="ImagePath"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[ImagePath]"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[ImagePath]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].Columns[Date]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Date"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[Date]"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[Date]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].Columns[ContainerId]"
+                      cachedDataType="i4"
+                      cachedName="ContainerId"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[ContainerId]"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[ContainerId]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].Columns[StateValueId]"
+                      cachedDataType="i4"
+                      cachedName="StateValueId"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[StateValueId]"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[StateValueId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[ImagePath]"
+                      dataType="wstr"
+                      length="255"
+                      name="ImagePath" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[Date]"
+                      dataType="dbTimeStamp"
+                      name="Date" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[ContainerId]"
+                      dataType="i4"
+                      name="ContainerId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input].ExternalColumns[StateValueId]"
+                      dataType="i4"
+                      name="StateValueId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Destination 3 - States.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination 3 - States.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination 3 - States.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination 3 - States.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Destination 4 - Trips"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Destination 4 - Trips"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Trips"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Destination 4 - Trips.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].Columns[Id]"
+                      cachedDataType="i4"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].Columns[StartDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="StartDate"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].ExternalColumns[StartDate]"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[StartDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].Columns[EndDate]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="EndDate"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].ExternalColumns[EndDate]"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[EndDate]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].Columns[DateCreated]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DateCreated"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].ExternalColumns[DateCreated]"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[DateCreated]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].ExternalColumns[StartDate]"
+                      dataType="dbTimeStamp"
+                      name="StartDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].ExternalColumns[EndDate]"
+                      dataType="dbTimeStamp"
+                      name="EndDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input].ExternalColumns[DateCreated]"
+                      dataType="dbTimeStamp"
+                      name="DateCreated" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Destination 4 - Trips.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination 4 - Trips.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Destination 4 - Trips.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Destination 4 - Trips.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Source - Containers"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Source - Containers"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Containers"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Source - Containers.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Address]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Address]"
+                      length="100"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Address]"
+                      name="Address"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Longitude]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Longitude]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Longitude]"
+                      name="Longitude"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Latitude]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Latitude]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Latitude]"
+                      name="Latitude"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Description]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[EGDid]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[EGDid]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[EGDid]"
+                      name="EGDid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[LastStateid]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[LastStateid]"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].Columns[LastStateid]"
+                      name="LastStateid"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Address]"
+                      dataType="wstr"
+                      length="100"
+                      name="Address" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Longitude]"
+                      dataType="i4"
+                      name="Longitude" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Latitude]"
+                      dataType="i4"
+                      name="Latitude" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[EGDid]"
+                      dataType="i4"
+                      name="EGDid" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output].ExternalColumns[LastStateid]"
+                      dataType="i4"
+                      name="LastStateid" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Address]"
+                      dataType="wstr"
+                      length="100"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Address]"
+                      name="Address" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Longitude]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Longitude]"
+                      name="Longitude" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Latitude]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Latitude]"
+                      name="Latitude" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[Description]"
+                      name="Description" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[EGDid]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[EGDid]"
+                      name="EGDid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[LastStateid]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[LastStateid]"
+                      name="LastStateid" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Source 1 - EGD"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Source 1 - EGD"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."EGD"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Source 1 - EGD.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[Id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingTop]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PaddingTop]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingTop]"
+                      name="PaddingTop"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingBottom]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PaddingBottom]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingBottom]"
+                      name="PaddingBottom"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingLeft]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PaddingLeft]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingLeft]"
+                      name="PaddingLeft"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingRight]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PaddingRight]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PaddingRight]"
+                      name="PaddingRight"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PhotoStreak]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PhotoStreak]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[PhotoStreak]"
+                      name="PhotoStreak"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[ConfigurationStreak]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[ConfigurationStreak]"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].Columns[ConfigurationStreak]"
+                      name="ConfigurationStreak"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PaddingTop]"
+                      dataType="i4"
+                      name="PaddingTop" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PaddingBottom]"
+                      dataType="i4"
+                      name="PaddingBottom" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PaddingLeft]"
+                      dataType="i4"
+                      name="PaddingLeft" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PaddingRight]"
+                      dataType="i4"
+                      name="PaddingRight" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[PhotoStreak]"
+                      dataType="i4"
+                      name="PhotoStreak" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output].ExternalColumns[ConfigurationStreak]"
+                      dataType="i4"
+                      name="ConfigurationStreak" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PaddingTop]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PaddingTop]"
+                      name="PaddingTop" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PaddingBottom]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PaddingBottom]"
+                      name="PaddingBottom" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PaddingLeft]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PaddingLeft]"
+                      name="PaddingLeft" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PaddingRight]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PaddingRight]"
+                      name="PaddingRight" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PhotoStreak]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[PhotoStreak]"
+                      name="PhotoStreak" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[ConfigurationStreak]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[ConfigurationStreak]"
+                      name="ConfigurationStreak" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Source 2 - State_Values"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Source 2 - State_Values"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."State_Values"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Source 2 - State_Values.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].Columns[Id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].Columns[Name]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].ExternalColumns[Name]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].Columns[Name]"
+                      name="Name"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].Columns[Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].ExternalColumns[Description]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].ExternalColumns[Name]"
+                      dataType="wstr"
+                      length="255"
+                      name="Name" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[Name]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[Name]"
+                      name="Name" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[Description]"
+                      name="Description" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Source 3 - States"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Source 3 - States"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."States"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Source 3 - States.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[Id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[ImagePath]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[ImagePath]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[ImagePath]"
+                      name="ImagePath"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[Date]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[Date]"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[Date]"
+                      name="Date"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[ContainerId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[ContainerId]"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[ContainerId]"
+                      name="ContainerId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[StateValueId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[StateValueId]"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].Columns[StateValueId]"
+                      name="StateValueId"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[ImagePath]"
+                      dataType="wstr"
+                      length="255"
+                      name="ImagePath" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[Date]"
+                      dataType="dbTimeStamp"
+                      name="Date" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[ContainerId]"
+                      dataType="i4"
+                      name="ContainerId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output].ExternalColumns[StateValueId]"
+                      dataType="i4"
+                      name="StateValueId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[ImagePath]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[ImagePath]"
+                      name="ImagePath" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[Date]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[Date]"
+                      name="Date" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[ContainerId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[ContainerId]"
+                      name="ContainerId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[StateValueId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[StateValueId]"
+                      name="StateValueId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 1\Source 4 - Trips"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Source 4 - Trips"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Trips"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 1\Source 4 - Trips.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[Id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[StartDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].ExternalColumns[StartDate]"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[StartDate]"
+                      name="StartDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[EndDate]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].ExternalColumns[EndDate]"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[EndDate]"
+                      name="EndDate"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[DateCreated]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].ExternalColumns[DateCreated]"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].Columns[DateCreated]"
+                      name="DateCreated"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].ExternalColumns[StartDate]"
+                      dataType="dbTimeStamp"
+                      name="StartDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].ExternalColumns[EndDate]"
+                      dataType="dbTimeStamp"
+                      name="EndDate" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output].ExternalColumns[DateCreated]"
+                      dataType="dbTimeStamp"
+                      name="DateCreated" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[StartDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[StartDate]"
+                      name="StartDate" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[EndDate]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[EndDate]"
+                      name="EndDate" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[DateCreated]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[DateCreated]"
+                      name="DateCreated" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task 1.Paths[ADO NET Source Output]"
+              endId="Package\Data Flow Task 1\Destination - Containers.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task 1\Source - Containers.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Data Flow Task 1.Paths[ADO NET Source Output1]"
+              endId="Package\Data Flow Task 1\Destination 1 - EGD.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task 1\Source 1 - EGD.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Data Flow Task 1.Paths[ADO NET Source Output2]"
+              endId="Package\Data Flow Task 1\Destination 2 - State_Values.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task 1\Source 2 - State_Values.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Data Flow Task 1.Paths[ADO NET Source Output3]"
+              endId="Package\Data Flow Task 1\Destination 3 - States.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task 1\Source 3 - States.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Data Flow Task 1.Paths[ADO NET Source Output4]"
+              endId="Package\Data Flow Task 1\Destination 4 - Trips.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task 1\Source 4 - Trips.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task 2"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DTSID="{F0BA298A-9B11-4C35-87D4-FC5523571C48}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:FailPackageOnFailure="True"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task 2"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          defaultBufferSize="3145728"
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task 2\Destination 5 - Collectors"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Destination 5 - Collectors"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Collectors"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\Destination 5 - Collectors.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].Columns[Id]"
+                      cachedDataType="i4"
+                      cachedName="Id"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[Id]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].Columns[UserName]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="UserName"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[UserName]"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[UserName]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].Columns[PasswordHash]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="PasswordHash"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[PasswordHash]"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[PasswordHash]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].Columns[Title]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Title"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[Title]"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[Title]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].Columns[Description]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="Description"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[Description]"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[Description]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[UserName]"
+                      dataType="wstr"
+                      length="255"
+                      name="UserName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[PasswordHash]"
+                      dataType="wstr"
+                      length="255"
+                      name="PasswordHash" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[Title]"
+                      dataType="wstr"
+                      length="255"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\Destination 5 - Collectors.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Destination 5 - Collectors.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Destination 5 - Collectors.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Destination 5 - Collectors.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Destination 6 - Collectors_Containers"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Collectors_Containers"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Inputs[Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Inputs[Destination Input].Columns[CollectorId]"
+                      cachedDataType="i4"
+                      cachedName="CollectorId"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Inputs[Destination Input].ExternalColumns[CollectorId]"
+                      lineageId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].Columns[CollectorId]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Inputs[Destination Input].Columns[ContainerId]"
+                      cachedDataType="i4"
+                      cachedName="ContainerId"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Inputs[Destination Input].ExternalColumns[ContainerId]"
+                      lineageId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].Columns[ContainerId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Inputs[Destination Input].ExternalColumns[CollectorId]"
+                      dataType="i4"
+                      name="CollectorId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Inputs[Destination Input].ExternalColumns[ContainerId]"
+                      dataType="i4"
+                      name="ContainerId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Destination 7 - Collectors_Trips"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Collectors_Trips"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Inputs[Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Inputs[Destination Input].Columns[CollectorId]"
+                      cachedDataType="i4"
+                      cachedName="CollectorId"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Inputs[Destination Input].ExternalColumns[CollectorId]"
+                      lineageId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].Columns[CollectorId]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Inputs[Destination Input].Columns[TripId]"
+                      cachedDataType="i4"
+                      cachedName="TripId"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Inputs[Destination Input].ExternalColumns[TripId]"
+                      lineageId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].Columns[TripId]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Inputs[Destination Input].ExternalColumns[CollectorId]"
+                      dataType="i4"
+                      name="CollectorId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Inputs[Destination Input].ExternalColumns[TripId]"
+                      dataType="i4"
+                      name="TripId" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Loads data into an ADO.NET-compliant database that uses a database table or view. Load data into a new or existing table. For example, use an ADO.NET provider for ODBC to load data into an ODBC destination."
+              name="Destination 8 - Trips_Containers"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="The Destination database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Trips_Containers"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the number of rows per batch. The default is 0 which uses the same size as SSIS internal buffer. "
+                  expressionType="Notify"
+                  name="BatchSize">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out. A value of 0 indicates infinite time-out. "
+                  expressionType="Notify"
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Specifies whether to use the SqlBulkCopy interface to improve the performance of bulk insert operations. Only certain providers support this interface."
+                  expressionType="Notify"
+                  name="UseBulkInsertWhenPossible">true</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ADONETDestination</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[DestinationConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input]"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input].Columns[TripId]"
+                      cachedDataType="i4"
+                      cachedName="TripId"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input].ExternalColumns[TripId]"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].Columns[TripId]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input].Columns[ContainerId]"
+                      cachedDataType="i4"
+                      cachedName="ContainerId"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input].ExternalColumns[ContainerId]"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].Columns[ContainerId]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input].Columns[ContainerPriority]"
+                      cachedDataType="i4"
+                      cachedName="ContainerPriority"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input].ExternalColumns[ContainerPriority]"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].Columns[ContainerPriority]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input].ExternalColumns[TripId]"
+                      dataType="i4"
+                      name="TripId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input].ExternalColumns[ContainerId]"
+                      dataType="i4"
+                      name="ContainerId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input].ExternalColumns[ContainerPriority]"
+                      dataType="i4"
+                      name="ContainerPriority" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Outputs[ADO NET Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="ADO NET Destination Error Output"
+                  synchronousInputId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Outputs[ADO NET Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 2\Source 5 - Collectors"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Source 5 - Collectors"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Collectors"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\Source 5 - Collectors.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[Id]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[UserName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[UserName]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[UserName]"
+                      name="UserName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[PasswordHash]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[PasswordHash]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[PasswordHash]"
+                      name="PasswordHash"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[Title]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[Title]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[Title]"
+                      name="Title"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[Description]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[Description]"
+                      length="255"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].Columns[Description]"
+                      name="Description"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[Id]"
+                      dataType="i4"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[UserName]"
+                      dataType="wstr"
+                      length="255"
+                      name="UserName" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[PasswordHash]"
+                      dataType="wstr"
+                      length="255"
+                      name="PasswordHash" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[Title]"
+                      dataType="wstr"
+                      length="255"
+                      name="Title" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output].ExternalColumns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      name="Description" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[UserName]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[UserName]"
+                      name="UserName" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[PasswordHash]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[PasswordHash]"
+                      name="PasswordHash" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[Title]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[Title]"
+                      name="Title" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[Description]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[Description]"
+                      name="Description" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Source 6 - Collectors_Containers"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Collectors_Containers"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].Columns[CollectorId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].ExternalColumns[CollectorId]"
+                      lineageId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].Columns[CollectorId]"
+                      name="CollectorId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].Columns[ContainerId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].ExternalColumns[ContainerId]"
+                      lineageId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].Columns[ContainerId]"
+                      name="ContainerId"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].ExternalColumns[CollectorId]"
+                      dataType="i4"
+                      name="CollectorId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output].ExternalColumns[ContainerId]"
+                      dataType="i4"
+                      name="ContainerId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Error Output].Columns[CollectorId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Error Output].Columns[CollectorId]"
+                      name="CollectorId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Error Output].Columns[ContainerId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Error Output].Columns[ContainerId]"
+                      name="ContainerId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Source 7 - Collectors_Trips"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Collectors_Trips"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].Columns[CollectorId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].ExternalColumns[CollectorId]"
+                      lineageId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].Columns[CollectorId]"
+                      name="CollectorId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].Columns[TripId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].ExternalColumns[TripId]"
+                      lineageId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].Columns[TripId]"
+                      name="TripId"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].ExternalColumns[CollectorId]"
+                      dataType="i4"
+                      name="CollectorId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output].ExternalColumns[TripId]"
+                      dataType="i4"
+                      name="TripId" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Error Output].Columns[CollectorId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Error Output].Columns[CollectorId]"
+                      name="CollectorId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Error Output].Columns[TripId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Error Output].Columns[TripId]"
+                      name="TripId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task 2\Source 8 - Trips_Containers"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="Source 8 - Trips_Containers"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">"dbo"."Trips_Containers"</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">0</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Connections[IDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  connectionManagerRefId="Package.ConnectionManagers[SourceConnectionAdoNET]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].Columns[TripId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].ExternalColumns[TripId]"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].Columns[TripId]"
+                      name="TripId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].Columns[ContainerId]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].ExternalColumns[ContainerId]"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].Columns[ContainerId]"
+                      name="ContainerId"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].Columns[ContainerPriority]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].ExternalColumns[ContainerPriority]"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].Columns[ContainerPriority]"
+                      name="ContainerPriority"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].ExternalColumns[TripId]"
+                      dataType="i4"
+                      name="TripId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].ExternalColumns[ContainerId]"
+                      dataType="i4"
+                      name="ContainerId" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output].ExternalColumns[ContainerPriority]"
+                      dataType="i4"
+                      name="ContainerPriority" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[TripId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[TripId]"
+                      name="TripId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[ContainerId]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[ContainerId]"
+                      name="ContainerId" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[ContainerPriority]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[ContainerPriority]"
+                      name="ContainerPriority" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task 2.Paths[ADO NET Source Output]"
+              endId="Package\Data Flow Task 2\Destination 5 - Collectors.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task 2\Source 5 - Collectors.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Data Flow Task 2.Paths[ADO NET Source Output1]"
+              endId="Package\Data Flow Task 2\Destination 6 - Collectors_Containers.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task 2\Source 6 - Collectors_Containers.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Data Flow Task 2.Paths[ADO NET Source Output2]"
+              endId="Package\Data Flow Task 2\Destination 7 - Collectors_Trips.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task 2\Source 7 - Collectors_Trips.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\Data Flow Task 2.Paths[ADO NET Source Output3]"
+              endId="Package\Data Flow Task 2\Destination 8 - Trips_Containers.Inputs[Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\Data Flow Task 2\Source 8 - Trips_Containers.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[{D23CCEEC-6DC4-4AF5-9E41-42DCF1076042\}]"
+      DTS:CreationName=""
+      DTS:DTSID="{D23CCEEC-6DC4-4AF5-9E41-42DCF1076042}"
+      DTS:From="Package\Data Flow Task 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="{D23CCEEC-6DC4-4AF5-9E41-42DCF1076042}"
+      DTS:To="Package\Data Flow Task 2" />
+  </DTS:PrecedenceConstraints>
+</DTS:Executable>
