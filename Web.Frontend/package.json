@@ -16,13 +16,16 @@
     "typescript": "^2.3.4"
   },
   "dependencies": {
-    "@types/flux": "^3.1.0",
-    "simplr-flux": "^2.0.1",
+    "@types/classnames": "^2.2.3",
     "@types/core-js": "^0.9.41",
+    "@types/flux": "^3.1.0",
     "@types/node": "^7.0.28",
     "@types/react": "^15.0.28",
     "@types/react-dom": "^15.5.0",
-    "@types/systemjs": "^0.19.32"
+    "@types/react-router-dom": "^4.2.3",
+    "@types/systemjs": "^0.19.32",
+    "simplr-flux": "^2.0.1",
+    "simplr-tslint": "0.0.1"
   },
   "jspm": {
     "name": "EGD.Web.Frontend",
@@ -35,10 +38,12 @@
       "baseURL": "wwwroot"
     },
     "dependencies": {
+      "classnames": "npm:classnames@^2.2.5",
       "css": "github:systemjs/plugin-css@^0.1.35",
       "flux": "npm:flux@^3.1.0",
       "json": "github:systemjs/plugin-json@^0.3.0",
       "react-dom": "npm:react-dom@^15.4.1",
+      "react-router-dom": "npm:react-router-dom@^4.2.2",
       "simplr-flux": "npm:simplr-flux@^2.0.1"
     },
     "devDependencies": {},
@@ -80,13 +85,10 @@
           "test.js"
         ]
       },
-      "npm:pbkdf2@3.0.12": {
+      "npm:pbkdf2@3.0.14": {
         "main": "browser.js"
       },
-      "npm:safe-buffer@5.0.1": {
-        "browser": "index.js"
-      },
-      "npm:safe-buffer@5.1.0": {
+      "npm:safe-buffer@5.1.1": {
         "browser": "index.js"
       }
     }
