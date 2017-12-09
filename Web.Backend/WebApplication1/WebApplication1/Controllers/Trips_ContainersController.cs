@@ -25,15 +25,7 @@ namespace EGD.Controllers
         [Route("tc/trip/{id}")]
         public IEnumerable<Trips_Containers> GetByTripId(int id)
         {
-            if (id != null)
-            {
                 return _Trips_ContainersRepo.GetByTripId(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
         }
         [HttpGet("tc/container/{id}")]
         public IEnumerable<Trips_Containers> GetByContainerId(int id)

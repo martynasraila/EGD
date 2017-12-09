@@ -26,28 +26,14 @@ namespace EGD.Controllers
         [Route("cc/collector/{id}")]
         public IEnumerable<Collectors_Containers> GetByCollectorId(int id)
         {
-            if (id != null)
-            {
                 return _Collectors_ContainerssRepo.GetByCollectorId(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
         }
         [HttpGet("cc/container/{id}")]
         public IEnumerable<Collectors_Containers> GetByContainerId(int id)
         {
-            if (id != null)
-            {
+
                 return _Collectors_ContainerssRepo.GetByContainerId(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
+
         }
 
 

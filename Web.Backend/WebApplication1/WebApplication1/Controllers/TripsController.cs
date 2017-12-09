@@ -24,15 +24,9 @@ namespace EGD.Controllers
         [HttpGet("{id}")]
         public Trips GetById(int id)
         {
-            if (id != null)
-            {
                 return _TripsRepo.GetById(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
+            
+
         }
         [HttpPost]
         public bool Create([FromBody]Trips ourTrip)

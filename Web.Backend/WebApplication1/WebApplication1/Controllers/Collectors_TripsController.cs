@@ -26,28 +26,14 @@ namespace EGD.Controllers
         [Route("ct/collector/{id}")]
         public IEnumerable<Collectors_Trips> GetByCollectorId(int id)
         {
-            if (id != null)
-            {
-                return _Collectors_TripsRepo.GetByCollectorId(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
+
+            return _Collectors_TripsRepo.GetByCollectorId(id);
         }
+            
         [HttpGet("ct/trip/{id}")]
         public IEnumerable<Collectors_Trips> GetByTripId(int id)
         {
-            if (id != null)
-            {
                 return _Collectors_TripsRepo.GetByTripId(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
         }
 
 

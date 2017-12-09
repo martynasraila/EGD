@@ -24,15 +24,9 @@ namespace EGD.Controllers
         [HttpGet("{id}")]
         public States GetById(int id)
         {
-            if (id != null)
-            {
                 return _StatesRepository.GetById(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
+            
+ 
         }
         [HttpPost]
         public bool Create([FromBody]States ourState)

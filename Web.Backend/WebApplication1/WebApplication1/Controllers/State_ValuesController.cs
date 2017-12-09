@@ -24,15 +24,9 @@ namespace EGD.Controllers
         [HttpGet("{id}")]
         public State_Values GetById(int id)
         {
-            if (id != null)
-            {
+
                 return _State_ValuesRepo.GetById(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
+
         }
     }
 }

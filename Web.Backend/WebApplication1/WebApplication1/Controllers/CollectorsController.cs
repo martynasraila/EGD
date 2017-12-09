@@ -24,15 +24,7 @@ namespace EGD.Controllers
         [HttpGet("{id}")]
         public Collectors GetById(int id)
         {
-            if (id != null)
-            {
                 return _CollectorsRepo.GetById(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
         }
         [HttpPost]
         public bool Create([FromBody]Collectors ourCollector)

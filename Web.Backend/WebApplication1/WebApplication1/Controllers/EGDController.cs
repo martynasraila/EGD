@@ -23,16 +23,10 @@ namespace WebApplication1.Controllers
 
         [HttpGet("{id}")]
         public EGD GetById(int id)
-        {
-            if(id != null)
-            {
+        { 
                 return _EGDRepo.GetById(id);
-            }
-            else
-            {
-                new System.ArgumentNullException("Nera tokio id");
-                return null;
-            }
+            
+
         }
         [HttpPost]
         public bool Create([FromBody]EGD ourEGD)
