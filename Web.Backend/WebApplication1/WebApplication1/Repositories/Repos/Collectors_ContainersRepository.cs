@@ -22,7 +22,8 @@ namespace EGD.Repositories
             using (IDbConnection conn = Connection)
             {
                 conn.Open();
-                int rowsAffected = conn.Execute(@"DELETE FROM [Collectors_Containers] WHERE CollectorId = @Id", new { Id = id });
+                int rowsAffected = conn.Execute(@"DELETE FROM [Collectors_Containers] 
+                        WHERE CollectorId = @Id", new { Id = id });
                 if (rowsAffected > 0)
                 {
                     return true;
@@ -35,7 +36,8 @@ namespace EGD.Repositories
             using (IDbConnection conn = Connection)
             {
                 conn.Open();
-                int rowsAffected = conn.Execute(@"DELETE FROM [Collectors_Containers] WHERE ContainerId = @Id", new { Id = id });
+                int rowsAffected = conn.Execute(@"DELETE FROM [Collectors_Containers]
+                            WHERE ContainerId = @Id", new { Id = id });
                 if (rowsAffected > 0)
                 {
                     return true;

@@ -13,5 +13,6 @@ namespace EGD.Repositories
         bool InsertContainer(Containers ourContainer);
         bool UpdateContainer(Containers ourContainer);
         bool DeleteContainer(int id);
+        List<ContainerStatistics> GetStatistics();
     }
 }

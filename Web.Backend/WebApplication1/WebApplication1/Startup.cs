@@ -35,6 +35,7 @@ namespace WebApplication1
             services.AddScoped<ICollectors_ContainersRepository, Collectors_ContainersRepository>();
             services.AddScoped<ICollectors_TripsRepository, Collectors_TripsRepository>();
             services.AddScoped<ITrips_ContainersRepository, Trips_ContainersRepository>();
+            services.AddScoped<ILoginRepository, LoginRepository>();
             services.AddMvc();
         }
 
