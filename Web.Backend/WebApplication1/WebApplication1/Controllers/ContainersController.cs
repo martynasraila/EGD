@@ -44,5 +44,11 @@ namespace EGD.Controllers
         {
             return _ContainersRepo.DeleteContainer(id);
         }
+        [HttpPost("{stats}")]
+        public IEnumerable<ContainerStatistics> GetStatistics()
+        {
+            return _ContainersRepo.GetStatistics();
+        }
+
     }
 }
