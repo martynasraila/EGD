@@ -1,0 +1,17 @@
+.administrator-containers-container {
+    flex: 1 0 auto;
+
+    .controls-section {
+        height: 50px;
+    }
+
+    .administrator-containers-cview {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+
+        .table {
+            max-width: 80%;
+        }
+    }
+}
