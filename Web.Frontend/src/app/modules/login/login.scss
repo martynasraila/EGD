@@ -1,0 +1,64 @@
+.login {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+
+    .login-content {
+        flex: 1 0 auto;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .login-box {
+            border: 1px solid black;
+            width: 450px;
+            height: 300px;
+
+            padding: 40px;
+
+            .login-title {
+                font-size: 25px;
+            }
+
+            form {
+                padding-top: 40px;
+
+                .form-field {
+                    display: flex;
+                    flex-direction: column;
+
+                    padding-bottom: 20px;
+
+                    label {
+                        font-size: 20px;
+                        padding-bottom: 15px;
+                    }
+
+                    input {
+                        width: 100%;
+                    }
+                }
+
+                .controls-box {
+                    display: flex;
+
+                    .error-container {
+                        flex: 1 0 auto;
+                        color: red;
+
+                        .error-item {
+                            padding-bottom: 10px;
+                        }
+                    }
+
+                    .submit-container {
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
+}

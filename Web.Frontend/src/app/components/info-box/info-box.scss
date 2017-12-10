@@ -1,0 +1,31 @@
+.info-box {
+    width: 400px;
+    height: 300px;
+    border: 1px solid black;
+
+    padding: 40px;
+
+    .main-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        padding-bottom: 40px;
+
+        .main-value {
+            font-size: 40px;
+            font-weight: 600;
+        }
+
+        .main-title {
+            padding-top: 20px;
+            font-size: 20px;
+        }
+    }
+
+    .info-section {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+}

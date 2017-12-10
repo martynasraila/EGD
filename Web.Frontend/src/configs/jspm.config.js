@@ -25,6 +25,9 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
+        "@simplr/react-forms-validation": "npm:@simplr/react-forms-validation@4.3.3",
+        "@simplr/react-forms": "npm:@simplr/react-forms@4.3.3",
+        "@simplr/react-forms-dom": "npm:@simplr/react-forms-dom@4.3.3",
         "classnames": "npm:classnames@2.2.5",
         "react-router-dom": "npm:react-router-dom@4.2.2",
         "assert": "npm:jspm-nodelibs-assert@0.2.1",
@@ -39,13 +42,13 @@ SystemJS.config({
         "fs": "npm:jspm-nodelibs-fs@0.2.1",
         "http": "npm:jspm-nodelibs-http@0.2.0",
         "https": "npm:jspm-nodelibs-https@0.2.2",
-        "immutable": "npm:immutable@3.8.1",
+        "immutable": "npm:immutable@3.8.2",
         "json": "github:systemjs/plugin-json@0.3.0",
         "os": "npm:jspm-nodelibs-os@0.2.1",
         "path": "npm:jspm-nodelibs-path@0.2.3",
         "process": "npm:jspm-nodelibs-process@0.2.1",
-        "react": "npm:react@15.5.4",
-        "react-dom": "npm:react-dom@15.5.4",
+        "react": "npm:react@15.6.2",
+        "react-dom": "npm:react-dom@15.6.2",
         "simplr-flux": "npm:simplr-flux@2.0.1",
         "stream": "npm:jspm-nodelibs-stream@0.2.1",
         "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.1",
@@ -58,31 +61,15 @@ SystemJS.config({
         "npm:simplr-flux@2.0.1": {
             "map": {
                 "flux": "npm:flux@3.1.2",
-                "immutable": "npm:immutable@3.8.1",
+                "immutable": "npm:immutable@3.8.2",
                 "action-emitter": "npm:action-emitter@0.2.1",
-                "@types/flux": "npm:@types/flux@3.1.0"
+                "@types/flux": "npm:@types/flux@3.1.4"
             }
         },
         "npm:flux@3.1.2": {
             "map": {
                 "fbjs": "npm:fbjs@0.8.16",
                 "fbemitter": "npm:fbemitter@2.1.1"
-            }
-        },
-        "npm:react-dom@15.5.4": {
-            "map": {
-                "fbjs": "npm:fbjs@0.8.16",
-                "loose-envify": "npm:loose-envify@1.3.1",
-                "prop-types": "npm:prop-types@15.5.10",
-                "object-assign": "npm:object-assign@4.1.1"
-            }
-        },
-        "npm:react@15.5.4": {
-            "map": {
-                "fbjs": "npm:fbjs@0.8.16",
-                "loose-envify": "npm:loose-envify@1.3.1",
-                "prop-types": "npm:prop-types@15.5.10",
-                "object-assign": "npm:object-assign@4.1.1"
             }
         },
         "npm:jspm-nodelibs-buffer@0.2.3": {
@@ -136,12 +123,6 @@ SystemJS.config({
                 "@types/fbemitter": "npm:@types/fbemitter@2.0.32"
             }
         },
-        "npm:prop-types@15.5.10": {
-            "map": {
-                "fbjs": "npm:fbjs@0.8.16",
-                "loose-envify": "npm:loose-envify@1.3.1"
-            }
-        },
         "npm:fbemitter@2.1.1": {
             "map": {
                 "fbjs": "npm:fbjs@0.8.16"
@@ -171,12 +152,6 @@ SystemJS.config({
             "map": {
                 "readable-stream": "npm:readable-stream@2.3.3",
                 "pako": "npm:pako@0.2.9"
-            }
-        },
-        "npm:@types/flux@3.1.0": {
-            "map": {
-                "@types/react": "npm:@types/react@15.0.29",
-                "@types/fbemitter": "npm:@types/fbemitter@2.0.32"
             }
         },
         "npm:url@0.11.0": {
@@ -318,7 +293,7 @@ SystemJS.config({
         },
         "npm:react-router-dom@4.2.2": {
             "map": {
-                "prop-types": "npm:prop-types@15.5.10",
+                "prop-types": "npm:prop-types@15.6.0",
                 "loose-envify": "npm:loose-envify@1.3.1",
                 "invariant": "npm:invariant@2.2.2",
                 "warning": "npm:warning@3.0.0",
@@ -361,7 +336,7 @@ SystemJS.config({
                 "history": "npm:history@4.7.2",
                 "invariant": "npm:invariant@2.2.2",
                 "loose-envify": "npm:loose-envify@1.3.1",
-                "prop-types": "npm:prop-types@15.5.10",
+                "prop-types": "npm:prop-types@15.6.0",
                 "warning": "npm:warning@3.0.0",
                 "hoist-non-react-statics": "npm:hoist-non-react-statics@2.3.1",
                 "path-to-regexp": "npm:path-to-regexp@1.7.0"
@@ -492,6 +467,106 @@ SystemJS.config({
             "map": {
                 "inherits": "npm:inherits@2.0.3",
                 "minimalistic-assert": "npm:minimalistic-assert@1.0.0"
+            }
+        },
+        "npm:@simplr/react-forms-dom@4.3.3": {
+            "map": {
+                "react": "npm:react@15.6.2",
+                "prop-types": "npm:prop-types@15.6.0",
+                "immutable": "npm:immutable@3.8.2",
+                "classnames": "npm:classnames@2.2.5",
+                "tslib": "npm:tslib@1.8.1",
+                "react-dom": "npm:react-dom@15.6.2",
+                "typed-immutable-record": "npm:typed-immutable-record@0.0.6",
+                "@types/react": "npm:@types/react@15.6.7",
+                "@types/prop-types": "npm:@types/prop-types@15.5.2",
+                "@types/classnames": "npm:@types/classnames@2.2.3",
+                "@simplr/react-forms": "npm:@simplr/react-forms@4.3.3"
+            }
+        },
+        "npm:react@15.6.2": {
+            "map": {
+                "prop-types": "npm:prop-types@15.6.0",
+                "object-assign": "npm:object-assign@4.1.1",
+                "fbjs": "npm:fbjs@0.8.16",
+                "loose-envify": "npm:loose-envify@1.3.1",
+                "create-react-class": "npm:create-react-class@15.6.2"
+            }
+        },
+        "npm:react-dom@15.6.2": {
+            "map": {
+                "prop-types": "npm:prop-types@15.6.0",
+                "object-assign": "npm:object-assign@4.1.1",
+                "fbjs": "npm:fbjs@0.8.16",
+                "loose-envify": "npm:loose-envify@1.3.1"
+            }
+        },
+        "npm:create-react-class@15.6.2": {
+            "map": {
+                "fbjs": "npm:fbjs@0.8.16",
+                "loose-envify": "npm:loose-envify@1.3.1",
+                "object-assign": "npm:object-assign@4.1.1"
+            }
+        },
+        "npm:@simplr/react-forms@4.3.3": {
+            "map": {
+                "immutable": "npm:immutable@3.8.2",
+                "prop-types": "npm:prop-types@15.6.0",
+                "tslib": "npm:tslib@1.8.1",
+                "typed-immutable-record": "npm:typed-immutable-record@0.0.6",
+                "@types/prop-types": "npm:@types/prop-types@15.5.2",
+                "@types/react": "npm:@types/react@15.6.7",
+                "react": "npm:react@15.6.2",
+                "react-dom": "npm:react-dom@15.6.2",
+                "action-emitter": "npm:action-emitter@0.2.1",
+                "@types/flux": "npm:@types/flux@3.1.4",
+                "@types/fbemitter": "npm:@types/fbemitter@2.0.32",
+                "@types/react-router-dom": "npm:@types/react-router-dom@4.2.3",
+                "@types/react-dom": "npm:@types/react-dom@15.5.6"
+            }
+        },
+        "npm:@types/flux@3.1.4": {
+            "map": {
+                "@types/react": "npm:@types/react@15.6.7",
+                "@types/fbemitter": "npm:@types/fbemitter@2.0.32"
+            }
+        },
+        "npm:@types/react-router-dom@4.2.3": {
+            "map": {
+                "@types/react": "npm:@types/react@15.6.7",
+                "@types/history": "npm:@types/history@4.6.2",
+                "@types/react-router": "npm:@types/react-router@4.0.19"
+            }
+        },
+        "npm:@types/react-dom@15.5.6": {
+            "map": {
+                "@types/react": "npm:@types/react@15.6.7"
+            }
+        },
+        "npm:@types/react-router@4.0.19": {
+            "map": {
+                "@types/react": "npm:@types/react@15.6.7",
+                "@types/history": "npm:@types/history@4.6.2"
+            }
+        },
+        "npm:prop-types@15.6.0": {
+            "map": {
+                "loose-envify": "npm:loose-envify@1.3.1",
+                "object-assign": "npm:object-assign@4.1.1",
+                "fbjs": "npm:fbjs@0.8.16"
+            }
+        },
+        "npm:@simplr/react-forms-validation@4.3.3": {
+            "map": {
+                "action-emitter": "npm:action-emitter@0.2.1",
+                "immutable": "npm:immutable@3.8.2",
+                "react": "npm:react@15.6.2",
+                "tslib": "npm:tslib@1.8.1",
+                "@types/react-dom": "npm:@types/react-dom@15.5.6",
+                "validator": "npm:validator@7.2.0",
+                "@types/react": "npm:@types/react@15.6.7",
+                "@simplr/react-forms": "npm:@simplr/react-forms@4.3.3",
+                "@types/validator": "npm:@types/validator@6.3.0"
             }
         }
     }
