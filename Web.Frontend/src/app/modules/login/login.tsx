@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { LoginHeader } from "./header/login-header";
-import { Form, Text, Password, Submit, ErrorsContainer, ErrorsTemplate } from "@simplr/react-forms-dom";
+import { Form, Text, Password, Submit, ErrorsContainer } from "@simplr/react-forms-dom";
 import { RequiredValidator, ByteLengthValidator } from "@simplr/react-forms-validation";
 import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
 
