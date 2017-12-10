@@ -16,6 +16,9 @@
     "typescript": "^2.3.4"
   },
   "dependencies": {
+    "@simplr/react-forms": "^4.3.3",
+    "@simplr/react-forms-dom": "^4.3.3",
+    "@simplr/react-forms-validation": "^4.3.3",
     "@types/classnames": "^2.2.3",
     "@types/core-js": "^0.9.41",
     "@types/flux": "^3.1.0",
@@ -38,6 +41,9 @@
       "baseURL": "wwwroot"
     },
     "dependencies": {
+      "@simplr/react-forms": "npm:@simplr/react-forms@^4.3.3",
+      "@simplr/react-forms-dom": "npm:@simplr/react-forms-dom@^4.3.3",
+      "@simplr/react-forms-validation": "npm:@simplr/react-forms-validation@^4.3.3",
       "classnames": "npm:classnames@^2.2.5",
       "css": "github:systemjs/plugin-css@^0.1.35",
       "flux": "npm:flux@^3.1.0",
@@ -62,7 +68,7 @@
       "os": "npm:jspm-nodelibs-os@^0.2.0",
       "path": "npm:jspm-nodelibs-path@^0.2.0",
       "process": "npm:jspm-nodelibs-process@^0.2.0",
-      "react": "npm:react@^15.0.2",
+      "react": "npm:react@^15.6.2",
       "stream": "npm:jspm-nodelibs-stream@^0.2.0",
       "string_decoder": "npm:jspm-nodelibs-string_decoder@^0.2.0",
       "url": "npm:jspm-nodelibs-url@^0.2.0",
@@ -90,6 +96,14 @@
       },
       "npm:safe-buffer@5.1.1": {
         "browser": "index.js"
+      },
+      "npm:tslib@1.8.1": {
+        "format": "cjs",
+        "meta": {
+          "tslib.js": {
+            "esModule": true
+          }
+        }
       }
     }
   }

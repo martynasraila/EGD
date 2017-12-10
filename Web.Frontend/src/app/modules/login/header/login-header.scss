@@ -1,0 +1,17 @@
+.login-header {
+    height: 50px;
+    border-bottom: 1px solid black;
+
+    display: flex;
+    align-items: center;
+
+    i {
+        font-size: 25px;
+    }
+
+    padding-left: 20px;
+
+    .title-container {
+        padding-left: 10px;
+    }
+}

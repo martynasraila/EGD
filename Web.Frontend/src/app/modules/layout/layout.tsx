@@ -4,7 +4,7 @@ import { LayoutContentContainer } from "./content/layout-content-container";
 
 import "./layout.css";
 
-export class Layout extends React.Component<{}> {
+export class Layout extends React.Component {
     public render(): JSX.Element {
         return <div className="layout-container">
             <LayoutHeader />

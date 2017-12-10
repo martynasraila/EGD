@@ -4,7 +4,7 @@ import { RouteComponentProps } from "react-router-dom";
 export class AdministratorContainerCreateRoute extends React.Component<RouteComponentProps<{}>> {
     public render(): JSX.Element {
         return <div>
-            Home route
+            Create route
         </div>;
     }
 }

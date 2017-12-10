@@ -1,6 +1,9 @@
+import * as React from "react";
 import * as ReactDOM from "react-dom";
+import { InitializeValidation } from "@simplr/react-forms-validation";
+import { AuthenticationContainer } from "./containers/authentication/authentication-container";
 
-import { Router } from "./routes";
+InitializeValidation();
 
 import "./reset.css";
 import "./app.css";
@@ -13,7 +16,7 @@ class App {
     private startApp(): void {
         const appRoot = document.getElementById("app-root");
         if (appRoot != null) {
-            ReactDOM.render(Router, appRoot);
+            ReactDOM.render(<AuthenticationContainer />, appRoot);
         } else {
             this.generateAppRootElement();
         }
