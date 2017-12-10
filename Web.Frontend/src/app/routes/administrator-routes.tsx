@@ -12,7 +12,7 @@ export const AdministratorRoutes =
             <Switch>
                 <Route path="/administrator" component={AdministratorHomeRoute} exact />
                 <Route path="/administrator/containers" component={AdministratorContainersRoute} exact />
-                <Route path="/administrator/containers/create" component={AdministratorContainerCreateRoute} exact />
+                <Route path="/administrator/container/create" component={AdministratorContainerCreateRoute} exact />
             </Switch>
         </Layout>
     </BrowserRouter>;

@@ -5,10 +5,13 @@ import { Form, Text, Password, Submit, ErrorsContainer, ErrorsTemplate } from "@
 import { RequiredValidator, ByteLengthValidator } from "@simplr/react-forms-validation";
 import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
 
-import "./login.css";
 import { FieldValidationType } from "@simplr/react-forms/contracts";
 import { UserLoggedIn } from "../../actions/identity/identity-actions-creators";
 import { UserKind } from "../../stores/identity/identity-contracts";
+
+import { ErrorTemplate } from "../../helpers/form-helpers";
+
+import "./login.css";
 
 // interface LoginSubmitDto {
 //     Username: string;
@@ -19,16 +22,6 @@ export class Login extends React.Component {
     private onSubmit: FormOnSubmitCallback = (event, store) => {
         // const submitData = store.ToObject<LoginSubmitDto>();
         UserLoggedIn("1", UserKind.Administrator);
-    }
-
-    private errorTemplate: ErrorsTemplate = (fieldErrors, formError, formStore) => {
-        const errors = fieldErrors
-            .map((value, key) => <div className="error-item" key={`error-key-${key}`}>{value!.Message}</div>)
-            .toArray();
-
-        return <div className="error-container">
-            {errors}
-        </div>;
     }
 
     public render(): JSX.Element {
@@ -59,7 +52,7 @@ export class Login extends React.Component {
                             </Password>
                         </div>
                         <div className="controls-box">
-                            <ErrorsContainer template={this.errorTemplate} />
+                            <ErrorsContainer template={ErrorTemplate} />
                             <div className="submit-container">
                                 <Submit disableOnError disableOnPristine>Prisijungti</Submit>
                             </div>
