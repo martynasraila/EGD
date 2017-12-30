@@ -1,5 +1,6 @@
 import * as React from "react";
 import * as Immutable from "immutable";
+import { Link } from "react-router-dom";
 import { ContainerDto } from "../../../../stores/containers/containers-contracts";
 
 interface Props {
@@ -29,7 +30,9 @@ export class AdministratorContainersCView extends React.Component<Props> {
                             }
 
                             return <tr key={`table-key-${item.Id}`}>
-                                <th>{item.Id}</th>
+                                <th>
+                                    <Link to={`/administrator/containers/${item.Id}`}>{item.Id}</Link>
+                                </th>
                                 <th>{item.LastStateId}</th>
                                 <th>{item.LastStateId}</th>
                                 <th>{item.Description}</th>

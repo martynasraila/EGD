@@ -26,10 +26,10 @@ class AuthenticationContainerClass extends React.Component<{}, State> {
     public render(): JSX.Element {
         switch (this.state.UserKind) {
             case UserKind.Administrator: {
-                return AdministratorRoutes;
+                return <AdministratorRoutes />;
             }
             case UserKind.Collector: {
-                return CollectorRoutes;
+                return <CollectorRoutes />;
             }
             default: {
                 return <Login />;

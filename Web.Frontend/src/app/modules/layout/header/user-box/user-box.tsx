@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import "./user-box.css";
-import { UserLoggedOut } from "../../../../actions/identity/identity-actions-creators";
+import { IdentityActionsCreators } from "../../../../actions/identity/identity-actions-creators";
 
 interface Props {
     userTitle: string;
@@ -9,7 +9,7 @@ interface Props {
 
 export class UserBox extends React.Component<Props> {
     private onClick: React.MouseEventHandler<HTMLDivElement> = () => {
-        UserLoggedOut();
+        IdentityActionsCreators.UserLoggedOut();
     }
 
     public render(): JSX.Element {

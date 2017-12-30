@@ -6,15 +6,20 @@ import { AdministratorHomeRoute } from "../modules/administrator/routes/administ
 import { AdministratorContainersRoute } from "../modules/administrator/routes/administrator-containers-route";
 import { AdministratorContainerCreateRoute } from "../modules/administrator/routes/administrator-container-create-route";
 import { AdministratorContainerViewRoute } from "../modules/administrator/routes/administrator-container-view-route";
+import { AdministratorAddDeviceRoute } from "../modules/administrator/routes/administrator-device-add-route";
 
-export const AdministratorRoutes =
-    <BrowserRouter>
-        <Layout>
-            <Switch>
-                <Route path="/administrator" component={AdministratorHomeRoute} exact />
-                <Route path="/administrator/containers" component={AdministratorContainersRoute} exact />
-                <Route path="/administrator/containers/:id" component={AdministratorContainerViewRoute} exact />
-                <Route path="/administrator/container/create" component={AdministratorContainerCreateRoute} exact />
-            </Switch>
-        </Layout>
-    </BrowserRouter>;
+export class AdministratorRoutes extends React.Component {
+    public render(): JSX.Element {
+        return <BrowserRouter>
+            <Layout>
+                <Switch>
+                    <Route path="/administrator" component={AdministratorHomeRoute} exact />
+                    <Route path="/administrator/containers" component={AdministratorContainersRoute} exact />
+                    <Route path="/administrator/containers/:id" component={AdministratorContainerViewRoute} exact />
+                    <Route path="/administrator/container/create" component={AdministratorContainerCreateRoute} exact />
+                    <Route path="/administrator/container/device/create" component={AdministratorAddDeviceRoute} exact />
+                </Switch>
+            </Layout>
+        </BrowserRouter>;
+    }
+}

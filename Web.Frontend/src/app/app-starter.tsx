@@ -8,7 +8,7 @@ InitializeValidation();
 import "./reset.css";
 import "./app.css";
 
-class App {
+class AppStarter {
     constructor() {
         this.startApp();
     }
@@ -30,4 +30,4 @@ class App {
     }
 }
 
-new App();
+new AppStarter();

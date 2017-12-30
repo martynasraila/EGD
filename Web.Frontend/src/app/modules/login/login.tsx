@@ -6,7 +6,7 @@ import { RequiredValidator, ByteLengthValidator } from "@simplr/react-forms-vali
 import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
 
 import { FieldValidationType } from "@simplr/react-forms/contracts";
-import { UserLoggedIn } from "../../actions/identity/identity-actions-creators";
+import { IdentityActionsCreators } from "../../actions/identity/identity-actions-creators";
 import { UserKind } from "../../stores/identity/identity-contracts";
 
 import { ErrorTemplate } from "../../helpers/form-helpers";
@@ -21,7 +21,7 @@ import "./login.css";
 export class Login extends React.Component {
     private onSubmit: FormOnSubmitCallback = (event, store) => {
         // const submitData = store.ToObject<LoginSubmitDto>();
-        UserLoggedIn("1", UserKind.Administrator);
+        IdentityActionsCreators.UserLoggedIn("1", UserKind.Administrator);
     }
 
     public render(): JSX.Element {

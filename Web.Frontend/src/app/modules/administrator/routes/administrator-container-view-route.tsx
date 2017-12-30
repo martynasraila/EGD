@@ -1,5 +1,6 @@
 import * as React from "react";
 import { RouteComponentProps } from "react-router-dom";
+import { AdministratorContainerView } from "../components/containers/administrator-container-view";
 
 interface Params {
     id: string;
@@ -10,7 +11,6 @@ interface State {
 }
 
 export class AdministratorContainerViewRoute extends React.Component<RouteComponentProps<Params>, State> {
-
     public state: State = {
         Id: undefined
     };
@@ -34,6 +34,6 @@ export class AdministratorContainerViewRoute extends React.Component<RouteCompon
             return null;
         }
 
-        return <div>{this.state.Id}</div>;
+        return <AdministratorContainerView id={this.state.Id} />;
     }
 }
