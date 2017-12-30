@@ -20,6 +20,7 @@ interface FormData {
     PaddingBottom: number;
 }
 
+// TODO: implement validation.
 export class AdministratorDeviceFormCView extends React.Component<Props, FormData> {
     constructor(props: Props, context: any) {
         super(props, context);
@@ -91,6 +92,7 @@ export class AdministratorDeviceFormCView extends React.Component<Props, FormDat
                 </div>
             </Form>
             <Submit formId="device-form" className="btn btn-light">{this.props.submitTitle}</Submit>
+            {/* {<ErrorsContainer template={ErrorTemplate} />} */}
         </div>;
     }
 }

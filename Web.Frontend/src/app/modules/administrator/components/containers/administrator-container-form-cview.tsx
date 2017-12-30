@@ -11,6 +11,7 @@ interface Props {
 }
 
 //TODO: implement form.
+//TODO: implement validation.
 export class AdministratorContainerFormCView extends React.Component<Props> {
     private resolveStateString(): string {
         if (this.props.lastState == null) {
@@ -57,6 +58,7 @@ export class AdministratorContainerFormCView extends React.Component<Props> {
                     </div>
                 </div>
                 <Submit className="btn btn-light">Išsaugoti</Submit>
+                {/* {<ErrorsContainer template={ErrorTemplate} />} */}
             </Form>
         </div>;
     }
