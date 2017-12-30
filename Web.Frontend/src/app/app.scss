@@ -5,3 +5,16 @@ html, body, #app-root {
     font-family: "Open Sans", sans-serif;
     height: 100%;
 }
+
+.field-container {
+    padding-bottom: 15px;
+
+    .field-title {
+        padding-bottom: 10px;
+        font-weight: 600;
+    }
+
+    div > * {
+        width: 100%;
+    }
+}

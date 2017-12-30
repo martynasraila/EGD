@@ -1,9 +1,9 @@
 import * as React from "react";
 import * as FluxUtils from "flux/utils";
 import { IdentityStore } from "../../stores/identity/identity-store";
-import { AdministratorRoutes } from "../../routes/administrator-routes";
+import { AdministratorRoutes } from "../../routers/administrator-routes";
 import { UserKind } from "../../stores/identity/identity-contracts";
-import { CollectorRoutes } from "../../routes/collector-routes";
+import { CollectorRoutes } from "../../routers/collector-routes";
 import { Login } from "../../modules/login/login";
 
 interface State {
@@ -26,10 +26,10 @@ class AuthenticationContainerClass extends React.Component<{}, State> {
     public render(): JSX.Element {
         switch (this.state.UserKind) {
             case UserKind.Administrator: {
-                return AdministratorRoutes;
+                return <AdministratorRoutes />;
             }
             case UserKind.Collector: {
-                return CollectorRoutes;
+                return <CollectorRoutes />;
             }
             default: {
                 return <Login />;

@@ -1,0 +1,48 @@
+.administrator-device-form-cview {
+    .device-form {
+        display: flex;
+        flex-direction: row;
+
+        .padding-side {
+            flex: 1 0 auto;
+            padding-left: 20px;
+
+            .side-title {
+                font-weight: 600;
+                padding-bottom: 20px;
+            }
+
+            .padding-content {
+                display: flex;
+
+                .padding-horizontal {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .padding-vertical {
+                    display: flex;
+                    justify-content: center;
+                }
+
+                .padding-container {
+                    width: 320px;
+                    height: 240px;
+                    border: 1px dashed black;
+                    margin: 20px;
+
+                    .photo-padding {
+                        width: 100%;
+                        height: 100%;
+                        
+                        .border-container {
+                            width: 100%;
+                            height: 100%;
+                            border: 1px solid black;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
