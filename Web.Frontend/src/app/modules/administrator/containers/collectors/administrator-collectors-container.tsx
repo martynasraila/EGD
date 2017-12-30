@@ -56,7 +56,7 @@ class AdministratorCollectorsContainerClass extends React.Component<{}, State> {
     public render(): JSX.Element {
         return <div className="administrator-collectors-container">
             <div className="controls-section">
-                <Link className="btn btn-light" to="/administrator/colllector/create">Pridėti naują</Link>
+                <Link className="btn btn-light" to="/administrator/collector/create">Pridėti naują</Link>
             </div>
             {this.renderStatuses()}
         </div>;

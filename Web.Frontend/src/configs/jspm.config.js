@@ -25,6 +25,7 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
+        "randomstring": "npm:randomstring@1.1.5",
         "@simplr/react-forms-validation": "npm:@simplr/react-forms-validation@4.3.3",
         "@simplr/react-forms": "npm:@simplr/react-forms@4.3.3",
         "@simplr/react-forms-dom": "npm:@simplr/react-forms-dom@4.3.3",
@@ -51,7 +52,7 @@ SystemJS.config({
         "react-dom": "npm:react-dom@15.6.2",
         "simplr-flux": "npm:simplr-flux@2.0.1",
         "stream": "npm:jspm-nodelibs-stream@0.2.1",
-        "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.1",
+        "string_decoder": "npm:jspm-nodelibs-string_decoder@0.2.2",
         "url": "npm:jspm-nodelibs-url@0.2.1",
         "util": "npm:jspm-nodelibs-util@0.2.2",
         "vm": "npm:jspm-nodelibs-vm@0.2.1",
@@ -105,11 +106,6 @@ SystemJS.config({
         "npm:jspm-nodelibs-os@0.2.1": {
             "map": {
                 "os-browserify": "npm:os-browserify@0.2.1"
-            }
-        },
-        "npm:jspm-nodelibs-string_decoder@0.2.1": {
-            "map": {
-                "string_decoder": "npm:string_decoder@0.10.31"
             }
         },
         "npm:jspm-nodelibs-url@0.2.1": {
@@ -567,6 +563,16 @@ SystemJS.config({
                 "@types/react": "npm:@types/react@15.6.7",
                 "@simplr/react-forms": "npm:@simplr/react-forms@4.3.3",
                 "@types/validator": "npm:@types/validator@6.3.0"
+            }
+        },
+        "npm:randomstring@1.1.5": {
+            "map": {
+                "array-uniq": "npm:array-uniq@1.0.2"
+            }
+        },
+        "npm:jspm-nodelibs-string_decoder@0.2.2": {
+            "map": {
+                "string_decoder": "npm:string_decoder@0.10.31"
             }
         }
     }
