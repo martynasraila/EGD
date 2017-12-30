@@ -1,10 +1,8 @@
 import * as React from "react";
-import { RouteComponentProps } from "react-router-dom";
+import { AdministratorCollectorsContainer } from "../containers/collectors/administrator-collectors-container";
 
-export class AdministratorCollectorsRoute extends React.Component<RouteComponentProps<{}>> {
+export class AdministratorCollectorsRoute extends React.Component {
     public render(): JSX.Element {
-        return <div>
-            Collectors route
-        </div>;
+        return <AdministratorCollectorsContainer />;
     }
 }
