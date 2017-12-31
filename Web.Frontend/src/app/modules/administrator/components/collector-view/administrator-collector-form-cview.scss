@@ -1,0 +1,32 @@
+.administrator-collector-form-cview {
+    form {
+        width: 500px;
+        padding-bottom: 40px;
+
+        .submit-container {
+            padding-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .error-container {
+            flex: 1 0 auto;
+            color: red;
+
+            .error-item {
+                padding-bottom: 10px;
+            }
+        }
+    }
+
+    .form-field {
+        font-size: 20px;
+        padding-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+
+        label {
+            padding-bottom: 15px;
+            font-weight: 600;
+        }
+    }
+}

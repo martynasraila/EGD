@@ -37,18 +37,18 @@ class AdministratorContainersContainerClass extends React.Component<{}, State> {
         switch (this.state.Status) {
             case Abstractions.ItemStatus.Init:
             case Abstractions.ItemStatus.Pending: {
-                return <div>Loading</div>;
+                return <div>Kraunama...</div>;
             }
             case Abstractions.ItemStatus.Loaded: {
                 return <AdministratorContainersCView items={this.state.Items} />;
             }
-            case Abstractions.ItemStatus.Failed: {
-                return <div>Failed to load list.</div>;
-            }
             case Abstractions.ItemStatus.NoData: {
                 return <div>
-                    No items found.
+                    Sąrašas tuščias.
                 </div>;
+            }
+            case Abstractions.ItemStatus.Failed: {
+                return <div>Nepavyko užkrauti sąrašo.</div>;
             }
         }
     }
