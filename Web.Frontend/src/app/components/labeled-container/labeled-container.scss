@@ -1,8 +1,16 @@
 .labeled-container {
-    h1 {
-        font-size: 25px;
+    .header {
         border-bottom: 1px solid black;
-        padding: 20px 0;
         margin-bottom: 20px;
+        padding: 20px 0;
+
+        display: flex;
+        justify-content: space-between;
+
+        .title {
+            h1 {
+                font-size: 25px;
+            }
+        }
     }
 }
