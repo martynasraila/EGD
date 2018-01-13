@@ -13,7 +13,7 @@ import "./administrator-containers-container.css";
 
 interface State {
     Status: Abstractions.ItemStatus;
-    Items: Immutable.Map<string, ContainerDto>;
+    Items: Immutable.Map<number, ContainerDto>;
 }
 
 class AdministratorContainersContainerClass extends React.Component<{}, State> {

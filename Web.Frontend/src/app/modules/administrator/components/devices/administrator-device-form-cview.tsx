@@ -12,12 +12,12 @@ interface Props {
 }
 
 interface FormData {
-    PhotoStreak: number;
-    ConfigurationStreak: number;
-    PaddingLeft: number;
-    PaddingRight: number;
-    PaddingTop: number;
-    PaddingBottom: number;
+    photoStreak: number;
+    configurationStreak: number;
+    paddingLeft: number;
+    paddingRight: number;
+    paddingTop: number;
+    paddingBottom: number;
 }
 
 // TODO: implement validation.
@@ -27,7 +27,7 @@ export class AdministratorDeviceFormCView extends React.Component<Props, FormDat
         let formData;
 
         if (props.device != null) {
-            const { Id, ...rest } = props.device;
+            const { id, ...rest } = props.device;
             formData = rest;
         } else {
             formData = this.defaultFormData;
@@ -37,44 +37,44 @@ export class AdministratorDeviceFormCView extends React.Component<Props, FormDat
     }
 
     private onFormChange: FormOnChangeCallback = (event, newValue, fieldId, store) => {
-        this.setState(store.ToObject());
+        this.setState(store.ToObject<FormData>());
     }
 
     private get defaultFormData(): FormData {
         return {
-            ConfigurationStreak: 10,
-            PaddingBottom: 10,
-            PaddingLeft: 10,
-            PaddingRight: 10,
-            PaddingTop: 10,
-            PhotoStreak: 10
+            configurationStreak: 10,
+            paddingBottom: 10,
+            paddingLeft: 10,
+            paddingRight: 10,
+            paddingTop: 10,
+            photoStreak: 10
         };
     }
 
     public render(): JSX.Element {
-        const padding = `${this.state.PaddingTop}px ${this.state.PaddingRight}px ${this.state.PaddingBottom}px ${this.state.PaddingLeft}px`;
+        const padding = `${this.state.paddingTop}px ${this.state.paddingRight}px ${this.state.paddingBottom}px ${this.state.paddingLeft}px`;
 
         return <div className="administrator-device-form-cview">
-            <Form formId="device-form" className="device-form" onChange={this.onFormChange}>
+            <Form formId="device-form" className="device-form" onChange={this.onFormChange} onSubmit={this.props.onSubmit}>
                 <div className="info-side">
                     <div className="field-container">
                         <div className="field-title">Nuotraukos darymo intervalas (min)</div>
-                        <Number name="PhotoStreak" defaultValue={this.state.PhotoStreak}></Number>
+                        <Number name="photoStreak" defaultValue={this.state.photoStreak}></Number>
                     </div>
                     <div className="field-container">
                         <div className="field-title">Konfigūracijos atnaujinimo intervalas (min)</div>
-                        <Number name="ConfigurationStreak" defaultValue={this.state.ConfigurationStreak}></Number>
+                        <Number name="configurationStreak" defaultValue={this.state.configurationStreak}></Number>
                     </div>
                 </div>
                 <div className="padding-side">
                     <div className="side-title">Analizuojama erdvė</div>
                     <div className="padding-content">
                         <div className="padding-horizontal">
-                            <Number name="PaddingLeft" defaultValue={this.state.PaddingLeft}></Number>
+                            <Number name="paddingLeft" defaultValue={this.state.paddingLeft}></Number>
                         </div>
                         <div>
                             <div className="padding-vertical">
-                                <Number name="PaddingTop" defaultValue={this.state.PaddingTop}></Number>
+                                <Number name="paddingTop" defaultValue={this.state.paddingTop}></Number>
                             </div>
                             <div className="padding-container">
                                 <div className="photo-padding" style={{ padding: padding }}>
@@ -82,11 +82,11 @@ export class AdministratorDeviceFormCView extends React.Component<Props, FormDat
                                 </div>
                             </div>
                             <div className="padding-vertical">
-                                <Number name="PaddingBottom" defaultValue={this.state.PaddingBottom}></Number>
+                                <Number name="paddingBottom" defaultValue={this.state.paddingBottom}></Number>
                             </div>
                         </div>
                         <div className="padding-horizontal">
-                            <Number name="PaddingRight" defaultValue={this.state.PaddingRight}></Number>
+                            <Number name="paddingRight" defaultValue={this.state.paddingRight}></Number>
                         </div>
                     </div>
                 </div>

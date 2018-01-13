@@ -1,21 +1,13 @@
 import { Dispatcher } from "simplr-flux";
-import { UserKind } from "../../stores/identity/identity-contracts";
 import { IdentityActions } from "./identity-actions";
+import { IdentityDto } from "../../stores/identity/identity-store";
 
 export class IdentityActionsCreators {
-    public static UserLoggedIn(userId: string, userKind: UserKind): void {
-        Dispatcher.dispatch(new IdentityActions.UserLoggedIn(userId, userKind));
+    public static UserLoggedIn(identity: IdentityDto): void {
+        Dispatcher.dispatch(new IdentityActions.UserLoggedIn(identity));
     }
 
     public static UserLoggedOut(): void {
         Dispatcher.dispatch(new IdentityActions.UserLoggedOut);
     }
-
-    // public static AuthenticationRequired(userName: string, password: string): void {
-
-    // }
-
-    // public static AuthenticationFailed(): void {
-
-    // }
 }

@@ -1,4 +1,6 @@
 import * as React from "react";
+import * as url from "url";
+
 import { Container } from "flux/utils";
 import { Abstractions } from "simplr-flux";
 import { ContainerDto } from "../../../../stores/containers/containers-contracts";
@@ -8,9 +10,11 @@ import { DeviceDto } from "../../../../stores/devices/devices-contracts";
 import { LabeledContainer } from "../../../../components/labeled-container/labeled-container";
 import { AdministratorDeviceFormCView } from "../../components/devices/administrator-device-form-cview";
 import { Link } from "react-router-dom";
+import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
+import { Configuration } from "../../../../configuration";
 
 interface Props {
-    containerId: number;
+    containerId?: number;
 }
 
 interface State {
@@ -26,6 +30,13 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
     }
 
     public static calculateState(state: State, props: Props): State {
+        if (props.containerId == null) {
+            return {
+                Status: Abstractions.ItemStatus.NoData,
+                DeviceStatus: Abstractions.ItemStatus.NoData
+            };
+        }
+
         const item = ContainersMapStore.get(props.containerId.toString());
 
         if (item.Value == null) {
@@ -37,7 +48,7 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
             };
         }
 
-        if (item.Value.EgdId == null) {
+        if (item.Value.egDid == null) {
             return {
                 Container: item.Value,
                 Status: item.Status,
@@ -46,7 +57,7 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
             };
         }
 
-        const deviceItem = DevicesMapStore.get(item.Value.EgdId.toString());
+        const deviceItem = DevicesMapStore.get(item.Value.egDid.toString());
 
         return {
             Container: item.Value,
@@ -56,9 +67,32 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
         };
     }
 
-    // TODO: implement.
-    private onDeviceSubmit = () => {
-        throw new Error("Not implemented.");
+    private onDeviceSubmit: FormOnSubmitCallback = async (event, store) => {
+        const submitData = store.ToObject<FormData>();
+
+        const path = url.resolve(Configuration.Api.Path, "api/EGD");
+
+        try {
+            await window.fetch(path, {
+                method: "PUT",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                } as any,
+                body: JSON.stringify({
+                    ...this.state.Device,
+                    ...submitData
+                })
+            });
+
+            if (this.state.Device != null) {
+                DevicesMapStore.InvalidateCache(this.state.Device.id.toString());
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert("Nepavyko išsaugoti pakeitimų.");
+        }
     }
 
     private renderStatuses(): JSX.Element {
@@ -88,7 +122,7 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
     }
 
     public render(): JSX.Element {
-        const deviceIdString = this.state.Container ? ` (${this.state.Container.EgdId})` : undefined;
+        const deviceIdString = this.state.Container ? ` (${this.state.Container.egDid})` : "";
 
         return <LabeledContainer title={`Įrenginys ${deviceIdString}`} className="administrator-device-view-container">
             {this.renderStatuses()}

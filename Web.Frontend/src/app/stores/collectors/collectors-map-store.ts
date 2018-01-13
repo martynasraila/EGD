@@ -1,5 +1,7 @@
+import * as url from "url";
 import { MapStore } from "simplr-flux";
 import { CollectorDto } from "./collectors-contracts";
+import { Configuration } from "../../configuration";
 
 type CollectorsDictionary = { [key: string]: CollectorDto };
 
@@ -11,26 +13,25 @@ class CollectorsMapStoreClass extends MapStore<CollectorDto> {
         // TODO: implement.
 
         for (const key of keys) {
-            // const promise = fetch(`https://jsonplaceholder.typicode.com/posts/${key}`)
-            //     .then(data => data.json())
-            //     .then((data: Post) => {
-            //         postsDictionary[key] = data;
-            //     });
+            const promise = new Promise<void>(async (resolve, reject) => {
+                const path = url.resolve(Configuration.Api.Path, `api/collectors/${key}`);
 
-            const promise = new Promise<void>(resolve => {
-                setTimeout(() => {
-                    const sampleItem: CollectorDto = {
-                        Id: 1,
-                        Title: "Sample title #1.",
-                        Description: "Some description about collector.",
-                        PasswordHash: "027bd14fb78fd9ca8ef115c6136f1d7b3a810af2c5082c3616b6797467179887",
-                        UserName: "collector1"
-                    };
+                try {
+                    const response = await window.fetch(path, {
+                        method: "GET", headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                        } as any
+                    });
 
-                    itemsDictionary[key] = sampleItem;
+                    const data = await response.json() as CollectorDto;
 
+                    itemsDictionary[key] = data;
                     resolve();
-                });
+                } catch (error) {
+                    console.error(error);
+                    reject(error);
+                }
             });
 
             promises.push(promise);

@@ -1,11 +1,14 @@
 import * as React from "react";
 import * as History from "history";
+import * as url from "url";
+
 import { Form, Text, Submit, ErrorsContainer } from "@simplr/react-forms-dom";
 import { RequiredValidator } from "@simplr/react-forms-validation";
 import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts/form";
 
 import { ErrorTemplate } from "../../../../helpers/form-helpers";
 import { ContainersActionsCreators } from "../../../../actions/containers/containers-actions-creators";
+import { Configuration } from "../../../../configuration";
 
 import "./administrator-container-create-cview.css";
 
@@ -13,12 +16,32 @@ interface Props {
     history: History.History;
 }
 
+interface ContainerCreateSubmitDto {
+    address: string;
+    description: string;
+}
+
 export class AdministratorContainerCreateCView extends React.Component<Props> {
-    private onSubmit: FormOnSubmitCallback = (event, store) => {
-        // TODO: implement.
-        // const submitData = store.ToObject<LoginSubmitDto>();
-        ContainersActionsCreators.ClearRequired();
-        this.props.history.push("/administrator/containers");
+    private onSubmit: FormOnSubmitCallback = async (event, store) => {
+        const submitData = store.ToObject<ContainerCreateSubmitDto>();
+        const path = url.resolve(Configuration.Api.Path, `api/containers`);
+
+        try {
+            await window.fetch(path, {
+                method: "POST", headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                } as any,
+                body: JSON.stringify(submitData)
+            });
+
+            ContainersActionsCreators.ClearRequired();
+            this.props.history.push("/administrator/containers");
+        } catch (error) {
+            console.error(error);
+            alert("Nepavyko sukurti konteinerio. Bandykite dar kartą.");
+        }
+
     }
 
     public render(): JSX.Element {
@@ -28,7 +51,7 @@ export class AdministratorContainerCreateCView extends React.Component<Props> {
                     <label htmlFor="Address">
                         Adresas
                     </label>
-                    <Text name="Address" id="Address">
+                    <Text name="address" id="Address">
                         <RequiredValidator error="Adresas yra privalomas." />
                     </Text>
                 </div>
@@ -36,12 +59,12 @@ export class AdministratorContainerCreateCView extends React.Component<Props> {
                     <label htmlFor="Description">
                         Aprašymas
                     </label>
-                    <Text name="Description" id="Description">
+                    <Text name="description" id="Description">
                         <RequiredValidator error="Aprašymas yra privalomas." />
                     </Text>
                 </div>
                 <div className="submit-container">
-                    <Submit disableOnPristine disableOnError>Pridėti</Submit>
+                    <Submit disableOnPristine disableOnError className="btn btn-light">Pridėti</Submit>
                 </div>
                 <ErrorsContainer template={ErrorTemplate} />
             </Form>

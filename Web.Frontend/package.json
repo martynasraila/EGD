@@ -24,11 +24,12 @@
     "@types/flux": "^3.1.0",
     "@types/node": "^7.0.28",
     "@types/randomstring": "^1.1.6",
-    "@types/react": "^15.0.28",
-    "@types/react-dom": "^15.5.0",
+    "@types/react": "^16.0.34",
+    "@types/react-dom": "^16.0.3",
     "@types/react-router-dom": "^4.2.3",
     "@types/systemjs": "^0.19.32",
     "simplr-flux": "^2.0.1",
+    "simplr-loaders": "^2.1.2",
     "simplr-tslint": "0.0.1"
   },
   "jspm": {
@@ -50,9 +51,9 @@
       "flux": "npm:flux@^3.1.0",
       "json": "github:systemjs/plugin-json@^0.3.0",
       "randomstring": "npm:randomstring@^1.1.5",
-      "react-dom": "npm:react-dom@^15.4.1",
       "react-router-dom": "npm:react-router-dom@^4.2.2",
-      "simplr-flux": "npm:simplr-flux@^2.0.1"
+      "simplr-flux": "npm:simplr-flux@^2.0.1",
+      "simplr-loaders": "npm:simplr-loaders@^2.1.2"
     },
     "devDependencies": {},
     "peerDependencies": {
@@ -71,6 +72,7 @@
       "path": "npm:jspm-nodelibs-path@^0.2.0",
       "process": "npm:jspm-nodelibs-process@^0.2.0",
       "react": "npm:react@^15.6.2",
+      "react-dom": "npm:react-dom@^15.4.1",
       "stream": "npm:jspm-nodelibs-stream@^0.2.0",
       "string_decoder": "npm:jspm-nodelibs-string_decoder@^0.2.0",
       "url": "npm:jspm-nodelibs-url@^0.2.0",

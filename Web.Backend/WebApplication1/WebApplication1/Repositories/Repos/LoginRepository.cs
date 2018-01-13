@@ -20,8 +20,9 @@ namespace EGD.Repositories.Repos
 
         public object Get(string UserName)
         {
-            string sql = "SELECT Id FROM Collectors WHERE UserName = @UserName;" +
-                " SELECT Id FROM Administrators WHERE UserName = @UserName;";
+            // TODO: fix wrong return data.
+            string sql = "SELECT Id, PasswordHash FROM Collectors WHERE UserName = @UserName;" +
+                " SELECT Id, PasswordHash FROM Administrators WHERE UserName = @UserName;";
 
             using (IDbConnection conn = Connection)
             {

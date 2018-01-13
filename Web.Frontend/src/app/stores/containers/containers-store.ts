@@ -1,11 +1,14 @@
 import * as Immutable from "immutable";
+import * as url from "url";
 import { ReduceStore, ActionHandler, Abstractions } from "simplr-flux";
+
 import { ContainerDto } from "./containers-contracts";
 import { ContainersActions } from "../../actions/containers/containers-actions";
 import { ContainersActionsCreators } from "../../actions/containers/containers-actions-creators";
+import { Configuration } from "../../configuration";
 
 export interface StoreState {
-    Items: Immutable.Map<string, ContainerDto>;
+    Items: Immutable.Map<number, ContainerDto>;
     Status: Abstractions.ItemStatus;
 }
 
@@ -18,31 +21,34 @@ class ContainerStoreClass extends ReduceStore<StoreState> {
         this.registerAction(ContainersActions.DataLoadFailed, this.onDataLoadFailed);
     }
 
-    private onLoadRequired: ActionHandler<ContainersActions.LoadRequired, StoreState> = (action, state) => {
-        setTimeout(() => {
-            const sampleData: { [key: number]: ContainerDto } = {
-                1: {
-                    Address: "Sample address",
-                    Description: "Sample description",
-                    EgdId: 1,
-                    Id: 1,
-                    LastStateId: 2,
-                    Latitude: 12,
-                    Longitude: 12
-                },
-                2: {
-                    Address: "Sample address",
-                    Description: "Sample description",
-                    EgdId: 2,
-                    Id: 2,
-                    LastStateId: 2,
-                    Latitude: 12,
-                    Longitude: 12
-                }
-            };
+    private async getData(): Promise<void> {
+        const path = url.resolve(Configuration.Api.Path, "api/containers");
 
-            ContainersActionsCreators.DataLoaded(Immutable.Map(sampleData));
-        }, 100);
+        try {
+            const response = await window.fetch(path, {
+                method: "GET", headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                } as any
+            });
+
+            const itemsArray = await response.json() as ContainerDto[];
+
+            const itemsMap = Immutable.Map<number, ContainerDto>().withMutations(mutator => {
+                itemsArray.forEach(item => {
+                    mutator.set(item.id, item);
+                });
+            });
+
+            ContainersActionsCreators.DataLoaded(itemsMap);
+        } catch (error) {
+            console.error(error);
+            ContainersActionsCreators.DataLoadFailed();
+        }
+    }
+
+    private onLoadRequired: ActionHandler<ContainersActions.LoadRequired, StoreState> = (action, state) => {
+        this.getData();
 
         return {
             ...state,
@@ -70,7 +76,7 @@ class ContainerStoreClass extends ReduceStore<StoreState> {
         };
     }
 
-    public get Items(): Immutable.Map<string, ContainerDto> {
+    public get Items(): Immutable.Map<number, ContainerDto> {
         return this.getState().Items;
     }
 

@@ -1,5 +1,8 @@
+import * as url from "url";
+
 import { MapStore } from "simplr-flux";
 import { ContainerDto } from "./containers-contracts";
+import { Configuration } from "../../configuration";
 
 type ContainersDictionary = { [key: string]: ContainerDto };
 
@@ -8,31 +11,26 @@ class ContainersMapStoreClass extends MapStore<ContainerDto> {
         const promises: Array<Promise<void>> = [];
         const itemsDictionary: ContainersDictionary = {};
 
-        // TODO: implement.
-
         for (const key of keys) {
-            // const promise = fetch(`https://jsonplaceholder.typicode.com/posts/${key}`)
-            //     .then(data => data.json())
-            //     .then((data: Post) => {
-            //         postsDictionary[key] = data;
-            //     });
+            const promise = new Promise<void>(async (resolve, reject) => {
+                const path = url.resolve(Configuration.Api.Path, `api/containers/${key}`);
 
-            const promise = new Promise<void>(resolve => {
-                setTimeout(() => {
-                    const sampleContainer: ContainerDto = {
-                        Address: "Sample address",
-                        Description: "Sample description",
-                        EgdId: 1,
-                        Id: Number(key),
-                        LastStateId: 2,
-                        Latitude: 12,
-                        Longitude: 12
-                    };
+                try {
+                    const response = await window.fetch(path, {
+                        method: "GET", headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                        } as any
+                    });
 
-                    itemsDictionary[key] = sampleContainer;
+                    const data = await response.json() as ContainerDto;
 
+                    itemsDictionary[key] = data;
                     resolve();
-                });
+                } catch (error) {
+                    console.error(error);
+                    reject(error);
+                }
             });
 
             promises.push(promise);

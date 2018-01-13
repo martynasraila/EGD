@@ -12,9 +12,6 @@ SystemJS.config({
                 }
             }
         }
-    },
-    map: {
-        "whatwg-fetch": "npm:whatwg-fetch@2.0.3"
     }
 });
 
@@ -25,6 +22,7 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
+        "simplr-loaders": "npm:simplr-loaders@2.1.2",
         "randomstring": "npm:randomstring@1.1.5",
         "@simplr/react-forms-validation": "npm:@simplr/react-forms-validation@4.3.3",
         "@simplr/react-forms": "npm:@simplr/react-forms@4.3.3",
@@ -164,7 +162,7 @@ SystemJS.config({
         },
         "npm:diffie-hellman@5.0.2": {
             "map": {
-                "randombytes": "npm:randombytes@2.0.5",
+                "randombytes": "npm:randombytes@2.0.6",
                 "miller-rabin": "npm:miller-rabin@4.0.1",
                 "bn.js": "npm:bn.js@4.11.8"
             }
@@ -182,7 +180,7 @@ SystemJS.config({
         },
         "npm:public-encrypt@4.0.0": {
             "map": {
-                "randombytes": "npm:randombytes@2.0.5",
+                "randombytes": "npm:randombytes@2.0.6",
                 "create-hash": "npm:create-hash@1.1.3",
                 "browserify-rsa": "npm:browserify-rsa@4.0.1",
                 "bn.js": "npm:bn.js@4.11.8",
@@ -207,11 +205,6 @@ SystemJS.config({
                 "cipher-base": "npm:cipher-base@1.0.4"
             }
         },
-        "npm:randombytes@2.0.5": {
-            "map": {
-                "safe-buffer": "npm:safe-buffer@5.1.1"
-            }
-        },
         "npm:create-ecdh@4.0.0": {
             "map": {
                 "elliptic": "npm:elliptic@6.4.0",
@@ -234,7 +227,7 @@ SystemJS.config({
         "npm:browserify-rsa@4.0.1": {
             "map": {
                 "bn.js": "npm:bn.js@4.11.8",
-                "randombytes": "npm:randombytes@2.0.5"
+                "randombytes": "npm:randombytes@2.0.6"
             }
         },
         "npm:elliptic@6.4.0": {
@@ -385,7 +378,7 @@ SystemJS.config({
                 "pbkdf2": "npm:pbkdf2@3.0.14",
                 "diffie-hellman": "npm:diffie-hellman@5.0.2",
                 "public-encrypt": "npm:public-encrypt@4.0.0",
-                "randombytes": "npm:randombytes@2.0.5",
+                "randombytes": "npm:randombytes@2.0.6",
                 "browserify-sign": "npm:browserify-sign@4.0.4",
                 "create-hash": "npm:create-hash@1.1.3",
                 "randomfill": "npm:randomfill@1.0.3"
@@ -402,7 +395,7 @@ SystemJS.config({
         },
         "npm:randomfill@1.0.3": {
             "map": {
-                "randombytes": "npm:randombytes@2.0.5",
+                "randombytes": "npm:randombytes@2.0.6",
                 "safe-buffer": "npm:safe-buffer@5.1.1"
             }
         },
@@ -573,6 +566,23 @@ SystemJS.config({
         "npm:jspm-nodelibs-string_decoder@0.2.2": {
             "map": {
                 "string_decoder": "npm:string_decoder@0.10.31"
+            }
+        },
+        "npm:simplr-loaders@2.1.2": {
+            "map": {
+                "@types/react-dom": "npm:@types/react-dom@16.0.3",
+                "@types/react": "npm:@types/react@16.0.34"
+            }
+        },
+        "npm:@types/react-dom@16.0.3": {
+            "map": {
+                "@types/react": "npm:@types/react@16.0.34",
+                "@types/node": "npm:@types/node@9.3.0"
+            }
+        },
+        "npm:randombytes@2.0.6": {
+            "map": {
+                "safe-buffer": "npm:safe-buffer@5.1.1"
             }
         }
     }

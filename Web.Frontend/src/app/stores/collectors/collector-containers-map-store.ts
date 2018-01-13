@@ -1,18 +1,19 @@
+import * as Immutable from "immutable";
 import * as url from "url";
 import { MapStore } from "simplr-flux";
-import { DeviceDto } from "./devices-contracts";
 import { Configuration } from "../../configuration";
+import { CollectorContainerDto } from "./collectors-contracts";
 
-type ItemsDictionary = { [key: string]: DeviceDto };
+type CollectorContainersDictionary = { [key: string]: Immutable.List<CollectorContainerDto> };
 
-class DevicesMapStoreClass extends MapStore<DeviceDto> {
-    protected async requestData(keys: string[]): Promise<ItemsDictionary> {
+class CollectorContainersMapStoreClass extends MapStore<Immutable.List<CollectorContainerDto>> {
+    protected async requestData(keys: string[]): Promise<CollectorContainersDictionary> {
         const promises: Array<Promise<void>> = [];
-        const itemsDictionary: ItemsDictionary = {};
+        const itemsDictionary: CollectorContainersDictionary = {};
 
         for (const key of keys) {
             const promise = new Promise<void>(async (resolve, reject) => {
-                const path = url.resolve(Configuration.Api.Path, `api/egd/${key}`);
+                const path = url.resolve(Configuration.Api.Path, `Api/Collectors_Containers/cc/collector/${key}`);
 
                 try {
                     const response = await window.fetch(path, {
@@ -22,9 +23,9 @@ class DevicesMapStoreClass extends MapStore<DeviceDto> {
                         } as any
                     });
 
-                    const data = await response.json() as DeviceDto;
+                    const data = await response.json() as CollectorContainerDto[];
 
-                    itemsDictionary[key] = data;
+                    itemsDictionary[key] = Immutable.List<CollectorContainerDto>(data);
                     resolve();
                 } catch (error) {
                     console.error(error);
@@ -41,4 +42,4 @@ class DevicesMapStoreClass extends MapStore<DeviceDto> {
     }
 }
 
-export const DevicesMapStore = new DevicesMapStoreClass();
+export const CollectorContainersMapStore = new CollectorContainersMapStoreClass();

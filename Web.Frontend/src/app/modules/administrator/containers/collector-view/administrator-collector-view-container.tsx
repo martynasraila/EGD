@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Container } from "flux/utils";
 import { Abstractions } from "simplr-flux";
+import { SpinnerLoader } from "simplr-loaders";
 
 import { CollectorsMapStore } from "../../../../stores/collectors/collectors-map-store";
 import { CollectorDto } from "../../../../stores/collectors/collectors-contracts";
@@ -33,7 +34,7 @@ class AdministratorCollectorViewContainerClass extends React.Component<Props, St
         switch (this.state.Status) {
             case Abstractions.ItemStatus.Init:
             case Abstractions.ItemStatus.Pending: {
-                return <div>Kraunama...</div>;
+                return <SpinnerLoader />;
             }
             case Abstractions.ItemStatus.Loaded: {
                 if (this.state.Collector != null) {

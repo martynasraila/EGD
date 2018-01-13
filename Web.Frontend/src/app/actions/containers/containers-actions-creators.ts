@@ -12,7 +12,7 @@ export namespace ContainersActionsCreators {
         Dispatcher.dispatch(new ContainersActions.ClearRequired);
     }
 
-    export function DataLoaded(items: Immutable.Map<string, ContainerDto>): void {
+    export function DataLoaded(items: Immutable.Map<number, ContainerDto>): void {
         Dispatcher.dispatch(new ContainersActions.DataLoaded(items));
     }
 

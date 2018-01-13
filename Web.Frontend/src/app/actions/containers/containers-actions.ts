@@ -5,9 +5,9 @@ export namespace ContainersActions {
     export class LoadRequired { }
     export class ClearRequired { }
     export class DataLoaded {
-        constructor(private items: Immutable.Map<string, ContainerDto>) { }
+        constructor(private items: Immutable.Map<number, ContainerDto>) { }
 
-        public get Items(): Immutable.Map<string, ContainerDto> {
+        public get Items(): Immutable.Map<number, ContainerDto> {
             return this.items;
         }
     }

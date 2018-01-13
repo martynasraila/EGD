@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { ContainerDto } from "../../stores/containers/containers-contracts";
 
 interface Props {
-    items: Immutable.Map<string, ContainerDto>;
+    items: Immutable.Map<string | number, ContainerDto>;
     isAdministrator: boolean;
 }
 
@@ -38,16 +38,16 @@ export class ContainersTableView extends React.Component<Props> {
                             return null;
                         }
 
-                        return <tr key={`table-key-${item.Id}`}>
+                        return <tr key={`table-key-${item.id}`}>
                             <th>
-                                {this.renderIdCell(item.Id)}
+                                {this.renderIdCell(item.id)}
                             </th>
-                            <th>{item.LastStateId}</th>
-                            <th>{item.LastStateId}</th>
-                            <th>{item.Description}</th>
-                            <th>{item.Address}</th>
-                            <th>{`${item.Longitude}, ${item.Latitude}`}</th>
-                            <th>{item.EgdId}</th>
+                            <th>{item.lastStateid}</th>
+                            <th>{item.lastStateid}</th>
+                            <th>{item.description}</th>
+                            <th>{item.address}</th>
+                            <th>{`${item.longitude}, ${item.latitude}`}</th>
+                            <th>{item.egDid}</th>
                         </tr>;
                     })
                     .toArray()}

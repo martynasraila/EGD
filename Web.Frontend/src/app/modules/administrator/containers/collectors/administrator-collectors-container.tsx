@@ -3,6 +3,7 @@ import * as Immutable from "immutable";
 import { Container } from "flux/utils";
 import { Abstractions } from "simplr-flux";
 import { Link } from "react-router-dom";
+import { SpinnerLoader } from "simplr-loaders";
 
 import { CollectorsStore } from "../../../../stores/collectors/collectors-store";
 import { CollectorsActionsCreators } from "../../../../actions/collectors/collectors-actions-creators";
@@ -13,7 +14,7 @@ import "./administrator-collectors-container.css";
 
 interface State {
     Status: Abstractions.ItemStatus;
-    Items: Immutable.Map<string, CollectorDto>;
+    Items: Immutable.Map<number, CollectorDto>;
 }
 
 class AdministratorCollectorsContainerClass extends React.Component<{}, State> {
@@ -37,17 +38,17 @@ class AdministratorCollectorsContainerClass extends React.Component<{}, State> {
         switch (this.state.Status) {
             case Abstractions.ItemStatus.Init:
             case Abstractions.ItemStatus.Pending: {
-                return <div>Loading</div>;
+                return <SpinnerLoader />;
             }
             case Abstractions.ItemStatus.Loaded: {
                 return <AdministratorCollectorsCView items={this.state.Items} />;
             }
             case Abstractions.ItemStatus.Failed: {
-                return <div>Failed to load list.</div>;
+                return <div>Nepavyko užkrauti sąrašo.</div>;
             }
             case Abstractions.ItemStatus.NoData: {
                 return <div>
-                    No items found.
+                    Šiuo metu vežėjo nėra.
                 </div>;
             }
         }

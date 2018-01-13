@@ -3,29 +3,59 @@ import { UserKind } from "./identity-contracts";
 import { IdentityActions } from "../../actions/identity/identity-actions";
 
 interface StoreState {
-    UserId?: string;
+    UserId?: number;
     UserKind?: UserKind;
+    UserTitle?: string;
+    UserName?: string;
 }
+
+export interface IdentityDto {
+    userKind: UserKind;
+    id: number;
+    userName?: string;
+    passwordHash?: string;
+    title?: string;
+}
+
+const IDENTITY_ITEM_KEY: string = "Identity";
 
 class IdentityStoreClass extends ReduceStore<StoreState> {
     constructor() {
         super();
         this.registerAction(IdentityActions.UserLoggedIn, this.onUserLoggedIn);
-        this.registerAction(IdentityActions.UserLoggedOut, this.cleanUpStore.bind(this));
+        this.registerAction(IdentityActions.UserLoggedOut, this.onUserLoggedOut);
     }
 
-    private onUserLoggedIn: ActionHandler<IdentityActions.UserLoggedIn, StoreState> = (action, state) =>
-        ({
-            ...state,
-            UserId: action.UserId,
-            UserKind: action.UserKind
-        })
+    private onUserLoggedOut: ActionHandler<IdentityActions.UserLoggedOut, StoreState> = (action, state) => {
+        localStorage.removeItem(IDENTITY_ITEM_KEY);
+        return this.getInitialState();
+    }
+
+    private onUserLoggedIn: ActionHandler<IdentityActions.UserLoggedIn, StoreState> = (action, state) => {
+        const newState = {
+            UserKind: action.Identity.userKind,
+            UserId: action.Identity.id,
+            UserTitle: action.Identity.title,
+            UserName: action.Identity.userName
+        };
+
+        localStorage.setItem(IDENTITY_ITEM_KEY, JSON.stringify(newState));
+
+        return newState;
+    }
 
     public getInitialState(): StoreState {
-        return {
-            // TODO: change.
-            UserKind: UserKind.Administrator
-        };
+        try {
+            const identity = localStorage.getItem(IDENTITY_ITEM_KEY);
+
+            if (identity != null) {
+                return JSON.parse(identity);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+
+        return {};
     }
 
     public get IsAuthenticated(): boolean {

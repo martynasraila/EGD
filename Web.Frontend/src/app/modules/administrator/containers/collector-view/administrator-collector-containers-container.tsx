@@ -2,11 +2,15 @@ import * as React from "react";
 import * as Immutable from "immutable";
 import { Container } from "flux/utils";
 import { Abstractions } from "simplr-flux";
+import { BubbleLoader } from "simplr-loaders";
+import { Link } from "react-router-dom";
+
 import { ContainerDto } from "../../../../stores/containers/containers-contracts";
-import { CollectorContainersMapStore } from "../../../../stores/collectors/collector-conatiners-map-store";
+import { CollectorContainersMapStore } from "../../../../stores/collectors/collector-containers-map-store";
 import { LabeledContainer } from "../../../../components/labeled-container/labeled-container";
 import { ContainersTableView } from "../../../../components/containers-table/containers-table-view";
-import { Link } from "react-router-dom";
+import { ContainersMapStore } from "../../../../stores/containers/containers-map-store";
+import { ItemsStatusResolver } from "../../../../helpers/flux-helpers";
 
 interface Props {
     id: number;
@@ -19,15 +23,37 @@ interface State {
 
 class AdministratorCollectorContainersContainerClass extends React.Component<Props, State> {
     public static getStores(): Container.StoresList {
-        return [CollectorContainersMapStore];
+        return [CollectorContainersMapStore, ContainersMapStore];
     }
 
     public static calculateState(state: State, props: Props): State {
         const item = CollectorContainersMapStore.get(props.id.toString());
 
+        if (item.Value == null) {
+            return {
+                Items: undefined,
+                Status: item.Status
+            };
+        }
+
+        // x should be defined.
+        const containersList = item.Value.map<string>(x => x!.containerId.toString()).toArray();
+
+        const requestedContainers = ContainersMapStore.getAll(containersList);
+
+        const itemsStatus = ItemsStatusResolver(...requestedContainers.map(x => x!.Status).toArray());
+
+        if (itemsStatus !== Abstractions.ItemStatus.Loaded) {
+            return {
+                Status: itemsStatus
+            };
+        }
+
+        const itemsMap = requestedContainers.map(x => x!.Value as ContainerDto).toMap();
+
         return {
-            Items: item.Value,
-            Status: item.Status
+            Items: itemsMap,
+            Status: Abstractions.ItemStatus.Loaded
         };
     }
 
@@ -35,7 +61,7 @@ class AdministratorCollectorContainersContainerClass extends React.Component<Pro
         switch (this.state.Status) {
             case Abstractions.ItemStatus.Init:
             case Abstractions.ItemStatus.Pending: {
-                return <div>Loading</div>;
+                return <BubbleLoader />;
             }
             case Abstractions.ItemStatus.Loaded: {
                 if (this.state.Items != null && this.state.Items.size !== 0) {
@@ -44,11 +70,11 @@ class AdministratorCollectorContainersContainerClass extends React.Component<Pro
             }
             case Abstractions.ItemStatus.NoData: {
                 return <div>
-                    No items found.
+                    Konteinerių nerasta.
                 </div>;
             }
             case Abstractions.ItemStatus.Failed: {
-                return <div>Failed to load list.</div>;
+                return <div>Nepavyko užkrauti sąrašo.</div>;
             }
         }
     }

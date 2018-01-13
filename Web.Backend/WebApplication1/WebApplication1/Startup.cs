@@ -26,6 +26,16 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Policy", builder => builder
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials()
+                );
+            });
+
             services.AddScoped<IEGDRepository, EGDRepository>();
             services.AddScoped<IContainersRepository,ContainersRepository>();
             services.AddScoped<IStatesRepository, StatesRepository>();
@@ -47,6 +57,7 @@ namespace WebApplication1
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("Policy");
             app.UseMvc();
         }
     }
