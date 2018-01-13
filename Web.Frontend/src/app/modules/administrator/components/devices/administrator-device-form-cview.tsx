@@ -1,7 +1,11 @@
 import * as React from "react";
+import * as url from "url";
 import { Form, Number, Submit } from "@simplr/react-forms-dom";
 import { FormOnChangeCallback, FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
 import { DeviceDto } from "../../../../stores/devices/devices-contracts";
+
+import { DevicesMapStore } from "../../../../stores/devices/devices-map-store";
+import { Configuration } from "../../../../configuration";
 
 import "./administrator-device-form-cview.css";
 
@@ -55,7 +59,7 @@ export class AdministratorDeviceFormCView extends React.Component<Props, FormDat
         const padding = `${this.state.paddingTop}px ${this.state.paddingRight}px ${this.state.paddingBottom}px ${this.state.paddingLeft}px`;
 
         return <div className="administrator-device-form-cview">
-            <Form formId="device-form" className="device-form" onChange={this.onFormChange}>
+            <Form formId="device-form" className="device-form" onChange={this.onFormChange} onSubmit={this.props.onSubmit}>
                 <div className="info-side">
                     <div className="field-container">
                         <div className="field-title">Nuotraukos darymo intervalas (min)</div>

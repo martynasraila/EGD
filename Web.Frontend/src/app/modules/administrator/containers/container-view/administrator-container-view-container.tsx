@@ -34,12 +34,13 @@ class AdministratorContainerViewContainerClass extends React.Component<Props, St
             };
         }
 
-        const deviceItem = StatesMapStore.get(item.Value.lastStateid.toString());
+        const lastStateId = item.Value.lastStateid;
+        const lastStateItem = (lastStateId) ? StatesMapStore.get(lastStateId.toString()).Value : undefined;
 
         return {
             Container: item.Value,
             Status: item.Status,
-            LastState: deviceItem.Value
+            LastState: lastStateItem
         };
     }
 

@@ -1,4 +1,6 @@
 import * as React from "react";
+import * as url from "url";
+
 import { Container } from "flux/utils";
 import { Abstractions } from "simplr-flux";
 import { ContainerDto } from "../../../../stores/containers/containers-contracts";
@@ -8,6 +10,8 @@ import { DeviceDto } from "../../../../stores/devices/devices-contracts";
 import { LabeledContainer } from "../../../../components/labeled-container/labeled-container";
 import { AdministratorDeviceFormCView } from "../../components/devices/administrator-device-form-cview";
 import { Link } from "react-router-dom";
+import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
+import { Configuration } from "../../../../configuration";
 
 interface Props {
     containerId?: number;
@@ -63,9 +67,32 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
         };
     }
 
-    // TODO: implement.
-    private onDeviceSubmit = () => {
-        throw new Error("Not implemented.");
+    private onDeviceSubmit: FormOnSubmitCallback = async (event, store) => {
+        const submitData = store.ToObject<FormData>();
+
+        const path = url.resolve(Configuration.Api.Path, "api/EGD");
+
+        try {
+            await window.fetch(path, {
+                method: "PUT",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                } as any,
+                body: JSON.stringify({
+                    ...this.state.Device,
+                    ...submitData
+                })
+            });
+
+            if (this.state.Device != null) {
+                DevicesMapStore.InvalidateCache(this.state.Device.id.toString());
+            }
+
+        } catch (error) {
+            console.error(error);
+            alert("Nepavyko išsaugoti pakeitimų.");
+        }
     }
 
     private renderStatuses(): JSX.Element {
