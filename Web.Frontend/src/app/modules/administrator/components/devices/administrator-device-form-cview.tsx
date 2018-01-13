@@ -1,11 +1,7 @@
 import * as React from "react";
-import * as url from "url";
 import { Form, Number, Submit } from "@simplr/react-forms-dom";
 import { FormOnChangeCallback, FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
 import { DeviceDto } from "../../../../stores/devices/devices-contracts";
-
-import { DevicesMapStore } from "../../../../stores/devices/devices-map-store";
-import { Configuration } from "../../../../configuration";
 
 import "./administrator-device-form-cview.css";
 
