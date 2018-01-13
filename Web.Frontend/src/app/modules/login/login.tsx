@@ -12,9 +12,10 @@ import { IdentityActionsCreators } from "../../actions/identity/identity-actions
 
 import { ErrorTemplate } from "../../helpers/form-helpers";
 
-import "./login.css";
 import { Configuration } from "../../configuration";
 import { IdentityDto } from "../../stores/identity/identity-store";
+
+import "./login.css";
 
 interface LoginSubmitDto {
     Username: string;
@@ -32,7 +33,7 @@ export class Login extends React.Component {
                 method: "POST", headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
-                }
+                } as any
             });
 
             const identity = await response.json() as IdentityDto;

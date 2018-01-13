@@ -10,8 +10,4 @@ export class IdentityActionsCreators {
     public static UserLoggedOut(): void {
         Dispatcher.dispatch(new IdentityActions.UserLoggedOut);
     }
-
-    public static AuthenticationRequired(userName: string, password: string): void {
-        Dispatcher.dispatch(new IdentityActions.AuthenticationRequired(userName, password));
-    }
 }

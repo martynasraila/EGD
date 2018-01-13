@@ -1,4 +1,4 @@
-import { ReduceStore, ActionHandler, Abstractions } from "simplr-flux";
+import { ReduceStore, ActionHandler } from "simplr-flux";
 import { UserKind } from "./identity-contracts";
 import { IdentityActions } from "../../actions/identity/identity-actions";
 

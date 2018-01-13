@@ -37,7 +37,7 @@ export class AdministratorDeviceFormCView extends React.Component<Props, FormDat
     }
 
     private onFormChange: FormOnChangeCallback = (event, newValue, fieldId, store) => {
-        this.setState(store.ToObject());
+        this.setState(store.ToObject<FormData>());
     }
 
     private get defaultFormData(): FormData {
