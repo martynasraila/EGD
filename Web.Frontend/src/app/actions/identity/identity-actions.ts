@@ -1,15 +1,11 @@
-import { UserKind } from "../../stores/identity/identity-contracts";
+import { IdentityDto } from "../../stores/identity/identity-store";
 
 export namespace IdentityActions {
     export class UserLoggedIn {
-        constructor(private userId: string, private userKind: UserKind) { }
+        constructor(private identity: IdentityDto) { }
 
-        public get UserId(): string {
-            return this.userId;
-        }
-
-        public get UserKind(): UserKind {
-            return this.userKind;
+        public get Identity(): IdentityDto {
+            return this.identity;
         }
     }
 

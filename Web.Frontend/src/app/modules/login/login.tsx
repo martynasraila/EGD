@@ -1,4 +1,6 @@
 import * as React from "react";
+import * as url from "url";
+import * as crypto from "crypto";
 
 import { LoginHeader } from "./header/login-header";
 import { Form, Text, Password, Submit, ErrorsContainer } from "@simplr/react-forms-dom";
@@ -7,21 +9,46 @@ import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
 
 import { FieldValidationType } from "@simplr/react-forms/contracts";
 import { IdentityActionsCreators } from "../../actions/identity/identity-actions-creators";
-import { UserKind } from "../../stores/identity/identity-contracts";
 
 import { ErrorTemplate } from "../../helpers/form-helpers";
 
 import "./login.css";
+import { Configuration } from "../../configuration";
+import { IdentityDto } from "../../stores/identity/identity-store";
 
-// interface LoginSubmitDto {
-//     Username: string;
-//     Password: string;
-// }
+interface LoginSubmitDto {
+    Username: string;
+    Password: string;
+}
 
 export class Login extends React.Component {
-    private onSubmit: FormOnSubmitCallback = (event, store) => {
-        // const submitData = store.ToObject<LoginSubmitDto>();
-        IdentityActionsCreators.UserLoggedIn("1", UserKind.Administrator);
+    private onSubmit: FormOnSubmitCallback = async (event, store) => {
+        const submitData = store.ToObject<LoginSubmitDto>();
+
+        const path = url.resolve(Configuration.Api.Path, `api/login/${submitData.Username}`);
+
+        try {
+            const response = await window.fetch(path, {
+                method: "POST", headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const identity = await response.json() as IdentityDto;
+
+            const hash = crypto.createHash("sha256");
+            const passwordHash = hash.update(submitData.Password).digest("hex").toString();
+
+            if (identity.passwordHash && passwordHash === identity.passwordHash) {
+                IdentityActionsCreators.UserLoggedIn(identity);
+            } else {
+                throw new Error("Wrong credentials.");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Neteisingi prisijungimo duomenys.");
+        }
     }
 
     public render(): JSX.Element {
@@ -54,7 +81,7 @@ export class Login extends React.Component {
                         <div className="controls-box">
                             <ErrorsContainer template={ErrorTemplate} />
                             <div className="submit-container">
-                                <Submit disableOnError disableOnPristine>Prisijungti</Submit>
+                                <Submit disableOnError disableOnPristine className="btn btn-light">Prisijungti</Submit>
                             </div>
                         </div>
                     </Form>

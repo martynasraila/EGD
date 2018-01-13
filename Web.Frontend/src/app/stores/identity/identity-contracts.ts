@@ -1,4 +1,4 @@
 export enum UserKind {
-    Collector = 8,
-    Administrator = 24
+    Collector = "collector",
+    Administrator = "administrator"
 }
