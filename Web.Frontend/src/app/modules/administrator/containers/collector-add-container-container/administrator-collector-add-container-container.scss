@@ -1,0 +1,13 @@
+.administrator-collector-add-container-container {
+    flex: 1 0 auto;
+
+    .administrator-collector-layout-view-container {
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+
+        .table {
+            max-width: 80%;
+        }
+    }
+}

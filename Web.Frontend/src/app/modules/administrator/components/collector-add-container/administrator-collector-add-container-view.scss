@@ -1,0 +1,10 @@
+.administrator-collector-add-container-view {
+    flex: 1 0 auto;
+    justify-content: center;
+    display: flex;
+
+    .administrator-collector-layout-view-container {
+        max-width: 1200px;
+        width: 100%;
+    }
+}
