@@ -10,6 +10,7 @@ import { AdministratorAddDeviceRoute } from "../modules/administrator/routes/adm
 import { AdministratorCollectorsRoute } from "../modules/administrator/routes/administrator-collectors-route";
 import { AdministratorCollectorCreateRoute } from "../modules/administrator/routes/administrator-collector-create-route";
 import { AdministratorCollectorViewRoute } from "../modules/administrator/routes/administrator-collector-view-route";
+import { AdministratorCollectorAddContainerRoute } from "../modules/administrator/routes/administrator-collector-add-container-route";
 
 export class AdministratorRoutes extends React.Component {
     public render(): JSX.Element {
@@ -25,6 +26,7 @@ export class AdministratorRoutes extends React.Component {
                     <Route path="/administrator/collectors" component={AdministratorCollectorsRoute} exact />
                     <Route path="/administrator/collector/create" component={AdministratorCollectorCreateRoute} exact />
                     <Route path="/administrator/collectors/:id" component={AdministratorCollectorViewRoute} exact />
+                    <Route path="/administrator/collectors/:id/add-container" component={AdministratorCollectorAddContainerRoute} exact />
                 </Switch>
             </Layout>
         </BrowserRouter>;

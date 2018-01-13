@@ -58,7 +58,7 @@ class AdministratorCollectorContainersContainerClass extends React.Component<Pro
             <Link
                 key="add-container-button"
                 className="btn btn-light"
-                to={`/administrator/collector/${this.props.id}/add-container`}
+                to={`/administrator/collectors/${this.props.id}/add-container`}
             >
                 Pridėti
             </Link>
