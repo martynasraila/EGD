@@ -14,7 +14,7 @@ export class AdministratorCollectorAddContainerView extends React.Component<Prop
         return <div className="administrator-collector-add-container-view">
             <div className="administrator-collector-layout-view-container">
                 <div className="administrator-collector-view-layout">
-                    <AdministratorCollectorAddContainerContainer />
+                    <AdministratorCollectorAddContainerContainer collectorId={this.props.id} />
                 </div>
             </div>
         </div>;

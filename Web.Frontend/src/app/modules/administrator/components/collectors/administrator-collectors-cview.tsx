@@ -4,7 +4,7 @@ import { CollectorDto } from "../../../../stores/collectors/collectors-contracts
 import { Link } from "react-router-dom";
 
 interface Props {
-    items: Immutable.Map<string, CollectorDto>;
+    items: Immutable.Map<number, CollectorDto>;
 }
 
 export class AdministratorCollectorsCView extends React.Component<Props> {
@@ -29,13 +29,13 @@ export class AdministratorCollectorsCView extends React.Component<Props> {
                                 return null;
                             }
 
-                            return <tr key={`table-key-${item.Id}`}>
+                            return <tr key={`table-key-${item.id}`}>
                                 <th>
-                                    <Link to={`/administrator/collectors/${item.Id}`}>{item.Id}</Link>
+                                    <Link to={`/administrator/collectors/${item.id}`}>{item.id}</Link>
                                 </th>
-                                <th>{item.UserName}</th>
-                                <th>{item.Title}</th>
-                                <th>{item.Description}</th>
+                                <th>{item.userName}</th>
+                                <th>{item.title}</th>
+                                <th>{item.description}</th>
                                 <th>{/*item.ContainersCount*/}</th>
                                 <th>{/*item.TripsCount*/}</th>
                                 <th>{/*item.LastTripDate*/}</th>

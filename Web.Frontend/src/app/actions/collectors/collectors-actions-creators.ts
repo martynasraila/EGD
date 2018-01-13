@@ -12,7 +12,7 @@ export namespace CollectorsActionsCreators {
         Dispatcher.dispatch(new CollectorsActions.ClearRequired);
     }
 
-    export function DataLoaded(items: Immutable.Map<string, CollectorDto>): void {
+    export function DataLoaded(items: Immutable.Map<number, CollectorDto>): void {
         Dispatcher.dispatch(new CollectorsActions.DataLoaded(items));
     }
 

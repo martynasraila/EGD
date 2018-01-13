@@ -1,12 +1,14 @@
 import * as Immutable from "immutable";
+import * as url from "url";
 import { Abstractions, ReduceStore, ActionHandler } from "simplr-flux";
 
 import { CollectorDto } from "./collectors-contracts";
 import { CollectorsActions } from "../../actions/collectors/collectors-actions";
 import { CollectorsActionsCreators } from "../../actions/collectors/collectors-actions-creators";
+import { Configuration } from "../../configuration";
 
 export interface StoreState {
-    Items: Immutable.Map<string, CollectorDto>;
+    Items: Immutable.Map<number, CollectorDto>;
     Status: Abstractions.ItemStatus;
 }
 
@@ -19,27 +21,34 @@ class CollectorsStoreClass extends ReduceStore<StoreState> {
         this.registerAction(CollectorsActions.DataLoadFailed, this.onDataLoadFailed);
     }
 
-    private onLoadRequired: ActionHandler<CollectorsActions.LoadRequired, StoreState> = (action, state) => {
-        setTimeout(() => {
-            const sampleData: { [key: number]: CollectorDto } = {
-                1: {
-                    Id: 1,
-                    Title: "Sample title #1.",
-                    Description: "Some description about collector.",
-                    PasswordHash: "027bd14fb78fd9ca8ef115c6136f1d7b3a810af2c5082c3616b6797467179887",
-                    UserName: "collector1"
-                },
-                2: {
-                    Id: 2,
-                    Title: "Sample title #2.",
-                    Description: "Some description about collector.",
-                    PasswordHash: "027bd14fb78fd9ca8ef115c6136f1d7b3a810af2c5082c3616b6797467179887",
-                    UserName: "collector2"
-                }
-            };
+    private async getData(): Promise<void> {
+        const path = url.resolve(Configuration.Api.Path, "api/collectors");
 
-            CollectorsActionsCreators.DataLoaded(Immutable.Map(sampleData));
-        }, 100);
+        try {
+            const response = await window.fetch(path, {
+                method: "GET", headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                } as any
+            });
+
+            const itemsArray = await response.json() as CollectorDto[];
+
+            const itemsMap = Immutable.Map<number, CollectorDto>().withMutations(mutator => {
+                itemsArray.forEach(item => {
+                    mutator.set(item.id, item);
+                });
+            });
+
+            CollectorsActionsCreators.DataLoaded(itemsMap);
+        } catch (error) {
+            console.error(error);
+            CollectorsActionsCreators.DataLoadFailed();
+        }
+    }
+
+    private onLoadRequired: ActionHandler<CollectorsActions.LoadRequired, StoreState> = (action, state) => {
+        this.getData();
 
         return {
             ...state,
@@ -67,7 +76,7 @@ class CollectorsStoreClass extends ReduceStore<StoreState> {
         };
     }
 
-    public get Items(): Immutable.Map<string, CollectorDto> {
+    public get Items(): Immutable.Map<number, CollectorDto> {
         return this.getState().Items;
     }
 

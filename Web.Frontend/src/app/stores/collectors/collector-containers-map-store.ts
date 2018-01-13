@@ -1,20 +1,19 @@
+import * as Immutable from "immutable";
 import * as url from "url";
 import { MapStore } from "simplr-flux";
-import { CollectorDto } from "./collectors-contracts";
 import { Configuration } from "../../configuration";
+import { CollectorContainerDto } from "./collectors-contracts";
 
-type CollectorsDictionary = { [key: string]: CollectorDto };
+type CollectorContainersDictionary = { [key: string]: Immutable.List<CollectorContainerDto> };
 
-class CollectorsMapStoreClass extends MapStore<CollectorDto> {
-    protected async requestData(keys: string[]): Promise<CollectorsDictionary> {
+class CollectorContainersMapStoreClass extends MapStore<Immutable.List<CollectorContainerDto>> {
+    protected async requestData(keys: string[]): Promise<CollectorContainersDictionary> {
         const promises: Array<Promise<void>> = [];
-        const itemsDictionary: CollectorsDictionary = {};
-
-        // TODO: implement.
+        const itemsDictionary: CollectorContainersDictionary = {};
 
         for (const key of keys) {
             const promise = new Promise<void>(async (resolve, reject) => {
-                const path = url.resolve(Configuration.Api.Path, `api/collectors/${key}`);
+                const path = url.resolve(Configuration.Api.Path, `Api/Collectors_Containers/cc/collector/${key}`);
 
                 try {
                     const response = await window.fetch(path, {
@@ -24,9 +23,9 @@ class CollectorsMapStoreClass extends MapStore<CollectorDto> {
                         } as any
                     });
 
-                    const data = await response.json() as CollectorDto;
+                    const data = await response.json() as CollectorContainerDto[];
 
-                    itemsDictionary[key] = data;
+                    itemsDictionary[key] = Immutable.List<CollectorContainerDto>(data);
                     resolve();
                 } catch (error) {
                     console.error(error);
@@ -43,4 +42,4 @@ class CollectorsMapStoreClass extends MapStore<CollectorDto> {
     }
 }
 
-export const CollectorsMapStore = new CollectorsMapStoreClass();
+export const CollectorContainersMapStore = new CollectorContainersMapStoreClass();

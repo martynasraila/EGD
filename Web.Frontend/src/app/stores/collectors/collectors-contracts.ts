@@ -1,7 +1,13 @@
 export interface CollectorDto {
-    Id: number;
-    UserName: string;
-    PasswordHash: string;
-    Title: string;
-    Description: string;
+    id: number;
+    userName: string;
+    passwordHash: string;
+    title: string;
+    description: string;
+    userKind: string;
+}
+
+export interface CollectorContainerDto {
+    collectorId: number;
+    containerId: number;
 }

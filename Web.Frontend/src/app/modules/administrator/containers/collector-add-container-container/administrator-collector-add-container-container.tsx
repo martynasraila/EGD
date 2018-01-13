@@ -12,25 +12,52 @@ import {
 } from "../../components/collector-add-container/form/administrator-collector-add-containers-form-view";
 
 import "./administrator-collector-add-container-container.css";
+import { SpinnerLoader } from "simplr-loaders";
+import { CollectorContainersMapStore } from "../../../../stores/collectors/collector-containers-map-store";
 
 interface State {
     Status: Abstractions.ItemStatus;
-    Items: Immutable.Map<number, ContainerDto>;
+    Items?: Immutable.Map<number, ContainerDto>;
 }
 
-class AdministratorCollectorAddContainerContainerClass extends React.Component<{}, State> {
+interface Props {
+    collectorId: number;
+}
+
+class AdministratorCollectorAddContainerContainerClass extends React.Component<Props, State> {
     public static getStores(): Container.StoresList {
-        return [ContainerStore];
+        return [CollectorContainersMapStore, ContainerStore];
     }
 
-    public static calculateState(state: State): State {
+    public static calculateState(state: State, props: Props): State {
+        const collectorContainers = CollectorContainersMapStore.get(props.collectorId.toString());
+
+        if (collectorContainers.Value == null) {
+            return {
+                Items: undefined,
+                Status: collectorContainers.Status
+            };
+        }
+
         const status = ContainerStore.Status;
+        const allContainers = ContainerStore.Items;
+
         if (status === Abstractions.ItemStatus.Init) {
             setTimeout(() => ContainersActionsCreators.LoadRequired());
         }
 
+        let items;
+
+        if (status === Abstractions.ItemStatus.Loaded && allContainers.size > 0) {
+            items = allContainers.filter(container =>
+                container != null &&
+                    collectorContainers.Value != null &&
+                    collectorContainers.Value.findIndex(x => x != null && x.containerId === container.id) === -1
+            ).toMap();
+        }
+
         return {
-            Items: ContainerStore.Items,
+            Items: items,
             Status: ContainerStore.Status
         };
     }
@@ -39,10 +66,12 @@ class AdministratorCollectorAddContainerContainerClass extends React.Component<{
         switch (this.state.Status) {
             case Abstractions.ItemStatus.Init:
             case Abstractions.ItemStatus.Pending: {
-                return <div>Kraunama...</div>;
+                return <SpinnerLoader />;
             }
             case Abstractions.ItemStatus.Loaded: {
-                return <AdministratorContainerAddContainersFormView items={this.state.Items} />;
+                if (this.state.Items != null) {
+                    return <AdministratorContainerAddContainersFormView collectorId={this.props.collectorId} items={this.state.Items} />;
+                }
             }
             case Abstractions.ItemStatus.NoData: {
                 return <div>
@@ -62,4 +91,5 @@ class AdministratorCollectorAddContainerContainerClass extends React.Component<{
     }
 }
 
-export const AdministratorCollectorAddContainerContainer = Container.create(AdministratorCollectorAddContainerContainerClass);
+export const AdministratorCollectorAddContainerContainer = Container
+    .create(AdministratorCollectorAddContainerContainerClass, { withProps: true });
