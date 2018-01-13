@@ -9,7 +9,7 @@ import { ContainerDto } from "../../stores/containers/containers-contracts";
 import "./containers-table-form-view.css";
 
 interface Props {
-    items: Immutable.Map<string, ContainerDto>;
+    items: Immutable.Map<number, ContainerDto>;
     isAdministrator: boolean;
     onSubmit: FormOnSubmitCallback;
     formId: string;
@@ -50,19 +50,19 @@ export class ContainersTableFormView extends React.Component<Props> {
                                 return null;
                             }
 
-                            return <tr key={`table-key-${item.Id}`}>
+                            return <tr key={`table-key-${item.id}`}>
                                 <th>
-                                    <CheckBox name={item.Id.toString()} />
+                                    <CheckBox name={item.id.toString()} />
                                 </th>
                                 <th>
-                                    {this.renderIdCell(item.Id)}
+                                    {this.renderIdCell(item.id)}
                                 </th>
-                                <th>{item.LastStateId}</th>
-                                <th>{item.LastStateId}</th>
-                                <th>{item.Description}</th>
-                                <th>{item.Address}</th>
-                                <th>{`${item.Longitude}, ${item.Latitude}`}</th>
-                                <th>{item.EgdId}</th>
+                                <th>{item.lastStateid}</th>
+                                <th>{item.lastStateid}</th>
+                                <th>{item.description}</th>
+                                <th>{item.address}</th>
+                                <th>{`${item.longitude}, ${item.latitude}`}</th>
+                                <th>{item.egDid}</th>
                             </tr>;
                         })
                         .toArray()}

@@ -21,21 +21,21 @@ class CollectorContainersMapStoreClass extends MapStore<Immutable.Map<string, Co
             const promise = new Promise<void>(resolve => {
                 setTimeout(() => {
                     const sampleMap = Immutable.Map<string, ContainerDto>().set("1", {
-                        Address: "Sample address",
-                        Description: "Sample description",
-                        EgdId: 1,
-                        Id: 1,
-                        LastStateId: 2,
-                        Latitude: 12,
-                        Longitude: 12
+                        address: "Sample address",
+                        description: "Sample description",
+                        egdId: 1,
+                        id: 1,
+                        lastStateId: 2,
+                        latitude: 12,
+                        longitude: 12
                     }).set("2", {
-                        Address: "Sample address",
-                        Description: "Sample description",
-                        EgdId: 2,
-                        Id: 2,
-                        LastStateId: 2,
-                        Latitude: 12,
-                        Longitude: 12
+                        address: "Sample address",
+                        description: "Sample description",
+                        egdId: 2,
+                        id: 2,
+                        lastStateId: 2,
+                        latitude: 12,
+                        longitude: 12
                     });
 
                     itemsDictionary[key] = sampleMap;

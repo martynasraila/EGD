@@ -10,7 +10,7 @@ import { AdministratorDeviceFormCView } from "../../components/devices/administr
 import { Link } from "react-router-dom";
 
 interface Props {
-    containerId: number;
+    containerId?: number;
 }
 
 interface State {
@@ -26,6 +26,13 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
     }
 
     public static calculateState(state: State, props: Props): State {
+        if (props.containerId == null) {
+            return {
+                Status: Abstractions.ItemStatus.NoData,
+                DeviceStatus: Abstractions.ItemStatus.NoData
+            };
+        }
+
         const item = ContainersMapStore.get(props.containerId.toString());
 
         if (item.Value == null) {
@@ -37,7 +44,7 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
             };
         }
 
-        if (item.Value.EgdId == null) {
+        if (item.Value.egDid == null) {
             return {
                 Container: item.Value,
                 Status: item.Status,
@@ -46,7 +53,7 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
             };
         }
 
-        const deviceItem = DevicesMapStore.get(item.Value.EgdId.toString());
+        const deviceItem = DevicesMapStore.get(item.Value.egDid.toString());
 
         return {
             Container: item.Value,
@@ -88,7 +95,7 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
     }
 
     public render(): JSX.Element {
-        const deviceIdString = this.state.Container ? ` (${this.state.Container.EgdId})` : undefined;
+        const deviceIdString = this.state.Container ? ` (${this.state.Container.egDid})` : "";
 
         return <LabeledContainer title={`Įrenginys ${deviceIdString}`} className="administrator-device-view-container">
             {this.renderStatuses()}

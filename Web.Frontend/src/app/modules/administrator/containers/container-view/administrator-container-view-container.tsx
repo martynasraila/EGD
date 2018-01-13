@@ -26,7 +26,7 @@ class AdministratorContainerViewContainerClass extends React.Component<Props, St
     public static calculateState(state: State, props: Props): State {
         const item = ContainersMapStore.get(props.id.toString());
 
-        if (item.Value == null || item.Value.EgdId == null) {
+        if (item.Value == null || item.Value.egDid == null) {
             return {
                 Container: item.Value,
                 Status: item.Status,
@@ -34,7 +34,7 @@ class AdministratorContainerViewContainerClass extends React.Component<Props, St
             };
         }
 
-        const deviceItem = StatesMapStore.get(item.Value.LastStateId.toString());
+        const deviceItem = StatesMapStore.get(item.Value.lastStateid.toString());
 
         return {
             Container: item.Value,

@@ -9,7 +9,7 @@ import { ContainerDto } from "../../../../../stores/containers/containers-contra
 import "./administrator-collector-add-containers-form-view.css";
 
 interface Props {
-    items: Immutable.Map<string, ContainerDto>;
+    items: Immutable.Map<number, ContainerDto>;
 }
 
 export class AdministratorContainerAddContainersFormView extends React.Component<Props> {

@@ -15,7 +15,7 @@ import "./administrator-collector-add-container-container.css";
 
 interface State {
     Status: Abstractions.ItemStatus;
-    Items: Immutable.Map<string, ContainerDto>;
+    Items: Immutable.Map<number, ContainerDto>;
 }
 
 class AdministratorCollectorAddContainerContainerClass extends React.Component<{}, State> {
@@ -42,7 +42,7 @@ class AdministratorCollectorAddContainerContainerClass extends React.Component<{
                 return <div>Kraunama...</div>;
             }
             case Abstractions.ItemStatus.Loaded: {
-                return <AdministratorContainerAddContainersFormView  items={this.state.Items} />;
+                return <AdministratorContainerAddContainersFormView items={this.state.Items} />;
             }
             case Abstractions.ItemStatus.NoData: {
                 return <div>

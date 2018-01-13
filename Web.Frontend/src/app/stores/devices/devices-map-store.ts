@@ -1,5 +1,7 @@
+import * as url from "url";
 import { MapStore } from "simplr-flux";
 import { DeviceDto } from "./devices-contracts";
+import { Configuration } from "../../configuration";
 
 type ItemsDictionary = { [key: string]: DeviceDto };
 
@@ -8,31 +10,26 @@ class DevicesMapStoreClass extends MapStore<DeviceDto> {
         const promises: Array<Promise<void>> = [];
         const itemsDictionary: ItemsDictionary = {};
 
-        // TODO: implement.
-
         for (const key of keys) {
-            // const promise = fetch(`https://jsonplaceholder.typicode.com/posts/${key}`)
-            //     .then(data => data.json())
-            //     .then((data: Post) => {
-            //         postsDictionary[key] = data;
-            //     });
+            const promise = new Promise<void>(async (resolve, reject) => {
+                const path = url.resolve(Configuration.Api.Path, `api/egd/${key}`);
 
-            const promise = new Promise<void>(resolve => {
-                setTimeout(() => {
-                    const sampleItem: DeviceDto = {
-                        Id: Number(key),
-                        ConfigurationStreak: 5,
-                        PaddingBottom: 10,
-                        PaddingLeft: 10,
-                        PaddingRight: 10,
-                        PaddingTop: 10,
-                        PhotoStreak: 5
-                    };
+                try {
+                    const response = await window.fetch(path, {
+                        method: "GET", headers: {
+                            "Accept": "application/json",
+                            "Content-Type": "application/json"
+                        } as any
+                    });
 
-                    itemsDictionary[key] = sampleItem;
+                    const data = await response.json() as DeviceDto;
 
+                    itemsDictionary[key] = data;
                     resolve();
-                });
+                } catch (error) {
+                    console.error(error);
+                    reject(error);
+                }
             });
 
             promises.push(promise);
