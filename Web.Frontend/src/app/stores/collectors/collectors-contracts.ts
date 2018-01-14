@@ -11,3 +11,8 @@ export interface CollectorContainerDto {
     collectorId: number;
     containerId: number;
 }
+
+export interface CollectorTripDto {
+    collectorId: number;
+    tripId: number;
+}

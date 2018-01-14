@@ -1,12 +1,12 @@
 import * as React from "react";
-import { LayoutMenu } from "../menu/layout-menu";
+import { MenuResolverContainer } from "../menu/menu-resolver/menu-resolver-container";
 
 import "./layout-content-container.css";
 
 export class LayoutContentContainer extends React.Component {
     public render(): JSX.Element {
         return <div className="layout-content-container">
-            <LayoutMenu />
+            <MenuResolverContainer />
             {this.props.children}
         </div>;
     }

@@ -1,0 +1,20 @@
+.collector-trip-selector-cview {
+    .controls-row {
+        display: flex;
+
+        :first-child {
+            margin-right: 5px;
+        }
+
+        .trip-control {
+            font-size: 25px;
+            cursor: pointer;
+            border-top: none;
+
+            &.disabled {
+                cursor: default;
+                color: gainsboro;
+            }
+        }
+    }
+}

@@ -46,6 +46,7 @@
       "@simplr/react-forms": "npm:@simplr/react-forms@^4.3.3",
       "@simplr/react-forms-dom": "npm:@simplr/react-forms-dom@^4.3.3",
       "@simplr/react-forms-validation": "npm:@simplr/react-forms-validation@^4.3.3",
+      "action-emitter": "npm:action-emitter@^0.2.1",
       "classnames": "npm:classnames@^2.2.5",
       "css": "github:systemjs/plugin-css@^0.1.35",
       "flux": "npm:flux@^3.1.0",

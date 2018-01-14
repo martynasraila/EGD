@@ -1,0 +1,24 @@
+.collector-trips-container {
+    flex: 1 0 auto;
+
+    .controls-section {
+        height: 50px;
+        >* {
+            margin-right: 8px;
+        }
+    }
+
+    .collector-trips-cview {
+        width: 100%;
+
+        >div {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+
+            table {
+                max-width: 80%;
+            }
+        }
+    }
+}

@@ -6,7 +6,7 @@ import "./labeled-container.css";
 interface Props {
     title: string;
     className?: string;
-    controls?: JSX.Element[];
+    controls?: JSX.Element[] | null;
 }
 
 export class LabeledContainer extends React.Component<Props> {
@@ -20,7 +20,7 @@ export class LabeledContainer extends React.Component<Props> {
                     {this.props.controls}
                 </div>
             </div>
-            <div>{this.props.children}</div>
+            <div className="content">{this.props.children}</div>
         </div>;
     }
 }

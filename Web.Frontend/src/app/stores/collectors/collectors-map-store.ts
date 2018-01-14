@@ -10,8 +10,6 @@ class CollectorsMapStoreClass extends MapStore<CollectorDto> {
         const promises: Array<Promise<void>> = [];
         const itemsDictionary: CollectorsDictionary = {};
 
-        // TODO: implement.
-
         for (const key of keys) {
             const promise = new Promise<void>(async (resolve, reject) => {
                 const path = url.resolve(Configuration.Api.Path, `api/collectors/${key}`);
