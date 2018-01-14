@@ -76,7 +76,10 @@ class AdministratorCollectorContainersContainerClass extends React.Component<Pro
             }
             case Abstractions.ItemStatus.Loaded: {
                 if (this.state.Items != null && this.state.Items.size !== 0) {
-                    return <ContainersTableView items={this.state.Items} isAdministrator />;
+                    return <ContainersTableView
+                        items={this.state.Items}
+                        isAdministrator={this.props.userKind === UserKind.Administrator}
+                    />;
                 }
             }
             case Abstractions.ItemStatus.NoData: {
