@@ -40,7 +40,7 @@ namespace WebApplication1
             using (IDbConnection conn = Connection)
             {
                 conn.Open();
-                return conn.Query<EGD>(sql, new {  id = id }).Single();
+                return conn.Query<EGD>(sql, new {  id = id }).FirstOrDefault();
             }
         }
 

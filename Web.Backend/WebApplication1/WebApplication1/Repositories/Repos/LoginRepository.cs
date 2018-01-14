@@ -21,8 +21,8 @@ namespace EGD.Repositories.Repos
         public object Get(string UserName)
         {
             // TODO: fix wrong return data.
-            string sql = "SELECT Id, PasswordHash FROM Collectors WHERE UserName = @UserName;" +
-                " SELECT Id, PasswordHash FROM Administrators WHERE UserName = @UserName;";
+            string sql = "SELECT Id, UserName, PasswordHash, Title FROM Collectors WHERE UserName = @UserName;" +
+                " SELECT Id, PasswordHash, Name, Surname FROM Administrators WHERE UserName = @UserName;";
 
             using (IDbConnection conn = Connection)
             {
@@ -30,18 +30,27 @@ namespace EGD.Repositories.Repos
 
                 using (var multi = conn.QueryMultiple(sql, new { UserName = UserName }))
                 {
-
                     var collectors = multi.Read<Collectors>().FirstOrDefault();
-                    
                     var admin = multi.Read<Administrators>().FirstOrDefault();
+                    
+                    var loginDto = new LoginDto();
 
                     if (collectors != null)
                     {
-                        return collectors;
+                        loginDto.Id = collectors.Id;
+                        loginDto.PasswordHash = collectors.PasswordHash;
+                        loginDto.Title = collectors.Title;
+                        loginDto.UserKind = "collector";
+                        return loginDto;
                     }
+
                     if (admin != null)
                     {
-                        return admin;
+                        loginDto.Id = admin.Id;
+                        loginDto.PasswordHash = admin.PasswordHash;
+                        loginDto.Title = $"{admin.Name.Trim()} {admin.Surname.Trim()}";
+                        loginDto.UserKind = "administrator";
+                        return loginDto;
                     }
                 }
                 return null;
