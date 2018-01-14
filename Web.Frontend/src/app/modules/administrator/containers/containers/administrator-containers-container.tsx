@@ -3,6 +3,7 @@ import * as Immutable from "immutable";
 import { Container } from "flux/utils";
 import { Abstractions } from "simplr-flux";
 import { Link } from "react-router-dom";
+import { SpinnerLoader } from "simplr-loaders";
 
 import { ContainerDto } from "../../../../stores/containers/containers-contracts";
 import { ContainerStore } from "../../../../stores/containers/containers-store";
@@ -37,7 +38,7 @@ class AdministratorContainersContainerClass extends React.Component<{}, State> {
         switch (this.state.Status) {
             case Abstractions.ItemStatus.Init:
             case Abstractions.ItemStatus.Pending: {
-                return <div>Kraunama...</div>;
+                return <SpinnerLoader />;
             }
             case Abstractions.ItemStatus.Loaded: {
                 return <AdministratorContainersCView items={this.state.Items} />;

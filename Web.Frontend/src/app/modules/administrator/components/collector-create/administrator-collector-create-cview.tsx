@@ -36,7 +36,7 @@ export class AdministratorCollectorCreateCView extends React.Component<Props> {
         const path = url.resolve(Configuration.Api.Path, `Api/Collectors`);
 
         try {
-            window.fetch(path, {
+            await window.fetch(path, {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
@@ -91,7 +91,7 @@ export class AdministratorCollectorCreateCView extends React.Component<Props> {
                     <HiddenString text={this.temporaryPassword} />
                 </div>
                 <div className="submit-container">
-                    <Submit disableOnPristine disableOnError>Pridėti</Submit>
+                    <Submit disableOnPristine disableOnError className="btn btn-light">Pridėti</Submit>
                 </div>
                 <ErrorsContainer template={ErrorTemplate} />
             </Form>
