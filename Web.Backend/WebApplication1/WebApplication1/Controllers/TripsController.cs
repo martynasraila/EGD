@@ -29,7 +29,7 @@ namespace EGD.Controllers
 
         }
         [HttpPost]
-        public bool Create([FromBody]Trips ourTrip)
+        public int Create([FromBody]Trips ourTrip)
         {
             return _TripsRepo.InsertTrip(ourTrip);
         }
