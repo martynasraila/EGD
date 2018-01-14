@@ -129,6 +129,21 @@ namespace EGD.Repositories.Repos
                 return false;
             }
         }
+        public bool UpdateByPriority(Trips_Containers ourTrip_Container)
+        {
+            using (IDbConnection conn = Connection)
+            {
+                conn.Open();
+                int rowsAffected = conn.Execute(@"UPDATE [Trips_Containers] SET [ContainerPriority]=@ContainerPriority" +
+                " WHERE ContainerId = " + ourTrip_Container.ContainerId + " AND TripId = " + ourTrip_Container.TripId , ourTrip_Container);
+
+                if (rowsAffected > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+        }
         public IDbConnection Connection
         {
             get

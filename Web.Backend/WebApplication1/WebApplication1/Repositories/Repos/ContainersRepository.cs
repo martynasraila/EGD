@@ -51,7 +51,7 @@ namespace EGD.Repositories
                 int rowsAffected = conn.Execute(@"INSERT INTO Containers([Address],
                 [Longitude],[Latitude],[Description],[EGDid],[LastStateid]) 
                     values (@Address, @Longitude, @Latitude, @Description, @EGDid, @LastStateid)",
-                new { ourContainer.Address, longitude = (int?)null, Latitude = (int?)null, ourContainer.Description, EGDid = (int?)null, LastStateid = (int?)null});
+                new { ourContainer.Address, Longitude = (int?)null, Latitude = (int?)null, ourContainer.Description, EGDid = (int?)null, LastStateid = (int?)null});
                 if (rowsAffected > 0)
                 {
                     return true;

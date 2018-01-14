@@ -14,6 +14,7 @@ namespace EGD.Repositories.Interfaces
         bool InsertTrip_Container(Trips_Containers ourTrip_Container);
         bool UpdateByTripId(Trips_Containers ourTrip_Container);
         bool UpdateByContainerId(Trips_Containers ourTrip_Container);
+        bool UpdateByPriority(Trips_Containers ourTrip_Container);
         bool DeleteByTripId(int id);
         bool DeleteByContainerId(int id);
     }
