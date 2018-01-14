@@ -66,6 +66,10 @@ class IdentityStoreClass extends ReduceStore<StoreState> {
     public get UserKind(): UserKind | undefined {
         return this.getState().UserKind;
     }
+
+    public get UserId(): number | undefined {
+        return this.getState().UserId;
+    }
 }
 
 export const IdentityStore = new IdentityStoreClass();

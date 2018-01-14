@@ -1,5 +1,7 @@
 import * as React from "react";
 import * as Immutable from "immutable";
+import * as classNames from "classnames";
+
 import { Container } from "flux/utils";
 import { Abstractions } from "simplr-flux";
 import { BubbleLoader } from "simplr-loaders";
@@ -11,9 +13,12 @@ import { LabeledContainer } from "../../../../components/labeled-container/label
 import { ContainersTableView } from "../../../../components/containers-table/containers-table-view";
 import { ContainersMapStore } from "../../../../stores/containers/containers-map-store";
 import { ItemsStatusResolver } from "../../../../helpers/flux-helpers";
+import { UserKind } from "../../../../stores/identity/identity-contracts";
 
 interface Props {
     id: number;
+    userKind: UserKind;
+    className?: string;
 }
 
 interface State {
@@ -79,7 +84,11 @@ class AdministratorCollectorContainersContainerClass extends React.Component<Pro
         }
     }
 
-    private renderControls(): JSX.Element[] {
+    private renderControls(): JSX.Element[] | null {
+        if (this.props.userKind !== UserKind.Administrator) {
+            return null;
+        }
+
         return [
             <Link
                 key="add-container-button"
@@ -94,7 +103,7 @@ class AdministratorCollectorContainersContainerClass extends React.Component<Pro
     public render(): JSX.Element {
         return <LabeledContainer
             title="Vežėjo konteineriai"
-            className="administrator-collector-containers-container"
+            className={classNames("administrator-collector-containers-container", this.props.className)}
             controls={this.renderControls()}
         >
             {this.renderStatuses()}

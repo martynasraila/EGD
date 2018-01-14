@@ -6,7 +6,7 @@ import "./labeled-container.css";
 interface Props {
     title: string;
     className?: string;
-    controls?: JSX.Element[];
+    controls?: JSX.Element[] | null;
 }
 
 export class LabeledContainer extends React.Component<Props> {
