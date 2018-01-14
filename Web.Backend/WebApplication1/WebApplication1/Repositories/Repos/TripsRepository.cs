@@ -56,21 +56,22 @@ namespace EGD.Repositories
             }
         }
 
-        public bool InsertTrip(Trips ourTrip)
+        public int InsertTrip(Trips ourTrip)
         {
             DateTime? dt = null;
         
             using (IDbConnection conn = Connection)
             {
                 conn.Open();
-                int rowsAffected = conn.Execute(@"INSERT INTO Trips([StartDate],[EndDate],[DateCreated]) 
-            values (@StartDate, @EndDate, @DateCreated)",
-                new { StartDate = dt,EndDate = dt,ourTrip.DateCreated });
-                if (rowsAffected > 0)
+                string sql = @"INSERT INTO Trips([StartDate],[EndDate],[DateCreated]) 
+            values (@StartDate, @EndDate, @DateCreated);
+            SELECT CAST(SCOPE_IDENTITY() as int)";
+                 var id = conn.Query<int>(sql, new { StartDate = dt,EndDate = dt,ourTrip.DateCreated }).Single();
+                if (id > 0)
                 {
-                    return true;
+                    return id;
                 }
-                return false;
+                return -1;
             }
         }
 

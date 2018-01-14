@@ -10,7 +10,7 @@ namespace EGD.Repositories
     {
         List<Trips> GetAllTrips();
         Trips GetById(int id);
-        bool InsertTrip(Trips ourTrip);
+        int InsertTrip(Trips ourTrip);
         bool UpdateTrip(Trips ourTrip);
         bool DeleteTrip(int id);
     }
