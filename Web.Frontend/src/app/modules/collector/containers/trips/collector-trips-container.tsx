@@ -92,10 +92,14 @@ class CollectorTripsContainerClass extends React.Component<{}, State> {
 
         try {
             await window.fetch(path, {
-                method: "POST", headers: {
+                method: "POST",
+                headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
-                } as any
+                } as any,
+                body: JSON.stringify({
+                    dateCreated: new Date().toISOString()
+                })
             });
 
             if (this.state.CollectorId != null) {

@@ -53,8 +53,7 @@ export class CollectorTripSelectorCView extends React.Component<Props, State> {
                 Disabled: true
             } as State));
 
-        // TODO: fix path.
-        const path = url.resolve(Configuration.Api.Path, "Api/Trips_Container/tc/trip");
+        const path = url.resolve(Configuration.Api.Path, "Api/Trips_Containers/tc/priority");
 
         try {
             const promisesArray = this.state.ItemsMap.map((value, key) =>

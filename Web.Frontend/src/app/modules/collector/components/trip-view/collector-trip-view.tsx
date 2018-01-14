@@ -4,11 +4,12 @@ import { Link } from "react-router-dom";
 
 import { TripDto } from "../../../../stores/trips/trips-contracts";
 
-import "./collector-trip-view.css";
 import { CollectorTripBasicInfoView } from "./basic-info/collector-trip-basic-info-view";
 import { CollectorTripSelectorContainer } from "../../containers/trip-selector/collector-trip-selector-container";
 import { ActionEmitter } from "../../../../helpers/action-emitter";
 import { SaveTripPrioritiesAction } from "./trip-selector/collector-trip-selector-cview";
+
+import "./collector-trip-view.css";
 
 interface Props {
     trip: TripDto;
@@ -56,7 +57,7 @@ export class CollectorTripView extends React.Component<Props> {
                     <button
                         className="btn btn-light"
                         onClick={this.onSaveClick}
-                        // disabled={this.props.trip.endDate != null && this.props.trip.endDate.length > 0}
+                        disabled={this.props.trip.endDate != null && this.props.trip.endDate.length > 0}
                     >
                         Išsaugoti
                     </button>
