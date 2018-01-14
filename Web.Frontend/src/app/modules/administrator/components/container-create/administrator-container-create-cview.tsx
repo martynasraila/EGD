@@ -51,7 +51,7 @@ export class AdministratorContainerCreateCView extends React.Component<Props> {
                     <label htmlFor="Address">
                         Adresas
                     </label>
-                    <Text name="address" id="Address">
+                    <Text name="address" id="Address" className="form-control">
                         <RequiredValidator error="Adresas yra privalomas." />
                     </Text>
                 </div>
@@ -59,7 +59,7 @@ export class AdministratorContainerCreateCView extends React.Component<Props> {
                     <label htmlFor="Description">
                         Aprašymas
                     </label>
-                    <Text name="description" id="Description">
+                    <Text name="description" id="Description" className="form-control">
                         <RequiredValidator error="Aprašymas yra privalomas." />
                     </Text>
                 </div>

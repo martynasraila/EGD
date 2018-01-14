@@ -18,3 +18,45 @@ html, body, #app-root {
         width: 100%;
     }
 }
+
+.spinner-loader {
+    color: #3498db;
+}
+.btn {
+    
+    font-weight: 600;
+
+    &:hover{
+        background-color:#3498db;
+        color: white;
+        opacity: 1;
+    }
+}
+.administrator-containers-cview {
+
+    .table {
+
+        tbody{
+            tr{
+                &:hover{
+                    background-color: #f5f5f5;
+                }
+            }
+        }
+    }
+}
+tbody{
+    tr{
+        &:hover{
+            background-color: #f5f5f5;
+        }
+    }
+}
+
+.header {
+    border-bottom:3px solid darken($color: #f5f5f5, $amount: 30%);
+}
+header {
+    border-bottom:3px solid darken($color: #f5f5f5, $amount: 30%);
+}
+
