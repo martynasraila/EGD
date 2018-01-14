@@ -20,7 +20,7 @@ export class LabeledContainer extends React.Component<Props> {
                     {this.props.controls}
                 </div>
             </div>
-            <div>{this.props.children}</div>
+            <div className="content">{this.props.children}</div>
         </div>;
     }
 }

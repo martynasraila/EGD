@@ -4,3 +4,9 @@ export interface TripDto {
     endDate: string;
     dateCreated: string;
 }
+
+export interface TripContainersDto {
+    containerId: number;
+    tripId: number;
+    containerPriority: number;
+}

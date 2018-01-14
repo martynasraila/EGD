@@ -22,6 +22,7 @@ SystemJS.config({
         "github:*/*.json"
     ],
     map: {
+        "action-emitter": "npm:action-emitter@0.2.1",
         "simplr-loaders": "npm:simplr-loaders@2.1.2",
         "randomstring": "npm:randomstring@1.1.5",
         "@simplr/react-forms-validation": "npm:@simplr/react-forms-validation@4.3.3",

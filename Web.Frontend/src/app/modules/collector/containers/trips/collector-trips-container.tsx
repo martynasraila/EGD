@@ -1,9 +1,10 @@
 import * as React from "react";
 import * as Immutable from "immutable";
+import * as url from "url";
 import { Container } from "flux/utils";
 import { SpinnerLoader } from "simplr-loaders";
-import { Link } from "react-router-dom";
-import { Submit } from "@simplr/react-forms-dom";
+// import { Link } from "react-router-dom";
+// import { Submit } from "@simplr/react-forms-dom";
 
 import { Abstractions } from "simplr-flux";
 
@@ -12,14 +13,19 @@ import { CollectorTripsMapStore } from "../../../../stores/collectors/collector-
 import { TripDto } from "../../../../stores/trips/trips-contracts";
 import { IdentityStore } from "../../../../stores/identity/identity-store";
 import { ItemsStatusResolver } from "../../../../helpers/flux-helpers";
-import { CollectorTripsFormCView, FORM_ID } from "../../components/trips/collector-trips-cview";
+import {
+    CollectorTripsFormCView,
+    // FORM_ID
+} from "../../components/trips/collector-trips-cview";
 
 import "./collector-trips-container.css";
-import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
+// import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
+import { Configuration } from "../../../../configuration";
 
 interface State {
     Status: Abstractions.ItemStatus;
     Items?: Immutable.Map<string, TripDto>;
+    CollectorId?: number;
 }
 
 class CollectorTripsContainerClass extends React.Component<{}, State> {
@@ -40,6 +46,7 @@ class CollectorTripsContainerClass extends React.Component<{}, State> {
 
         if (item.Value == null) {
             return {
+                CollectorId: collectorId,
                 Items: undefined,
                 Status: item.Status
             };
@@ -53,6 +60,7 @@ class CollectorTripsContainerClass extends React.Component<{}, State> {
 
         if (itemsStatus !== Abstractions.ItemStatus.Loaded) {
             return {
+                CollectorId: collectorId,
                 Status: itemsStatus
             };
         }
@@ -60,22 +68,47 @@ class CollectorTripsContainerClass extends React.Component<{}, State> {
         const itemsMap = requestedTrips.map(x => x!.Value as TripDto).toMap();
 
         return {
+            CollectorId: collectorId,
             Items: itemsMap,
             Status: Abstractions.ItemStatus.Loaded
         };
     }
 
-    private onCopyTrip: FormOnSubmitCallback = async (event, store) => {
-        const tripIdString: string = store.ToObject().tripId;
+    // private onCopyTrip: FormOnSubmitCallback = async (event, store) => {
+    //     const tripIdString: string = store.ToObject().tripId;
 
-        if (tripIdString == null || tripIdString != null && tripIdString.length === 0) {
-            return;
+    //     if (tripIdString == null || tripIdString != null && tripIdString.length === 0) {
+    //         return;
+    //     }
+
+    //     const tripId = Number(tripIdString);
+
+    //     // TODO: implement trip copy.
+    //     console.info(tripId);
+    // }
+
+    private async createTrip(): Promise<void> {
+        const path = url.resolve(Configuration.Api.Path, "Api/Trips");
+
+        try {
+            await window.fetch(path, {
+                method: "POST", headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                } as any
+            });
+
+            if (this.state.CollectorId != null) {
+                CollectorTripsMapStore.InvalidateCache(this.state.CollectorId.toString());
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Neteisingi prisijungimo duomenys.");
         }
+    }
 
-        const tripId = Number(tripIdString);
-
-        // TODO: implement trip copy.
-        console.info(tripId);
+    private onCreateTrip: React.MouseEventHandler<HTMLElement> = () => {
+        this.createTrip();
     }
 
     private renderStatuses(): JSX.Element {
@@ -86,7 +119,10 @@ class CollectorTripsContainerClass extends React.Component<{}, State> {
             }
             case Abstractions.ItemStatus.Loaded: {
                 if (this.state.Items) {
-                    return <CollectorTripsFormCView items={this.state.Items} onSubmit={this.onCopyTrip} />;
+                    return <CollectorTripsFormCView
+                        items={this.state.Items}
+                    // onSubmit={this.onCopyTrip}
+                    />;
                 }
             }
             case Abstractions.ItemStatus.NoData: {
@@ -102,8 +138,8 @@ class CollectorTripsContainerClass extends React.Component<{}, State> {
     public render(): JSX.Element {
         return <div className="collector-trips-container">
             <div className="controls-section">
-                <Link className="btn btn-light" to="/collector/trips/create">Sukurti</Link>
-                <Submit formId={FORM_ID} className="btn btn-light">Kopijuoti</Submit>
+                <button className="btn btn-light" onClick={this.onCreateTrip}>Sukurti</button>
+                {/* <Submit formId={FORM_ID} className="btn btn-light">Kopijuoti</Submit> */}
             </div>
             {this.renderStatuses()}
         </div>;

@@ -2,13 +2,17 @@ import * as React from "react";
 import * as Immutable from "immutable";
 import { Link } from "react-router-dom";
 
-import { Radio, RadioGroup, Form } from "@simplr/react-forms-dom";
+import {
+    // Radio,
+    RadioGroup,
+    Form
+} from "@simplr/react-forms-dom";
 import { TripDto } from "../../../../stores/trips/trips-contracts";
-import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
+// import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
 
 interface Props {
     items: Immutable.Map<string, TripDto>;
-    onSubmit: FormOnSubmitCallback;
+    // onSubmit: FormOnSubmitCallback;
 }
 
 export const FORM_ID = "collector-trips-form";
@@ -19,12 +23,16 @@ export class CollectorTripsFormCView extends React.Component<Props> {
     }
 
     public render(): JSX.Element {
-        return <Form className="collector-trips-cview" formId={FORM_ID} onSubmit={this.props.onSubmit}>
+        return <Form
+            className="collector-trips-cview"
+            formId={FORM_ID}
+        // onSubmit={this.props.onSubmit}
+        >
             <RadioGroup name="tripId">
                 <table className="table">
                     <thead>
                         <tr>
-                            <th></th>
+                            {/* <th></th> */}
                             <th>Kelionės Id</th>
                             <th>Sukūrimo data</th>
                             <th>Pradžios data</th>
@@ -40,7 +48,7 @@ export class CollectorTripsFormCView extends React.Component<Props> {
                                 }
 
                                 return <tr key={`table-key-${item.id}`}>
-                                    <th><Radio value={item.id.toString()} /></th>
+                                    {/* <th><Radio value={item.id.toString()} /></th> */}
                                     <th>
                                         {this.renderIdCell(item.id)}
                                     </th>

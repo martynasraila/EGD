@@ -41,6 +41,12 @@ class AdministratorCollectorContainersContainerClass extends React.Component<Pro
             };
         }
 
+        if (item.Value.size === 0) {
+            return {
+                Status: Abstractions.ItemStatus.NoData
+            };
+        }
+
         // x should be defined.
         const containersList = item.Value.map<string>(x => x!.containerId.toString()).toArray();
 
