@@ -37,6 +37,7 @@ export class AdministratorCollectorCreateCView extends React.Component<Props> {
 
         try {
             await window.fetch(path, {
+            window.fetch(path, {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
