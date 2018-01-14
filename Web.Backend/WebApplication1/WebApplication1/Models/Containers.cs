@@ -9,11 +9,11 @@ namespace EGD.Models
     {
         public int Id { get; set; }
         public string Address { get; set; }
-        public int Longitude { get; set; }
-        public int Latitude { get; set; }
+        public int? Longitude { get; set; }
+        public int? Latitude { get; set; }
         public string Description { get; set; }
-        public int EGDid { get; set; }
-        public int LastStateid {get;set;}
+        public int? EGDid { get; set; }
+        public int? LastStateid {get;set;}
 
     }
 }

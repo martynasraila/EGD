@@ -57,6 +57,11 @@ namespace EGD.Controllers
         {
             return _Trips_ContainersRepo.UpdateByContainerId(ourTrip_Container);
         }
+        [HttpPut("tc/priority")]
+        public bool UpdateByPriority([FromBody]Trips_Containers ourTrip_Container)
+        {
+            return _Trips_ContainersRepo.UpdateByPriority(ourTrip_Container);
+        }
         [HttpDelete("tc/container/{id}")]
         public bool DeleteByContainerId(int id)
         {
