@@ -11,8 +11,9 @@ import { ActionEmitter } from "../../../../helpers/action-emitter";
 import { SaveTripPrioritiesAction } from "./trip-selector/collector-trip-selector-cview";
 import { Configuration } from "../../../../configuration";
 
-import "./collector-trip-view.css";
 import { TripsMapStore } from "../../../../stores/trips/trips-map-store";
+
+import "./collector-trip-view.css";
 
 interface Props {
     trip: TripDto;
@@ -96,7 +97,12 @@ export class CollectorTripView extends React.Component<Props> {
                     </button>
                     <button
                         className="btn btn-light"
-                        disabled={this.props.trip.endDate != null && this.props.trip.endDate.length > 0}
+                        disabled={
+                            this.props.trip.startDate == null ||
+                            this.props.trip.startDate.length === 0 ||
+                            this.props.trip.endDate != null &&
+                            this.props.trip.endDate.length > 0
+                        }
                         onClick={this.onEndClick}
                     >
                         Užbaigti
@@ -108,7 +114,7 @@ export class CollectorTripView extends React.Component<Props> {
                             "btn btn-light",
                             { "disabled": this.props.trip.endDate != null && this.props.trip.endDate.length > 0 }
                         )}
-                        to={`/collector/trips/${this.props.trip.id}`}
+                        to={`/collector/trips/${this.props.trip.id}/add-containers`}
                         onClick={this.onAddContainersClick}
                     >
                         Pridėti konteinerių

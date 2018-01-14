@@ -2,6 +2,7 @@ import * as React from "react";
 import * as Immutable from "immutable";
 import { Container } from "flux/utils";
 import { Abstractions } from "simplr-flux";
+import { SpinnerLoader } from "simplr-loaders";
 
 import { ContainerDto } from "../../../../stores/containers/containers-contracts";
 import { ContainerStore } from "../../../../stores/containers/containers-store";
@@ -11,9 +12,9 @@ import {
     AdministratorContainerAddContainersFormView
 } from "../../components/collector-add-container/form/administrator-collector-add-containers-form-view";
 
-import "./administrator-collector-add-container-container.css";
-import { SpinnerLoader } from "simplr-loaders";
 import { CollectorContainersMapStore } from "../../../../stores/collectors/collector-containers-map-store";
+
+import "./administrator-collector-add-container-container.css";
 
 interface State {
     Status: Abstractions.ItemStatus;

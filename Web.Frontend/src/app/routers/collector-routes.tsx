@@ -6,6 +6,7 @@ import { CollectorHomeRoute } from "../modules/collector/routes/collector-home-r
 import { CollectorContainersRoute } from "../modules/collector/routes/collector-containers-route";
 import { CollectorTripsRoute } from "../modules/collector/routes/collector-trips-route";
 import { CollectorTripViewRoute } from "../modules/collector/routes/collector-trip-route";
+import { CollectorTripAddContainersRoute } from "../modules/collector/routes/collector-trip-add-containers-route";
 
 export class CollectorRoutes extends React.Component {
     public render(): JSX.Element {
@@ -17,6 +18,7 @@ export class CollectorRoutes extends React.Component {
                     <Route path="/collector/containers" exact component={CollectorContainersRoute} />
                     <Route path="/collector/trips" exact component={CollectorTripsRoute} />
                     <Route path="/collector/trips/:id" exact component={CollectorTripViewRoute} />
+                    <Route path="/collector/trips/:id/add-containers" exact component={CollectorTripAddContainersRoute} />
                 </Switch>
             </Layout>
         </BrowserRouter>;

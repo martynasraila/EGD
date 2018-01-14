@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as url from "url";
 import * as History from "history";
+import * as crypto from "crypto";
 import { generate } from "randomstring";
 import { Form, Text, ErrorsContainer, Submit } from "@simplr/react-forms-dom";
 import { FormOnSubmitCallback } from "@simplr/react-forms-dom/contracts";
@@ -36,6 +37,9 @@ export class AdministratorCollectorCreateCView extends React.Component<Props> {
         const path = url.resolve(Configuration.Api.Path, `Api/Collectors`);
 
         try {
+            const hash = crypto.createHash("sha256");
+            const passwordHash = hash.update(this.temporaryPassword).digest("hex").toString();
+
             await window.fetch(path, {
                 method: "POST",
                 headers: {
@@ -44,7 +48,7 @@ export class AdministratorCollectorCreateCView extends React.Component<Props> {
                 } as any,
                 body: JSON.stringify({
                     ...submitData,
-                    passwordHash: this.temporaryPassword
+                    passwordHash: passwordHash
                 })
             });
 
