@@ -1,11 +1,13 @@
 .layout-header {
     display: flex;
     height: 50px;
-    border-bottom: 1px solid black;
+    color:white;
 
     .home-button {
         width: 101px;
-        border-right: 1px solid black;
+        color: white;
+        background-color: #3498db;
+
 
         font-size: 25px;
         
@@ -13,10 +15,16 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+
+            &:hover{
+                color: darkgreen;
+            }
+
+        
     }
 
     .layout-navigation {
+        background-color: #3498db;
         flex: 1 0 auto;
-        border-right: 1px solid black;
     }
 }

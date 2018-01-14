@@ -1,10 +1,12 @@
 .info-box {
-    width: 400px;
-    height: 300px;
-    border: 1px solid black;
+    width: 300px;
+    height: 250px;
+    background-color: #3498db;
+    color: white;
 
     padding: 40px;
 
+    border-radius: 20px;
     .main-info {
         display: flex;
         flex-direction: column;
@@ -14,8 +16,9 @@
         padding-bottom: 40px;
 
         .main-value {
-            font-size: 40px;
+            font-size: 35px;
             font-weight: 600;
+            text-align: center; 
         }
 
         .main-title {

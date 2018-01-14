@@ -41,6 +41,8 @@ export class Login extends React.Component {
             const hash = crypto.createHash("sha256");
             const passwordHash = hash.update(submitData.Password).digest("hex").toString();
 
+            console.log(submitData.Username, submitData.Password, passwordHash);
+
             if (identity.passwordHash && passwordHash === identity.passwordHash) {
                 IdentityActionsCreators.UserLoggedIn(identity);
             } else {
@@ -65,7 +67,7 @@ export class Login extends React.Component {
                             <label htmlFor="Username">
                                 Vartotojo vardas
                             </label>
-                            <Text name="Username" id="Username">
+                            <Text name="Username" id="Username" className="form-control">
                                 <RequiredValidator error="Vartotojo vardas yra privalomas." />
                                 <ByteLengthValidator options={{ min: 3, max: 200 }} error="Per trumpas vartotojo vardas." />
                             </Text>
@@ -74,7 +76,7 @@ export class Login extends React.Component {
                             <label htmlFor="Password">
                                 Slaptažodis
                             </label>
-                            <Password name="Password" id="Password">
+                            <Password name="Password" id="Password" className="form-control">
                                 <RequiredValidator error="Slaptažodis yra privalomas" />
                                 <ByteLengthValidator options={{ min: 3, max: 200 }} error="Per trumpas slaptažodis." />
                             </Password>
