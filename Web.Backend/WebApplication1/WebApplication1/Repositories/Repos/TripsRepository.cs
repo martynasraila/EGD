@@ -58,12 +58,14 @@ namespace EGD.Repositories
 
         public bool InsertTrip(Trips ourTrip)
         {
+            DateTime? dt = null;
+        
             using (IDbConnection conn = Connection)
             {
                 conn.Open();
                 int rowsAffected = conn.Execute(@"INSERT INTO Trips([StartDate],[EndDate],[DateCreated]) 
             values (@StartDate, @EndDate, @DateCreated)",
-                new { ourTrip.StartDate,ourTrip.EndDate,ourTrip.DateCreated });
+                new { StartDate = dt,EndDate = dt,ourTrip.DateCreated });
                 if (rowsAffected > 0)
                 {
                     return true;
