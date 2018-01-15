@@ -87,7 +87,11 @@ export class AdministratorContainerFormCView extends React.Component<Props> {
                 <div className="field-container">
                     <div className="field-title">Aprašymas</div>
                     <div>
-                        <TextArea name="description" className="form-control" defaultValue={this.props.container.description.trim()}></TextArea>
+                        <TextArea
+                            name="description"
+                            className="form-control"
+                            defaultValue={this.props.container.description.trim()}
+                        ></TextArea>
                     </div>
                 </div>
                 <Submit className="btn btn-light">Išsaugoti</Submit>
