@@ -9,7 +9,7 @@ import { ContainerDto } from "../../stores/containers/containers-contracts";
 import "./containers-table-form-view.css";
 
 interface Props {
-    items: Immutable.Map<number, ContainerDto>;
+    items: Immutable.Map<string | number, ContainerDto>;
     isAdministrator: boolean;
     onSubmit: FormOnSubmitCallback;
     formId: string;
@@ -20,7 +20,7 @@ export class ContainersTableFormView extends React.Component<Props> {
         if (this.props.isAdministrator) {
             return <Link to={`/administrator/containers/${id}`}>{id}</Link>;
         } else {
-            return <span>id</span>;
+            return <span>{id}</span>;
         }
     }
 
@@ -56,7 +56,7 @@ export class ContainersTableFormView extends React.Component<Props> {
                                 </th>
                                 <th>{item.description}</th>
                                 <th>{item.address}</th>
-                                <th>{`${item.longitude}, ${item.latitude}`}</th>
+                                <th>{`${item.longitude || "-"}, ${item.latitude || "-"}`}</th>
                             </tr>;
                         })
                         .toArray()}

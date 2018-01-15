@@ -1,15 +1,18 @@
 import * as React from "react";
+import { withRouter, RouteComponentProps } from "react-router-dom";
+
+import { IdentityActionsCreators } from "../../../../actions/identity/identity-actions-creators";
 
 import "./user-box.css";
-import { IdentityActionsCreators } from "../../../../actions/identity/identity-actions-creators";
 
 interface Props {
     userTitle: string;
 }
 
-export class UserBox extends React.Component<Props> {
+class UserBoxClass extends React.Component<RouteComponentProps<{}> & Props> {
     private onClick: React.MouseEventHandler<HTMLDivElement> = () => {
         IdentityActionsCreators.UserLoggedOut();
+        this.props.history.push("/");
     }
 
     public render(): JSX.Element {
@@ -24,3 +27,5 @@ export class UserBox extends React.Component<Props> {
         </div>;
     }
 }
+
+export const UserBox = withRouter(UserBoxClass);

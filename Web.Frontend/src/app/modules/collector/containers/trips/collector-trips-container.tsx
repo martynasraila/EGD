@@ -91,11 +91,34 @@ class CollectorTripsContainerClass extends React.Component<{}, State> {
         const path = url.resolve(Configuration.Api.Path, "Api/Trips");
 
         try {
-            await window.fetch(path, {
-                method: "POST", headers: {
+            const response = await window.fetch(path, {
+                method: "POST",
+                headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json"
-                } as any
+                } as any,
+                body: JSON.stringify({
+                    dateCreated: new Date().toISOString()
+                })
+            });
+
+            const newId = Number(await response.text());
+
+            if (newId === -1) {
+                return;
+            }
+
+            const collectorTripCreatePath = url.resolve(Configuration.Api.Path, "Api/Collectors_Trips");
+            await window.fetch(collectorTripCreatePath, {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                } as any,
+                body: JSON.stringify({
+                    collectorId: this.state.CollectorId,
+                    tripId: newId
+                })
             });
 
             if (this.state.CollectorId != null) {

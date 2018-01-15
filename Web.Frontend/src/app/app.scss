@@ -1,7 +1,9 @@
 @import url("//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css");
 @import url("//fonts.googleapis.com/css?family=Open+Sans");
 
-html, body, #app-root {
+html,
+body,
+#app-root {
     font-family: "Open Sans", sans-serif;
     height: 100%;
 }
@@ -14,7 +16,7 @@ html, body, #app-root {
         font-weight: 600;
     }
 
-    div > * {
+    div>* {
         width: 100%;
     }
 }
@@ -22,36 +24,35 @@ html, body, #app-root {
 .spinner-loader {
     color: #3498db;
 }
+
 .btn {
-    
     font-weight: 600;
 
-    &:hover{
-        background-color:#3498db;
-        color: white;
-        opacity: 1;
+     &:not(:disabled) {
+        &:hover {
+            background-color: #3498db;
+            color: white;
+            opacity: 1;
+        }
     }
 }
+
 .administrator-containers-cview {
-
     .table {
-
-        tbody{
-            tr{
-                &:hover{
+        tbody {
+            tr {
+                &:hover {
                     background-color: #f5f5f5;
                 }
             }
         }
     }
 }
-tbody{
-    tr{
-        &:hover{
+
+tbody {
+    tr {
+        &:hover {
             background-color: #f5f5f5;
         }
     }
 }
-
-
-

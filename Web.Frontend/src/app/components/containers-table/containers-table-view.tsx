@@ -14,7 +14,7 @@ export class ContainersTableView extends React.Component<Props> {
         if (this.props.isAdministrator) {
             return <Link to={`/administrator/containers/${id}`}>{id}</Link>;
         } else {
-            return <span>id</span>;
+            return <span>{id}</span>;
         }
     }
 
@@ -41,7 +41,7 @@ export class ContainersTableView extends React.Component<Props> {
                             </th>
                             <th>{item.description}</th>
                             <th>{item.address}</th>
-                            <th>{`${item.longitude}, ${item.latitude}`}</th>
+                            <th>{`${item.longitude || "-"}, ${item.latitude || "-"}`}</th>
                         </tr>;
                     })
                     .toArray()}

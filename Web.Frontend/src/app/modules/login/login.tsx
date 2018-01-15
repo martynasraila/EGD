@@ -41,8 +41,6 @@ export class Login extends React.Component {
             const hash = crypto.createHash("sha256");
             const passwordHash = hash.update(submitData.Password).digest("hex").toString();
 
-            console.log(submitData.Username, submitData.Password, passwordHash);
-
             if (identity.passwordHash && passwordHash === identity.passwordHash) {
                 IdentityActionsCreators.UserLoggedIn(identity);
             } else {
