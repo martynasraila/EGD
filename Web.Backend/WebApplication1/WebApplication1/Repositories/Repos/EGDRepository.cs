@@ -44,19 +44,20 @@ namespace WebApplication1
             }
         }
 
-        public bool InsertEGD(EGD ourEgd)
+        public int InsertEGD(EGD ourEgd)
         {
             using (IDbConnection conn = Connection)
             {
                 conn.Open();
-                int rowsAffected = conn.Execute(@"INSERT INTO EGD([PaddingTop],[PaddingBottom],[PaddingLeft],[PaddingRight],[PhotoStreak],[ConfigurationStreak]) 
-            values (@PaddingTop, @PaddingBottom, @PaddingLeft, @PaddingRight, @PhotoStreak, @ConfigurationStreak)",
-                new { ourEgd.PaddingTop, ourEgd.PaddingBottom,ourEgd.PaddingLeft,ourEgd.PaddingRight,ourEgd.PhotoStreak,ourEgd.ConfigurationStreak });
-                if (rowsAffected > 0)
+                string sql = @"INSERT INTO EGD([PaddingTop],[PaddingBottom],[PaddingLeft],[PaddingRight],[PhotoStreak],[ConfigurationStreak]) 
+            values (@PaddingTop, @PaddingBottom, @PaddingLeft, @PaddingRight, @PhotoStreak, @ConfigurationStreak);
+            SELECT CAST(SCOPE_IDENTITY() as int)";
+                var id = conn.Query<int>(sql, new { ourEgd.PaddingTop, ourEgd.PaddingBottom,ourEgd.PaddingLeft,ourEgd.PaddingRight,ourEgd.PhotoStreak,ourEgd.ConfigurationStreak }).Single();
+                if (id > 0)
                 {
-                    return true;
+                    return id;
                 }
-                return false;
+                return -1;
             }
         }
 
