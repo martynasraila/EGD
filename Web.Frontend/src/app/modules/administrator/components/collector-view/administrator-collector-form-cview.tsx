@@ -98,7 +98,7 @@ export class AdministratorCollectorFormCView extends React.Component<Props> {
                     <label htmlFor="UserName">
                         Vartotojo vardas
                     </label>
-                    <Text name="userName" id="UserName" initialValue={this.props.collector.userName}>
+                    <Text name="userName" id="UserName" className="form-control" initialValue={this.props.collector.userName}>
                         <RequiredValidator error="Vartotojo vardas yra privalomas." />
                     </Text>
                 </div>
@@ -106,7 +106,7 @@ export class AdministratorCollectorFormCView extends React.Component<Props> {
                     <label htmlFor="Title">
                         Pavadinimas
                     </label>
-                    <Text name="title" id="Title" initialValue={this.props.collector.title}>
+                    <Text name="title" id="Title" className="form-control" initialValue={this.props.collector.title}>
                         <RequiredValidator error="Pavadinimas yra privalomas." />
                     </Text>
                 </div>
@@ -114,7 +114,7 @@ export class AdministratorCollectorFormCView extends React.Component<Props> {
                     <label htmlFor="Description">
                         Aprašymas
                     </label>
-                    <Text name="description" id="Description" initialValue={this.props.collector.description}>
+                    <Text name="description" className="form-control" id="Description" initialValue={this.props.collector.description}>
                         <RequiredValidator error="Aprašymas yra privalomas." />
                     </Text>
                 </div>

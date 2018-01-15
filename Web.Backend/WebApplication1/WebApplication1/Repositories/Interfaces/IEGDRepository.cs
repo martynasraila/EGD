@@ -9,7 +9,7 @@ namespace WebApplication1
     {
         List<EGD> GetAllEGD();
         EGD GetById(int id);
-        bool InsertEGD(EGD ourEgd);
+        int InsertEGD(EGD ourEgd);
         bool UpdateEGD(EGD ourEgd);
         bool DeleteEGD(int id);
     }

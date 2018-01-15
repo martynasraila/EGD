@@ -69,25 +69,25 @@ export class AdministratorContainerFormCView extends React.Component<Props> {
                 <div className="field-container">
                     <div className="field-title">Ilguma</div>
                     <div>
-                        <Number name="longitude" defaultValue={this.props.container.longitude} />
+                        <Number name="longitude" className="form-control" defaultValue={this.props.container.longitude} />
                     </div>
                 </div>
                 <div className="field-container">
                     <div className="field-title">Platuma</div>
                     <div>
-                        <Number name="latitude" defaultValue={this.props.container.latitude} />
+                        <Number name="latitude" className="form-control" defaultValue={this.props.container.latitude} />
                     </div>
                 </div>
                 <div className="field-container">
                     <div className="field-title">Adresas</div>
                     <div>
-                        <TextArea name="address" defaultValue={this.props.container.address.trim()}></TextArea>
+                        <TextArea name="address" className="form-control" defaultValue={this.props.container.address.trim()}></TextArea>
                     </div>
                 </div>
                 <div className="field-container">
                     <div className="field-title">Aprašymas</div>
                     <div>
-                        <TextArea name="description" defaultValue={this.props.container.description.trim()}></TextArea>
+                        <TextArea name="description" className="form-control" defaultValue={this.props.container.description.trim()}></TextArea>
                     </div>
                 </div>
                 <Submit className="btn btn-light">Išsaugoti</Submit>

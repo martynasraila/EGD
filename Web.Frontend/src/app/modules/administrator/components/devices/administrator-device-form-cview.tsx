@@ -59,22 +59,22 @@ export class AdministratorDeviceFormCView extends React.Component<Props, FormDat
                 <div className="info-side">
                     <div className="field-container">
                         <div className="field-title">Nuotraukos darymo intervalas (min)</div>
-                        <Number name="photoStreak" defaultValue={this.state.photoStreak}></Number>
+                        <Number name="photoStreak" className="form-control" defaultValue={this.state.photoStreak}></Number>
                     </div>
                     <div className="field-container">
                         <div className="field-title">Konfigūracijos atnaujinimo intervalas (min)</div>
-                        <Number name="configurationStreak" defaultValue={this.state.configurationStreak}></Number>
+                        <Number name="configurationStreak" className="form-control" defaultValue={this.state.configurationStreak}></Number>
                     </div>
                 </div>
                 <div className="padding-side">
                     <div className="side-title">Analizuojama erdvė</div>
                     <div className="padding-content">
                         <div className="padding-horizontal">
-                            <Number name="paddingLeft" defaultValue={this.state.paddingLeft}></Number>
+                            <Number name="paddingLeft" className="form-control" defaultValue={this.state.paddingLeft}></Number>
                         </div>
                         <div>
                             <div className="padding-vertical">
-                                <Number name="paddingTop" defaultValue={this.state.paddingTop}></Number>
+                                <Number name="paddingTop" className="form-control" defaultValue={this.state.paddingTop}></Number>
                             </div>
                             <div className="padding-container">
                                 <div className="photo-padding" style={{ padding: padding }}>
@@ -82,11 +82,11 @@ export class AdministratorDeviceFormCView extends React.Component<Props, FormDat
                                 </div>
                             </div>
                             <div className="padding-vertical">
-                                <Number name="paddingBottom" defaultValue={this.state.paddingBottom}></Number>
+                                <Number name="paddingBottom" className="form-control" defaultValue={this.state.paddingBottom}></Number>
                             </div>
                         </div>
                         <div className="padding-horizontal">
-                            <Number name="paddingRight" defaultValue={this.state.paddingRight}></Number>
+                            <Number name="paddingRight" className="form-control" defaultValue={this.state.paddingRight}></Number>
                         </div>
                     </div>
                 </div>

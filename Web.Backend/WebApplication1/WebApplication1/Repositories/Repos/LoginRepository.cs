@@ -38,7 +38,7 @@ namespace EGD.Repositories.Repos
                     if (collectors != null)
                     {
                         loginDto.Id = collectors.Id;
-                        loginDto.PasswordHash = collectors.PasswordHash;
+                        loginDto.PasswordHash = collectors.PasswordHash.Trim();
                         loginDto.Title = collectors.Title;
                         loginDto.UserKind = "collector";
                         return loginDto;
@@ -47,7 +47,7 @@ namespace EGD.Repositories.Repos
                     if (admin != null)
                     {
                         loginDto.Id = admin.Id;
-                        loginDto.PasswordHash = admin.PasswordHash;
+                        loginDto.PasswordHash = admin.PasswordHash.Trim();
                         loginDto.Title = $"{admin.Name.Trim()} {admin.Surname.Trim()}";
                         loginDto.UserKind = "administrator";
                         return loginDto;
