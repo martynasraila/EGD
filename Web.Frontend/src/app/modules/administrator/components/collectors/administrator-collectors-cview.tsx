@@ -17,9 +17,6 @@ export class AdministratorCollectorsCView extends React.Component<Props> {
                         <th>Vartotojo vardas</th>
                         <th>Pavadinimas</th>
                         <th>Aprašymas</th>
-                        <th>Priskirta konteinerių</th>
-                        <th>Kelionių skaičius</th>
-                        <th>Paskutinės kelionės data</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,9 +33,6 @@ export class AdministratorCollectorsCView extends React.Component<Props> {
                                 <th>{item.userName}</th>
                                 <th>{item.title}</th>
                                 <th>{item.description}</th>
-                                <th>{/*item.ContainersCount*/}</th>
-                                <th>{/*item.TripsCount*/}</th>
-                                <th>{/*item.LastTripDate*/}</th>
                             </tr>;
                         })
                         .toArray()}
