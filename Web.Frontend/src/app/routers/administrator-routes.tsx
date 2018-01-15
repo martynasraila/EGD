@@ -22,7 +22,7 @@ export class AdministratorRoutes extends React.Component {
                     <Route path="/administrator/containers" component={AdministratorContainersRoute} exact />
                     <Route path="/administrator/containers/:id" component={AdministratorContainerViewRoute} exact />
                     <Route path="/administrator/container/create" component={AdministratorContainerCreateRoute} exact />
-                    <Route path="/administrator/container/device/create" component={AdministratorAddDeviceRoute} exact />
+                    <Route path="/administrator/container/:id/device/create" component={AdministratorAddDeviceRoute} exact />
                     <Route path="/administrator/collectors" component={AdministratorCollectorsRoute} exact />
                     <Route path="/administrator/collector/create" component={AdministratorCollectorCreateRoute} exact />
                     <Route path="/administrator/collectors/:id" component={AdministratorCollectorViewRoute} exact />

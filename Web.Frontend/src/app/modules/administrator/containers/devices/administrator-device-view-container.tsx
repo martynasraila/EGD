@@ -68,7 +68,7 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
     }
 
     private onDeviceSubmit: FormOnSubmitCallback = async (event, store) => {
-        const submitData = store.ToObject<FormData>();
+        const submitData = store.ToObject();
 
         const path = url.resolve(Configuration.Api.Path, "api/EGD");
 
@@ -111,9 +111,18 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
                 }
             }
             case Abstractions.ItemStatus.NoData: {
-                return <div>
-                    <Link className="btn btn-light" to="/administrator/container/device/create">Pridėti įrenginį</Link>
-                </div>;
+                if (this.state.Container != null) {
+                    return <div>
+                        <Link
+                            className="btn btn-light"
+                            to={`/administrator/container/${this.state.Container.id}/device/create`}
+                        >
+                            Pridėti įrenginį
+                        </Link>
+                    </div>;
+                } else {
+                    return <div>Nepavyko rasti konteinerio.</div>;
+                }
             }
             case Abstractions.ItemStatus.Failed: {
                 return <div>Nepavyko užkrauti įrenginio informacijos.</div>;
@@ -122,7 +131,7 @@ class AdministratorDeviceViewContainerClass extends React.Component<Props, State
     }
 
     public render(): JSX.Element {
-        const deviceIdString = this.state.Container ? ` (${this.state.Container.egDid})` : "";
+        const deviceIdString = this.state.Container && this.state.Container.egDid ? ` (${this.state.Container.egDid})` : "";
 
         return <LabeledContainer title={`Įrenginys ${deviceIdString}`} className="administrator-device-view-container">
             {this.renderStatuses()}
