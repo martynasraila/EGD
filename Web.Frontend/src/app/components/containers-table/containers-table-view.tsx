@@ -23,12 +23,9 @@ export class ContainersTableView extends React.Component<Props> {
             <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Būsena</th>
-                    <th>Paskutinį kartą atnaujinta</th>
                     <th>Aprašymas</th>
                     <th>Adresas</th>
                     <th>Koordinatės</th>
-                    <th>Stebėjimas</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,12 +39,9 @@ export class ContainersTableView extends React.Component<Props> {
                             <th>
                                 {this.renderIdCell(item.id)}
                             </th>
-                            <th>{item.lastStateid}</th>
-                            <th>{item.lastStateid}</th>
                             <th>{item.description}</th>
                             <th>{item.address}</th>
                             <th>{`${item.longitude}, ${item.latitude}`}</th>
-                            <th>{item.egDid}</th>
                         </tr>;
                     })
                     .toArray()}

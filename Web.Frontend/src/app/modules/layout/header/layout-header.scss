@@ -26,5 +26,7 @@
     .layout-navigation {
         background-color: #3498db;
         flex: 1 0 auto;
+        display: flex;
+        align-items: center;
     }
 }
