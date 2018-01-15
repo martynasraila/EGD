@@ -190,7 +190,7 @@ export class CollectorTripSelectorCView extends React.Component<Props, State> {
                         <th>{item.id}</th>
                         <th>{item.description}</th>
                         <th>{item.address}</th>
-                        <th>{`${item.longitude}, ${item.latitude}`}</th>
+                        <th>{`${item.longitude || "-"}, ${item.latitude || "-"}`}</th>
                     </tr>;
 
                     containerIndex++;
