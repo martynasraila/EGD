@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
 
         }
         [HttpPost]
-        public bool Create([FromBody]EGD ourEGD)
+        public int Create([FromBody]EGD ourEGD)
         {
             return _EGDRepo.InsertEGD(ourEGD);
         }
