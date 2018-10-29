@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{489A2FBC-C8E8-44FA-B5BB-0739F9F87BAD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{489A2FBC-C8E8-44FA-B5BB-0739F9F87BAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestProject1", "XUnitTestProject1\XUnitTestProject1.csproj", "{27B69EDB-C6B3-430A-B9FD-3A49C8C9E61D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{489A2FBC-C8E8-44FA-B5BB-0739F9F87BAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{489A2FBC-C8E8-44FA-B5BB-0739F9F87BAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{489A2FBC-C8E8-44FA-B5BB-0739F9F87BAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27B69EDB-C6B3-430A-B9FD-3A49C8C9E61D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27B69EDB-C6B3-430A-B9FD-3A49C8C9E61D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27B69EDB-C6B3-430A-B9FD-3A49C8C9E61D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27B69EDB-C6B3-430A-B9FD-3A49C8C9E61D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -14,5 +14,6 @@ namespace WebApplication1
         public int PaddingRight { get; set; }  
         public int PhotoStreak { get; set; }
         public int ConfigurationStreak { get; set; }
+        public EGD() { }
     }
 }
