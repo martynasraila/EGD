@@ -1,9 +1,11 @@
 ﻿using Dapper;
 using EGD.Models;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using WebApplication1;
 
 namespace EGD.Repositories
 {
@@ -12,7 +14,7 @@ namespace EGD.Repositories
         private readonly string _connectionString;
         public ContainersRepository()
         {
-            _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EGD;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            _connectionString = Startup.ConnectionString;
         }
         public List<Containers> GetAllContainers()
         {
@@ -34,7 +36,7 @@ namespace EGD.Repositories
                                     Description,
                                     EGDid,
                                     LastStateid 
-                                FROM Containers
+                    FROM Containers
                                 WHERE Containers.Id = @id";
             using (IDbConnection conn = Connection)
             {
@@ -43,20 +45,21 @@ namespace EGD.Repositories
             }
         }
 
-        public bool InsertContainer(Containers ourContainer)
+        public int InsertContainer(Containers ourContainer)
         {
             using (IDbConnection conn = Connection)
             {
                 conn.Open();
-                int rowsAffected = conn.Execute(@"INSERT INTO Containers([Address],
+                int insertedId = conn.Query<int>(@"INSERT INTO Containers([Address],
                 [Longitude],[Latitude],[Description],[EGDid],[LastStateid]) 
-                    values (@Address, @Longitude, @Latitude, @Description, @EGDid, @LastStateid)",
-                new { ourContainer.Address, Longitude = (int?)null, Latitude = (int?)null, ourContainer.Description, EGDid = (int?)null, LastStateid = (int?)null});
-                if (rowsAffected > 0)
+                    values (@Address, @Longitude, @Latitude, @Description, @EGDid, @LastStateid);
+                    SELECT CAST(SCOPE_IDENTITY() as int)",
+                new { ourContainer.Address, Longitude = (int?)null, Latitude = (int?)null, ourContainer.Description, EGDid = (int?)null, LastStateid = (int?)null }).Single();
+                if (insertedId != -1)
                 {
-                    return true;
+                    return insertedId;
                 }
-                return false;
+                return -1;
             }
         }
 
@@ -114,8 +117,8 @@ namespace EGD.Repositories
                      " AND dbo.Collectors.Id = dbo.Collectors_Trips.CollectorId " +
                         " AND dbo.Trips.Id = dbo.Collectors_Trips.TripId;";
             ContainerStatistics stats = new ContainerStatistics();
-            List < ContainerStatistics > tarpinis = new List<ContainerStatistics>();
-            
+            List<ContainerStatistics> tarpinis = new List<ContainerStatistics>();
+
             using (IDbConnection conn = Connection)
             {
                 conn.Open();

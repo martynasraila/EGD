@@ -7,6 +7,7 @@ using EGD.Models;
 using System.Data;
 using System.Data.SqlClient;
 using Dapper;
+using WebApplication1;
 
 namespace EGD.Repositories.Repos
 {
@@ -15,7 +16,7 @@ namespace EGD.Repositories.Repos
         private readonly string _connectionString;
         public Trips_ContainersRepository()
         {
-            _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EGD;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            _connectionString = Startup.ConnectionString;
         }
 
         public bool DeleteByContainerId(int id)

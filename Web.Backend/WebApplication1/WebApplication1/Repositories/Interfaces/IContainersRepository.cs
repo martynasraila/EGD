@@ -10,7 +10,7 @@ namespace EGD.Repositories
     {
         List<Containers> GetAllContainers();
         Containers GetById(int id);
-        bool InsertContainer(Containers ourContainer);
+        int InsertContainer(Containers ourContainer);
         bool UpdateContainer(Containers ourContainer);
         bool DeleteContainer(int id);
         List<ContainerStatistics> GetStatistics();

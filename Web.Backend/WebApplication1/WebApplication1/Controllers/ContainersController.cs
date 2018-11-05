@@ -16,28 +16,31 @@ namespace EGD.Controllers
         {
             _ContainersRepo = ContainersRepo;
         }
+
         [HttpGet]
         public IEnumerable<Containers> Get()
         {
             return _ContainersRepo.GetAllContainers();
         }
+
         [HttpGet("{id}")]
         public Containers GetById(int id)
         {
-
-                return _ContainersRepo.GetById(id);
-
+            return _ContainersRepo.GetById(id);
         }
+
         [HttpPost]
-        public bool Create([FromBody]Containers ourContainer)
+        public int Create([FromBody]Containers ourContainer)
         {
             return _ContainersRepo.InsertContainer(ourContainer);
         }
+
         [HttpPut]
         public bool UpdateourContainer([FromBody]Containers ourContainer)
         {
             return _ContainersRepo.UpdateContainer(ourContainer);
         }
+
         [Route("{id}")]
         [HttpDelete]
         public bool Delete(int id)

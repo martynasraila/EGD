@@ -5,6 +5,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.Repositories;
 
 namespace WebApplication1
 {
@@ -13,19 +14,19 @@ namespace WebApplication1
         private readonly string _connectionString;
         public EGDRepository()
         {
-            _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EGD;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            _connectionString = Startup.ConnectionString;
         }
-        public List<EGD> GetAllEGD()
+        public List<WebApplication1.Models.EGD> GetAllEGD()
         {
             const string sql = @"SELECT * FROM EGD";
             using (IDbConnection dbConnection = Connection)
             {
                 dbConnection.Open();
-                return dbConnection.Query<EGD>(sql).ToList();
+                return dbConnection.Query<WebApplication1.Models.EGD>(sql).ToList();
             }
         }
 
-        public EGD GetById(int id)
+        public WebApplication1.Models.EGD GetById(int id)
         {
             const string sql = @"SELECT 
                                     Id, 
@@ -40,11 +41,11 @@ namespace WebApplication1
             using (IDbConnection conn = Connection)
             {
                 conn.Open();
-                return conn.Query<EGD>(sql, new {  id = id }).FirstOrDefault();
+                return conn.Query<WebApplication1.Models.EGD>(sql, new {  id = id }).FirstOrDefault();
             }
         }
 
-        public int InsertEGD(EGD ourEgd)
+        public int InsertEGD(WebApplication1.Models.EGD ourEgd)
         {
             using (IDbConnection conn = Connection)
             {
@@ -61,7 +62,7 @@ namespace WebApplication1
             }
         }
 
-        public bool UpdateEGD(EGD ourEgd)
+        public bool UpdateEGD(WebApplication1.Models.EGD ourEgd)
         {
             using (IDbConnection conn = Connection)
             {

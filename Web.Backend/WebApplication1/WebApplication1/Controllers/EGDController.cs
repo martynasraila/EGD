@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.Repositories;
 
 namespace WebApplication1.Controllers
 {
@@ -16,25 +17,25 @@ namespace WebApplication1.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<EGD> Get()
+        public IEnumerable<WebApplication1.Models.EGD> Get()
         {
             return _EGDRepo.GetAllEGD();
         }
 
         [HttpGet("{id}")]
-        public EGD GetById(int id)
-        { 
-                return _EGDRepo.GetById(id);
-            
-
+        public WebApplication1.Models.EGD GetById(int id)
+        {
+            return _EGDRepo.GetById(id);
         }
+
         [HttpPost]
-        public int Create([FromBody]EGD ourEGD)
+        public int Create([FromBody]WebApplication1.Models.EGD ourEGD)
         {
             return _EGDRepo.InsertEGD(ourEGD);
         }
+
         [HttpPut]
-        public bool UpdateEGD([FromBody]EGD ourEgd)
+        public bool UpdateEGD([FromBody]WebApplication1.Models.EGD ourEgd)
         {
             return _EGDRepo.UpdateEGD(ourEgd);
         }

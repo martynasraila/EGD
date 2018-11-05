@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EGD.Models;
 using Dapper;
+using WebApplication1;
 
 namespace EGD.Repositories
 {
@@ -14,11 +15,8 @@ namespace EGD.Repositories
         private readonly string _connectionString;
         public CollectorsRepository()
         {
-            _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EGD;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            _connectionString = Startup.ConnectionString;
         }
-
-
-        
 
         public bool DeleteCollector(int id)
         {
@@ -61,20 +59,21 @@ namespace EGD.Repositories
             }
         }
 
-        public bool InsertCollector(Collectors ourCollectors)
+        public int InsertCollector(Collectors ourCollectors)
         {
             using (IDbConnection conn = Connection)
             {
                 conn.Open();
-                int rowsAffected = conn.Execute(@"INSERT INTO Collectors([UserName],[PasswordHash],[Title],
+                int itemId = conn.Query<int>(@"INSERT INTO Collectors([UserName],[PasswordHash],[Title],
             [Description]) 
-            values (@UserName, @PasswordHash, @Title, @Description)",
-                new { ourCollectors.UserName, ourCollectors.PasswordHash, ourCollectors.Title,ourCollectors.Description });
-                if (rowsAffected > 0)
+            values (@UserName, @PasswordHash, @Title, @Description);
+            SELECT CAST(SCOPE_IDENTITY() as int)",
+                new { ourCollectors.UserName, ourCollectors.PasswordHash, ourCollectors.Title, ourCollectors.Description }).Single();
+                if (itemId != -1)
                 {
-                    return true;
+                    return itemId;
                 }
-                return false;
+                return -1;
             }
         }
 

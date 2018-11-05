@@ -6,6 +6,7 @@ using EGD.Models;
 using System.Data;
 using Dapper;
 using System.Data.SqlClient;
+using WebApplication1;
 
 namespace EGD.Repositories
 {
@@ -14,7 +15,7 @@ namespace EGD.Repositories
         private readonly string _connectionString;
         public StatesRepository()
         {
-            _connectionString = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=EGD;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            _connectionString = Startup.ConnectionString;
         }
         public bool DeleteState(int id)
         {

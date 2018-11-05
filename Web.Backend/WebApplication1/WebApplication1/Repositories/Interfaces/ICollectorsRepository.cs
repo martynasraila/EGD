@@ -10,7 +10,7 @@ namespace EGD.Repositories
     {
         List<Collectors> GetAllCollectors();
         Collectors GetById(int id);
-        bool InsertCollector(Collectors ourCollectors);
+        int InsertCollector(Collectors ourCollectors);
         bool UpdateCollector(Collectors ourCollectors);
         bool DeleteCollector(int id);
     }

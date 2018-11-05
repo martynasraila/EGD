@@ -17,22 +17,25 @@ namespace EGD.Controllers
         {
             _Collectors_ContainerssRepo = Collectors_ContainersRepo;
         }
+
         [HttpGet]
         public IEnumerable<Collectors_Containers> Get()
         {
             return _Collectors_ContainerssRepo.GetAllCollectors_Containers();
         }
+
         [HttpGet]
         [Route("cc/collector/{id}")]
         public IEnumerable<Collectors_Containers> GetByCollectorId(int id)
         {
-                return _Collectors_ContainerssRepo.GetByCollectorId(id);
+            return _Collectors_ContainerssRepo.GetByCollectorId(id);
         }
+
         [HttpGet("cc/container/{id}")]
         public IEnumerable<Collectors_Containers> GetByContainerId(int id)
         {
 
-                return _Collectors_ContainerssRepo.GetByContainerId(id);
+            return _Collectors_ContainerssRepo.GetByContainerId(id);
 
         }
 

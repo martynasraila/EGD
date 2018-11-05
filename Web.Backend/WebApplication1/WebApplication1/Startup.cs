@@ -23,6 +23,9 @@ namespace WebApplication1
 
         public IConfiguration Configuration { get; }
 
+        //public static string ConnectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=EGD;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        public static string ConnectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=D:\\Projects\\EGD\\Web.Backend\\TestDatabase\\EGD.mdf;Integrated Security=True;Connect Timeout=30";
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -36,8 +39,8 @@ namespace WebApplication1
                 );
             });
 
-            services.AddScoped<IEGDRepository, EGDRepository>();
-            services.AddScoped<IContainersRepository,ContainersRepository>();
+            services.AddScoped<Repositories.IEGDRepository, EGDRepository>();
+            services.AddScoped<IContainersRepository, ContainersRepository>();
             services.AddScoped<IStatesRepository, StatesRepository>();
             services.AddScoped<IState_ValuesRepository, State_ValuesRepository>();
             services.AddScoped<ICollectorsRepository, CollectorsRepository>();
